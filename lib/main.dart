@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Home',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const MyHomePage(title: 'Flutter Home Page'),
     );
@@ -38,6 +38,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 0;
+  static Color mainColor = Color(0xffeaeaea);
+
+
 
   final screens = [
     HomePage(),
@@ -49,6 +52,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    int tabIndex = 0;
+    final appBars = [
+    AppBar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      title: Text(
+        'Stock Prediction',
+        style: TextStyle(color: Colors.black),
+      ),
+    ),
+    AppBar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      title: Text('Search'),
+      actions: [
+        IconButton(onPressed: (){
+          showSearch(
+              context: context,
+              delegate: CustomSearch());
+        }, icon: Icon(Icons.search))
+      ],
+    ),
+  ];
+
     final items = <Widget>[
       Icon(
         Icons.home,
@@ -67,15 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     return Scaffold(
-
+      backgroundColor: mainColor,
       extendBody: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Stock Prediction',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      appBar: appBars[0],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(),
         child: CurvedNavigationBar(
