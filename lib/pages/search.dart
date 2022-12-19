@@ -6,16 +6,6 @@ class SearchPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black12,
-      // appBar: AppBar(
-      //   title: Text('Search'),
-      //   actions: [
-      //     IconButton(onPressed: (){
-      //       showSearch(
-      //           context: context,
-      //           delegate: CustomSearch());
-      //     }, icon: Icon(Icons.search))
-      //   ],
-      //   ),
       body: Center(
         child: Column(
           children: [

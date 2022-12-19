@@ -38,6 +38,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 0;
+  int tabIndex = 0;
+
   static Color mainColor = Color(0xffeaeaea);
 
 
@@ -53,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    int tabIndex = 0;
     final appBars = [
     AppBar(
       elevation: 0,
@@ -64,16 +65,28 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     ),
     AppBar(
+      centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.white,
-      title: Text('Search'),
-      actions: [
-        IconButton(onPressed: (){
+      title: InkWell(
+        onTap: () {
           showSearch(
               context: context,
               delegate: CustomSearch());
-        }, icon: Icon(Icons.search))
-      ],
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(child: Text("Search")),
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Icon(Icons.search, size: 30,)),
+            ],
+          ),
+        ),
+    ),
     ),
   ];
 
@@ -97,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: mainColor,
       extendBody: true,
-      appBar: appBars[0],
+      appBar: appBars[index],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(),
         child: CurvedNavigationBar(
@@ -108,7 +121,16 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 60,
           index: index,
           items: items,
-          onTap: (index) => setState(() => this.index = index),
+          onTap: (index) {
+            setState(() {
+              this.index = index;
+              if(this.index == 1){
+                this.tabIndex = 1;
+              }else{
+                this.tabIndex = 0;
+              }
+            });
+          },
         ),
       ),
 
