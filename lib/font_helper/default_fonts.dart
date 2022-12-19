@@ -15,3 +15,7 @@ TextStyle textStyleBtn({Color textColor = Colors.black}){
 TextStyle textStyleBtnMax({Color textColor = Colors.black}){
   return TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold);
 }
+
+TextStyle textStylePercent(){
+  return TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
+}
