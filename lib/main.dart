@@ -100,6 +100,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
     ),
     ),
+      AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Leaderboard',
+          style: TextStyle(color: Colors.black),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+            ),
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearch());
+            },
+          )
+        ],
+      ),
   ];
 
     final items = <Widget>[
@@ -138,6 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
               this.index = index;
               if(index == 1){
                 this.tabIndex = 1;
+              }else if(index == 3){
+                this.tabIndex = 2;
               }else{
                 this.tabIndex = 0;
               }

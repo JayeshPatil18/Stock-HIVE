@@ -1,5 +1,6 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/font_helper/default_fonts.dart';
 
 class SearchPage extends StatelessWidget{
   @override
@@ -7,8 +8,18 @@ class SearchPage extends StatelessWidget{
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 60),
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 20, bottom: 10),
+                child: Text("Search History", style: textStyleMinDesc(),)),
+            Container(
+              margin: EdgeInsets.only(bottom: 60),
+              child: Center(
+
+              ),
+            ),
+          ],
         ),
       ),
     );
