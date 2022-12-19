@@ -33,7 +33,7 @@ class CustomSearch extends SearchDelegate{
     return[
       IconButton(onPressed: (){
         query = '';
-      }, icon: const Icon(Icons.clear))
+      }, icon: const Icon(Icons.clear, color: Colors.black,))
     ];
   }
 
@@ -42,7 +42,7 @@ class CustomSearch extends SearchDelegate{
     return(
       IconButton(onPressed: (){
         close(context, null);
-      }, icon: const Icon(Icons.arrow_back))
+      }, icon: const Icon(Icons.arrow_back, color: Colors.black,))
     );
   }
 
