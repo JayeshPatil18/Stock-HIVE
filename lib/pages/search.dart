@@ -5,11 +5,10 @@ class SearchPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.transparent,
       body: Center(
-        child: Column(
-          children: [
-          ],
+        child: Container(
+          margin: EdgeInsets.only(bottom: 60),
         ),
       ),
     );

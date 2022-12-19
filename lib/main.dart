@@ -20,6 +20,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        textTheme: TextTheme(
+          headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          subtitle2: TextStyle(fontSize: 12 ),
+        )
       ),
       home: const MyHomePage(title: 'Flutter Home Page'),
     );
@@ -63,6 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
         'Stock Prediction',
         style: TextStyle(color: Colors.black),
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(
+            Icons.calculate,
+          ),
+          onPressed: () {
+            // do something
+          },
+        )
+      ],
     ),
     AppBar(
       centerTitle: true,
@@ -110,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: mainColor,
       extendBody: true,
-      appBar: appBars[index],
+      appBar: appBars[tabIndex],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(),
         child: CurvedNavigationBar(
@@ -124,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: (index) {
             setState(() {
               this.index = index;
-              if(this.index == 1){
+              if(index == 1){
                 this.tabIndex = 1;
               }else{
                 this.tabIndex = 0;

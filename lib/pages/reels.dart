@@ -4,9 +4,12 @@ class ReelsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
-      body: Center(
-        child: Text("Reels"),
+      backgroundColor: Colors.transparent,
+      body: Container(
+        margin: EdgeInsets.only(bottom: 60),
+        child: Center(
+          child: Text("Reels"),
+        ),
       ),
     );
   }

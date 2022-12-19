@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../font_helper/default_fonts.dart';
+
 class HomePage extends StatelessWidget {
+  var elevationValue = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class HomePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 4,
+                      elevation: elevationValue,
                       child: Container(
                         margin: EdgeInsets.all(20),
                         child: Column(
@@ -34,10 +37,10 @@ class HomePage extends StatelessWidget {
                                     size: 16),
                                     Container(
                                         margin: EdgeInsets.only(left: 4),
-                                        child: Text("Expires in 2 days", style: TextStyle(fontSize: 12 ))),
+                                        child: Text("Expires in 2 days", style: textStyleMinDesc())),
                                   ],
                                 )),
-                            Text("TCS stock will increase in next 10 days?", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("TCS stock will increase in next 10 days?", style: textStyleDefault()),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Row(
@@ -49,7 +52,7 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("Yes", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("Yes", style: textStyleBtn(textColor: Colors.blue)))),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -58,13 +61,10 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("No", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("No", style: textStyleBtn(textColor: Colors.red)))),
                                     ),
                                   ],
                                 )),
-
-
-
                           ],
                         ),
                       ),
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 4,
+                      elevation: elevationValue,
                       child: Container(
                         margin: EdgeInsets.all(20),
                         child: Column(
@@ -92,10 +92,10 @@ class HomePage extends StatelessWidget {
                                         size: 16),
                                     Container(
                                         margin: EdgeInsets.only(left: 4),
-                                        child: Text("Expires in 2 days", style: TextStyle(fontSize: 12 ))),
+                                        child: Text("Expires in 2 days", style: textStyleMinDesc())),
                                   ],
                                 )),
-                            Text("TCS stock will increase in next 10 days?", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("TCS stock will increase in next 10 days?", style: textStyleDefault()),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Row(
@@ -107,7 +107,7 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("Yes", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("Yes", style: textStyleBtn(textColor: Colors.blue)))),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -116,13 +116,10 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("No", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("No", style: textStyleBtn(textColor: Colors.red)))),
                                     ),
                                   ],
                                 )),
-
-
-
                           ],
                         ),
                       ),
@@ -135,7 +132,7 @@ class HomePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 4,
+                      elevation: elevationValue,
                       child: Container(
                         margin: EdgeInsets.all(20),
                         child: Column(
@@ -150,10 +147,10 @@ class HomePage extends StatelessWidget {
                                         size: 16),
                                     Container(
                                         margin: EdgeInsets.only(left: 4),
-                                        child: Text("Expires in 2 days", style: TextStyle(fontSize: 12 ))),
+                                        child: Text("Expires in 2 days", style: textStyleMinDesc())),
                                   ],
                                 )),
-                            Text("TCS stock will increase in next 10 days?", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("TCS stock will increase in next 10 days?", style: textStyleDefault()),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Row(
@@ -165,7 +162,7 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("Yes", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("Yes", style: textStyleBtn(textColor: Colors.blue)))),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -174,13 +171,10 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("No", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("No", style: textStyleBtn(textColor: Colors.red)))),
                                     ),
                                   ],
                                 )),
-
-
-
                           ],
                         ),
                       ),
@@ -193,7 +187,7 @@ class HomePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 4,
+                      elevation: elevationValue,
                       child: Container(
                         margin: EdgeInsets.all(20),
                         child: Column(
@@ -208,10 +202,10 @@ class HomePage extends StatelessWidget {
                                         size: 16),
                                     Container(
                                         margin: EdgeInsets.only(left: 4),
-                                        child: Text("Expires in 2 days", style: TextStyle(fontSize: 12 ))),
+                                        child: Text("Expires in 2 days", style: textStyleMinDesc())),
                                   ],
                                 )),
-                            Text("TCS stock will increase in next 10 days?", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("TCS stock will increase in next 10 days?", style: textStyleDefault()),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Row(
@@ -223,7 +217,7 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("Yes", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("Yes", style: textStyleBtn(textColor: Colors.blue)))),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -232,13 +226,10 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("No", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("No", style: textStyleBtn(textColor: Colors.red)))),
                                     ),
                                   ],
                                 )),
-
-
-
                           ],
                         ),
                       ),
@@ -251,7 +242,7 @@ class HomePage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      elevation: 4,
+                      elevation: elevationValue,
                       child: Container(
                         margin: EdgeInsets.all(20),
                         child: Column(
@@ -266,10 +257,10 @@ class HomePage extends StatelessWidget {
                                         size: 16),
                                     Container(
                                         margin: EdgeInsets.only(left: 4),
-                                        child: Text("Expires in 2 days", style: TextStyle(fontSize: 12 ))),
+                                        child: Text("Expires in 2 days", style: textStyleMinDesc())),
                                   ],
                                 )),
-                            Text("TCS stock will increase in next 10 days?", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("TCS stock will increase in next 10 days?", style: textStyleDefault()),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Row(
@@ -281,7 +272,7 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("Yes", style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("Yes", style: textStyleBtn(textColor: Colors.blue)))),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -290,13 +281,10 @@ class HomePage extends StatelessWidget {
                                               style: ButtonStyle(
                                                 shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
                                               ),
-                                              child: Text("No", style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold)))),
+                                              child: Text("No", style: textStyleBtn(textColor: Colors.red)))),
                                     ),
                                   ],
                                 )),
-
-
-
                           ],
                         ),
                       ),
