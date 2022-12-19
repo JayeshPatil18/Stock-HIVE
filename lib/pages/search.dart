@@ -1,25 +1,56 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/color_helper/defaultBg.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
+import 'package:stock_prediction/pages/profile.dart';
 
 class SearchPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20, bottom: 10),
-                child: Text("Search History", style: textStyleMinDesc(),)),
-            Container(
-              margin: EdgeInsets.only(bottom: 60),
-              child: Center(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Container(
+            margin: EdgeInsets.only(bottom: 60),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(width: 2,
+                          color: Colors.black),
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: TabBar(
+                      indicator: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.black,
+                      tabs: [
+                        Tab(text: "Questions",),
+                        Tab(text: "Users",),
+                      ]),
+                ),
 
-              ),
+                Expanded(child: Container(
+                  color: bgColorDefault(),
+                  margin: EdgeInsets.only(top: 10),
+                  child: TabBarView(
+                    children: [
+                      SearchQue(),
+                      SearchUsers(),
+                    ],
+                  ),
+                ))
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -83,5 +114,24 @@ class CustomSearch extends SearchDelegate{
         }
     );
   }
+}
 
+class SearchQue extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text("History of Questions")),
+    );
+  }
+}
+
+class SearchUsers extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text('History of Users')),
+    );
+  }
 }
