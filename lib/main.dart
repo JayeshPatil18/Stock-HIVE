@@ -6,6 +6,8 @@ import 'package:stock_prediction/pages/ranks.dart';
 import 'package:stock_prediction/pages/reels.dart';
 import 'package:stock_prediction/pages/search.dart';
 
+import 'color_helper/defaultBg.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -21,11 +23,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
         textTheme: TextTheme(
-          headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           subtitle2: TextStyle(fontSize: 12 ),
         )
       ),
-      home: const MyHomePage(title: 'Flutter Home Page'),
+      home: MyHomePage(title: 'Flutter Home Page'),
     );
   }
 }
@@ -43,10 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 0;
   int tabIndex = 0;
-
-  static Color mainColor = Color(0xffeaeaea);
-
-
 
   final screens = [
     HomePage(),
@@ -122,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
 
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: bgColorDefault(),
       extendBody: true,
       appBar: appBars[tabIndex],
       bottomNavigationBar: Theme(
