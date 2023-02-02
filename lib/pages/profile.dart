@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../color_helper/defaultBg.dart';
+import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
 
 class ProfilePage extends StatelessWidget{
@@ -47,9 +46,9 @@ class ProfilePage extends StatelessWidget{
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Icon(Icons.star, color: starColorDefault(),),
-                                      Icon(Icons.star, color: starColorDefault(),),
-                                      Icon(Icons.star, color: starColorDefault(),),
+                                      Icon(Icons.star, color: starColor(),),
+                                      Icon(Icons.star, color: starColor(),),
+                                      Icon(Icons.star, color: starColor(),),
                                     ],
                                   ),
                                 Container(
@@ -96,7 +95,7 @@ class ProfilePage extends StatelessWidget{
                 ),
 
                 Expanded(child: Container(
-                  color: bgColorDefault(),
+                  color: defaultBgColor(),
                   margin: EdgeInsets.only(top: 20),
                   child: TabBarView(
                     children: [

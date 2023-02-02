@@ -1,8 +1,9 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_prediction/color_helper/defaultBg.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
 import 'package:stock_prediction/pages/profile.dart';
+
+import '../color_helper/defaultColor.dart';
 
 class SearchPage extends StatelessWidget{
   @override
@@ -39,7 +40,7 @@ class SearchPage extends StatelessWidget{
                 ),
 
                 Expanded(child: Container(
-                  color: bgColorDefault(),
+                  color: defaultBgColor(),
                   margin: EdgeInsets.only(top: 10),
                   child: TabBarView(
                     children: [

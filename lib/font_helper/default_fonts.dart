@@ -8,6 +8,10 @@ TextStyle textStyleMinDesc(){
   return TextStyle(fontSize: 12 );
 }
 
+TextStyle textStyleSubTitle(){
+  return TextStyle(fontSize: 16 );
+}
+
 TextStyle textStyleBtn({Color textColor = Colors.black}){
   return TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.bold);
 }

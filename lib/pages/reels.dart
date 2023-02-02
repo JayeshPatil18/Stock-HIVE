@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../color_helper/defaultBg.dart';
+import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
 
 class ReelsPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class ReelsPage extends StatelessWidget {
         height: double.infinity,
         margin: EdgeInsets.only(bottom: 60),
         child: Container(
-          color: bgColorDefault(),
+          color: defaultBgColor(),
           child: PageView(
             scrollDirection: Axis.vertical,
             controller: controller,
