@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final appBars = [
       AppBar(
-        elevation: 0,
+        elevation: 0.6,
         backgroundColor: Colors.white,
         title: Text(
           'Stock Prediction',

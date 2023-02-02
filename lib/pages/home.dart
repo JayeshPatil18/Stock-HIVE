@@ -6,6 +6,7 @@ import '../dialgo_boxs/quePrediction.dart';
 import '../font_helper/default_fonts.dart';
 
 class HomePage extends StatelessWidget {
+  var elevationValue = 0.0;
 
   void showDialogQue(BuildContext context){
     showModalBottomSheet(
@@ -43,31 +44,81 @@ class HomePage extends StatelessWidget {
                     onTap: (){
                       showDialogQue(context);
                     },
-                    child: QuestionCard(),
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: QuestionCard(),
+                        )
+                    ),
                   ),
                   InkWell(
                     onTap: (){
                       showDialogQue(context);
                     },
-                    child: QuestionCard(),
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: QuestionCard(),
+                        )
+                    ),
                   ),
                   InkWell(
                     onTap: (){
                       showDialogQue(context);
                     },
-                    child: QuestionCard(),
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: QuestionCard(),
+                        )
+                    ),
                   ),
                   InkWell(
                     onTap: (){
                       showDialogQue(context);
                     },
-                    child: QuestionCard(),
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: QuestionCard(),
+                        )
+                    ),
                   ),
                   InkWell(
                     onTap: (){
                       showDialogQue(context);
                     },
-                    child: QuestionCard(),
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: QuestionCard(),
+                        )
+                    ),
                   ),
                 ],
               ),
