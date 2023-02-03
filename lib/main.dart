@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/home.dart';
+import 'package:stock_prediction/pages/my_games.dart';
 import 'package:stock_prediction/pages/profile.dart';
 import 'package:stock_prediction/pages/ranks.dart';
 import 'package:stock_prediction/pages/reels.dart';
@@ -47,8 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     HomePage(),
-    SearchPage(),
-    ReelsPage(),
+    MyGamePage(),
     RanksPage(),
     ProfilePage(),
   ];
@@ -75,6 +75,40 @@ class _MyHomePageState extends State<MyHomePage> {
         //   )
         // ],
       ),
+      AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'My Games',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Leaderboard',
+          style: TextStyle(color: Colors.black),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+            ),
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearch());
+            },
+          ),
+          AppBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            title: Text(
+              'My Profile',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ],
+      ),
       // AppBar(
       //   centerTitle: true,
       //   elevation: 0,
@@ -98,24 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
       //       ),
       //     ),
       //   ),
-      // ),
-      // AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.white,
-      //   title: Text(
-      //     'Leaderboard',
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(
-      //         Icons.search,
-      //       ),
-      //       onPressed: () {
-      //         showSearch(context: context, delegate: CustomSearch());
-      //       },
-      //     )
-      //   ],
       // ),
     ];
 
@@ -144,6 +160,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: (index){
           setState((){
             pageIndex = index;
+
+
           });
         },
         items: const <BottomNavigationBarItem>[
