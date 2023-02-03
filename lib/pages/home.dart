@@ -34,7 +34,6 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
-
           child: SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),

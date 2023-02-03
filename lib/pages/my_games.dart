@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_prediction/pages/search.dart';
-
 import '../color_helper/defaultColor.dart';
+import '../components/queCard.dart';
 
 class MyGamePage extends StatelessWidget{
+  static var elevationValue = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -16,7 +17,7 @@ class MyGamePage extends StatelessWidget{
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  margin: EdgeInsets.only(left: 10, right: 10),
                   height: 40,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -42,8 +43,8 @@ class MyGamePage extends StatelessWidget{
                   margin: EdgeInsets.only(top: 10),
                   child: TabBarView(
                     children: [
-                      SearchQue(),
-                      SearchUsers(),
+                      predictTab(),
+                      contestTab(),
                     ],
                   ),
                 ))
@@ -56,17 +57,89 @@ class MyGamePage extends StatelessWidget{
   }
 }
 
-class SearchQue extends StatelessWidget{
+class predictTab extends StatelessWidget{
+  static int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(child: Text("History of Questions")),
+      body: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TabSection(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: QuestionCard(),
+                          )
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: QuestionCard(),
+                          )
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: QuestionCard(),
+                          )
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: QuestionCard(),
+                          )
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: QuestionCard(),
+                          )
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
     );
   }
 }
 
-class SearchUsers extends StatelessWidget{
+class contestTab extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,4 +147,54 @@ class SearchUsers extends StatelessWidget{
       body: Center(child: Text('History of Users')),
     );
   }
+}
+
+class TabSection extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return TabSectionState();
+  }
+}
+
+class TabSectionState extends State<TabSection>{
+
+  List<String> items = [
+    'Available',
+    'Live',
+    'Completed',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: (){
+                setState((){
+                  predictTab.currentIndex = index;
+                });
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: predictTab.currentIndex == index ? Colors.black : Colors.white,
+                          borderRadius: BorderRadius.circular(14)
+                  ),
+                  margin: EdgeInsets.only(right: 10),
+                  child: Center(child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Text(items[index], style: TextStyle(color: predictTab.currentIndex == index ? Colors.white : Colors.black),),
+                  )),
+                ),
+            );
+          }
+      ),
+    );
+  }
+
 }

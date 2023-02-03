@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final appBars = [
       AppBar(
-        elevation: 0.6,
+        elevation: 0,
         backgroundColor: Colors.white,
         title: Text(
           'Stock Prediction',
@@ -90,24 +90,14 @@ class _MyHomePageState extends State<MyHomePage> {
           'Leaderboard',
           style: TextStyle(color: Colors.black),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearch());
-            },
-          ),
-          AppBar(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            title: Text(
-              'My Profile',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ],
+      ),
+      AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'My Profile',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       // AppBar(
       //   centerTitle: true,
@@ -160,8 +150,22 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: (index){
           setState((){
             pageIndex = index;
-
-
+            switch(pageIndex){
+              case 0:
+                tabIndex = 0;
+                break;
+              case 1:
+                tabIndex = 1;
+                break;
+              case 2:
+                tabIndex = 2;
+                break;
+              case 3:
+                tabIndex = 3;
+                break;
+              default:
+                tabIndex = 0;
+            }
           });
         },
         items: const <BottomNavigationBarItem>[
