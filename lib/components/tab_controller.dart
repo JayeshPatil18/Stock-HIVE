@@ -47,6 +47,8 @@ class ProfileTabs extends StatelessWidget{
                                 Icon(Icons.star, color: starColor(),),
                                 Icon(Icons.star, color: starColor(),),
                                 Icon(Icons.star, color: starColor(),),
+                                Icon(Icons.star, color: defaultBgColor(),),
+                                Icon(Icons.star, color: defaultBgColor(),),
                               ],
                             ),
                             Container(
@@ -60,7 +62,23 @@ class ProfileTabs extends StatelessWidget{
                                     Container(
                                         alignment: Alignment.topLeft,
                                         margin: EdgeInsets.only(top: 10),
-                                        child: Text('Points: 40', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),)),
+                                        child: Column(
+                                          children: [
+                                            Row
+                                              (
+                                              children: [
+                                                Text('Points: ', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                                                Text('40', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 18),),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text('Rank: ', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
+                                                Text('#1', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 18),),
+                                              ],
+                                            ),
+                                          ],
+                                        )),
                                   ],
                                 )),
                           ],

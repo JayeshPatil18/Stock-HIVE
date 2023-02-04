@@ -7,6 +7,7 @@ import 'package:stock_prediction/pages/ranks.dart';
 import 'package:stock_prediction/pages/reels.dart';
 import 'package:stock_prediction/pages/search.dart';
 import 'color_helper/defaultColor.dart';
+import 'dialgo_boxs/quePrediction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,9 +87,32 @@ class _MyHomePageState extends State<MyHomePage> {
       AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          'Leaderboard',
-          style: TextStyle(color: Colors.black),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'My Profile',
+              style: TextStyle(color: Colors.black),
+            ),
+            InkWell(
+              onTap: (){
+                showDialogMyRank(context);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                padding: EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 4),
+                child: Row(
+                  children: [
+                    Icon(Icons.keyboard_arrow_down, color: Colors.white,size: 25,),
+                    Text('My Rank', style: TextStyle(color: Colors.white,fontSize: 14), textAlign: TextAlign.start,),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
       AppBar(
@@ -195,4 +219,24 @@ class _MyHomePageState extends State<MyHomePage> {
           child: screens[pageIndex]),
     );
   }
+}
+
+void showDialogMyRank(BuildContext context){
+  showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+              top: Radius.circular(10)
+          )
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.80,
+        maxChildSize: 1.0,
+        minChildSize: 0.60,
+        builder: (context, scrollContoller) => SingleChildScrollView(
+          child: QueDialogBox(),
+        ),
+      ));
 }
