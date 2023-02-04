@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-TextStyle textStyleDefault(){
-  return TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+TextStyle textStyleDefault({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 20, color: textColor, fontWeight: FontWeight.bold);
 }
 
 TextStyle textStyleMinDesc(){
   return TextStyle(fontSize: 12 );
 }
 
-TextStyle textStyleSubTitle(){
-  return TextStyle(fontSize: 16 );
+TextStyle textStyleSubTitle({Color textColor = Colors.black}){
+  return TextStyle(color: textColor, fontSize: 16 );
 }
 
 TextStyle textStyleBtn({Color textColor = Colors.black}){

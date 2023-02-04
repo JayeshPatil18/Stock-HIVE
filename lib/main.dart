@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events),
-            label: 'Contest',
+            label: 'Games',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/rank2.png'), size: 28,),

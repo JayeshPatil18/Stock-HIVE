@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/font_helper/default_fonts.dart';
 import '../color_helper/defaultColor.dart';
 
 class ProfileTabs extends StatelessWidget{
@@ -20,9 +21,7 @@ class ProfileTabs extends StatelessWidget{
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          CircleAvatar(
+                      CircleAvatar(
                             child:
                             Container(
                                 width: 100,
@@ -32,11 +31,6 @@ class ProfileTabs extends StatelessWidget{
                             backgroundColor: Colors.black12,
                             radius: 50,
                           ),
-                          Container(
-                              margin: EdgeInsets.only(top: 6),
-                              child: Text('@username', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 16)))
-                        ],
-                      ),
                       Expanded(
                         child: Container(
                             margin: EdgeInsets.only(left: 20),child: Column(
@@ -61,24 +55,8 @@ class ProfileTabs extends StatelessWidget{
                                         child: Text('Jayesh Patil', style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 25))),
                                     Container(
                                         alignment: Alignment.topLeft,
-                                        margin: EdgeInsets.only(top: 10),
-                                        child: Column(
-                                          children: [
-                                            Row
-                                              (
-                                              children: [
-                                                Text('Points: ', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
-                                                Text('40', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 18),),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text('Rank: ', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 14),),
-                                                Text('#1', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 18),),
-                                              ],
-                                            ),
-                                          ],
-                                        )),
+                                        margin: EdgeInsets.only(top: 6),
+                                        child: Text('@username', style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 16)))
                                   ],
                                 )),
                           ],
@@ -87,38 +65,102 @@ class ProfileTabs extends StatelessWidget{
                     ],
                   ),
                 ),
-
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20),
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 2,
-                          color: Colors.black),
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: TabBar(
-                      indicator: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20)
+              Container(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.only(left: 10, right: 5),
+                        color: defaultBgColor(),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 4),
+                                  child: Text('Revenue', style: textStyleSubTitle(textColor: Colors.black),)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('1000', style: textStyleDefault(textColor: Colors.black),),
+                                  Icon(Icons.currency_rupee, color: Colors.black,)
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        Tab(text: "Predictions",),
-                        Tab(text: "Analytics",),
-                      ]),
+                    ),
+                    Expanded(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.only(left: 5, right: 5),
+                        color: defaultBgColor(),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 4),
+                                  child: Text('Points', style: textStyleSubTitle(textColor: Colors.black),)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('1000', style: textStyleDefault(textColor: Colors.black),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.only(left: 5, right: 10),
+                        color: defaultBgColor(),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 4),
+                                  child: Text('Rank', style: textStyleSubTitle(textColor: Colors.black),)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('#', style: textStyleDefault(textColor: Colors.black),),
+                                  Text('1000', style: textStyleDefault(textColor: Colors.black),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
 
-                Expanded(child: Container(
+                Expanded(
+                    child: Container(
                   color: defaultBgColor(),
                   margin: EdgeInsets.only(top: 20),
-                  child: TabBarView(
-                    children: [
-                      Predictions(),
-                      Analytics(),
-                    ],
-                  ),
                 ))
               ],
             ),

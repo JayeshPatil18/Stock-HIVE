@@ -19,3 +19,8 @@ Color starColor(){
   Color starColor = Color(0xffd4af37);
   return  starColor;
 }
+
+Color defaultColorSecondary(){
+  Color bgColor = Colors.black;
+  return  bgColor;
+}
