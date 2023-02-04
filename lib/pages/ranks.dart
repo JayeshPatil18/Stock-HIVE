@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stock_prediction/pages/view_profile.dart';
 
 import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
 
-class RanksPage extends StatelessWidget{
+class RanksPage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return RanksPageState();
+  }
+
+}
+
+class RanksPageState extends State<RanksPage>{
+
+  static void scrollToIndex(int index) => itemController.scrollTo(
+      index: index,
+      duration: Duration(seconds: 1),
+  );
+
+  static final itemController = ItemScrollController();
+
   var arrNames = [
     'Raman',
     'Ramanauan',
@@ -33,7 +50,8 @@ class RanksPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-                  child: ListView.builder(
+                  child: ScrollablePositionedList.builder(
+                    itemScrollController: itemController,
                       itemCount: arrNames.length,
                       itemBuilder: (context, index){
                         return Container(

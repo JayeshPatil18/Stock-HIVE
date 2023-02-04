@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             InkWell(
               onTap: (){
-                showDialogMyRank(context);
+                RanksPageState.scrollToIndex(11); // Scrolling Index for My Rank
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -219,24 +219,4 @@ class _MyHomePageState extends State<MyHomePage> {
           child: screens[pageIndex]),
     );
   }
-}
-
-void showDialogMyRank(BuildContext context){
-  showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-              top: Radius.circular(10)
-          )
-      ),
-      builder: (context) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.80,
-        maxChildSize: 1.0,
-        minChildSize: 0.60,
-        builder: (context, scrollContoller) => SingleChildScrollView(
-          child: QueDialogBox(),
-        ),
-      ));
 }
