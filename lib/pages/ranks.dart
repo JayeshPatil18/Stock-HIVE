@@ -17,7 +17,7 @@ class RanksPageState extends State<RanksPage>{
 
   static void scrollToIndex(int index) => itemController.scrollTo(
       index: index,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 600),
   );
 
   static final itemController = ItemScrollController();

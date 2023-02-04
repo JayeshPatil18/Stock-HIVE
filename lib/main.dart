@@ -122,6 +122,16 @@ class _MyHomePageState extends State<MyHomePage> {
           'My Profile',
           style: TextStyle(color: Colors.black),
         ),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
       ),
       // AppBar(
       //   centerTitle: true,
