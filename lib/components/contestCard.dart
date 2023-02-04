@@ -28,7 +28,7 @@ class ContestCard extends StatelessWidget{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ImageIcon(AssetImage('assets/imgs/contest_icon.png'), size: 60,),
+                ImageIcon(AssetImage('assets/imgs/contest_logo.png'), size: 60,),
                 Container(
                   child: Column(
                     children: [
