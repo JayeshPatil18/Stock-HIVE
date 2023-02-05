@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/pages/contest_overview.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/contestCard.dart';
 import '../components/queCard.dart';
+import '../dialgo_boxs/conSelectStocks.dart';
+import '../dialgo_boxs/quePrediction.dart';
 
 class MyGamePage extends StatelessWidget{
   static var elevationValue = 0.0;
@@ -74,60 +77,85 @@ class predictTab extends StatelessWidget{
                   margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
                   child: Column(
                     children: [
-                      Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            elevation: MyGamePage.elevationValue,
-                            child: QuestionCard(),
-                          )
+                      InkWell(
+                        onTap: (){
+                          showDialogContest(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              elevation: MyGamePage.elevationValue,
+                              child: QuestionCard(),
+                            )
+                        ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            elevation: MyGamePage.elevationValue,
-                            child: QuestionCard(),
-                          )
+                      InkWell(
+                        onTap: (){
+                          showDialogContest(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              elevation: MyGamePage.elevationValue,
+                              child: QuestionCard(),
+                            )
+                        ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            elevation: MyGamePage.elevationValue,
-                            child: QuestionCard(),
-                          )
+                      InkWell(
+                        onTap: (){
+                          showDialogContest(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              elevation: MyGamePage.elevationValue,
+                              child: QuestionCard(),
+                            )
+                        ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            elevation: MyGamePage.elevationValue,
-                            child: QuestionCard(),
-                          )
+                      InkWell(
+                        onTap: (){
+                          showDialogContest(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              elevation: MyGamePage.elevationValue,
+                              child: QuestionCard(),
+                            )
+                        ),
                       ),
-                      Container(
-                          margin: EdgeInsets.only(top: 8),
-                          width: double.infinity,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            elevation: MyGamePage.elevationValue,
-                            child: QuestionCard(),
-                          )
+                      InkWell(
+                        onTap: (){
+                          showDialogContest(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              elevation: MyGamePage.elevationValue,
+                              child: QuestionCard(),
+                            )
+                        ),
                       ),
                     ],
                   ),
@@ -156,16 +184,27 @@ class contestTab extends StatelessWidget{
                 margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
                 child: Column(
                   children: [
-                    Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: MyGamePage.elevationValue,
-                          child: ContestCard(),
-                        )
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          showDialogContest(context);
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 8),
@@ -319,5 +358,24 @@ class TabSectionConState extends State<TabSectionCon>{
       ),
     );
   }
+}
 
+void showDialogContest(BuildContext context){
+  showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+              top: Radius.circular(10)
+          )
+      ),
+      builder: (context) => DraggableScrollableSheet(
+        expand: true,
+        initialChildSize: 1.0,
+        maxChildSize: 1.0,
+        minChildSize: 0.60,
+        builder: (context, scrollContoller) => SingleChildScrollView(
+          child: ContestStocks(),
+        ),
+      ));
 }
