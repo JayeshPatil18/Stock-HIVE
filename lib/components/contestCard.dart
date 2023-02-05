@@ -211,7 +211,7 @@ class ContestCardSecondary extends StatelessWidget {
   }
 }
 
-class SortCard extends StatefulWidget{
+class SortCard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return SortCardState();
@@ -219,141 +219,123 @@ class SortCard extends StatefulWidget{
 }
 
 class SortCardState extends State<SortCard> {
-  bool isAlphabetically = false;
-  bool isPopularity = true;
-  bool isGainer = false;
-  bool isLoser = false;
+  int _selectedValue = 1;
+
+  void _updateSelectedValue(int value) {
+    setState(() {
+      _selectedValue = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-            alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 10, bottom: 10, right: 20, left: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+          padding: EdgeInsets.only(left: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Popularity"),
+              Radio(
+                value: 1,
+                groupValue: _selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    _updateSelectedValue(value!);
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+          Container(
+            color: defaultBgColor(),
+            height: 1,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 14),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Alphabetically',
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .copyWith(fontSize: 16)),
-                Checkbox(
-                  checkColor: Colors.white,
-                  value: isAlphabetically,
-                  activeColor: Colors.black,
-                  onChanged: (bool? value) {
+              children: <Widget>[
+                Text("Alphabetically"),
+                Radio(
+                  value: 2,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
                     setState(() {
-                      isAlphabetically = value!;
+                      _updateSelectedValue(value!);
                     });
                   },
-                )
+                ),
               ],
             ),
           ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 1,
-              color: defaultBgColor(),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Popularity',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(fontSize: 16)),
-                  Checkbox(
-                    checkColor: Colors.white,
-                    value: isPopularity,
-                    activeColor: Colors.black,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isPopularity = value!;
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 1,
-              color: defaultBgColor(),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Top Gainer',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(fontSize: 16)),
-                  Checkbox(
-                    checkColor: Colors.white,
-                    value: isGainer,
-                    activeColor: Colors.black,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isGainer = value!;
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              height: 1,
-              color: defaultBgColor(),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Top Loser',
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(fontSize: 16)),
-                  Checkbox(
-                    checkColor: Colors.white,
-                    value: isLoser,
-                    activeColor: Colors.black,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isLoser = value!;
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              child: OutlinedButton(
-                onPressed: (){
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text('Reset', style: textStyleBtn()),
+          Container(
+            color: defaultBgColor(),
+            height: 1,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text("Top Gainer"),
+                Radio(
+                  value: 3,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _updateSelectedValue(value!);
+                    });
+                  },
                 ),
+              ],
+            ),
+          ),
+          Container(
+            color: defaultBgColor(),
+            height: 1,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text("Top Loser"),
+                Radio(
+                  value: 4,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _updateSelectedValue(value!);
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            color: defaultBgColor(),
+            height: 1,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: OutlinedButton(
+              onPressed: (){
+                _updateSelectedValue(1!);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text('Reset', style: textStyleBtn()),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }

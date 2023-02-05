@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/contest_overview.dart';
+import 'package:stock_prediction/pages/stockSelector.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/contestCard.dart';
 import '../components/queCard.dart';
@@ -187,7 +188,9 @@ class contestTab extends StatelessWidget{
                     InkWell(
                       onTap: (){
                         if(true){ // For Checking Condition of Is this contest has been joined
-                          showDialogContest(context);
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
                         }else{
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => ContestOverview())
@@ -206,49 +209,125 @@ class contestTab extends StatelessWidget{
                           )
                       ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: MyGamePage.elevationValue,
-                          child: ContestCard(),
-                        )
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: MyGamePage.elevationValue,
-                          child: ContestCard(),
-                        )
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: MyGamePage.elevationValue,
-                          child: ContestCard(),
-                        )
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: MyGamePage.elevationValue,
-                          child: ContestCard(),
-                        )
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        if(true){ // For Checking Condition of Is this contest has been joined
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => StockSelector())
+                          );
+                        }else{
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => ContestOverview())
+                          );
+                        }
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          width: double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: MyGamePage.elevationValue,
+                            child: ContestCard(),
+                          )
+                      ),
                     ),
                   ],
                 ),
