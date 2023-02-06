@@ -187,7 +187,7 @@ class contestTab extends StatelessWidget{
                   children: [
                     InkWell(
                       onTap: (){
-                        if(true){ // For Checking Condition of Is this contest has been joined
+                        if(false){ // For Checking Condition of Is this contest has been joined
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => StockSelector())
                           );
@@ -449,12 +449,12 @@ void showDialogContest(BuildContext context){
           )
       ),
       builder: (context) => DraggableScrollableSheet(
-        expand: true,
-        initialChildSize: 1.0,
+        expand: false,
+        initialChildSize: 0.80,
         maxChildSize: 1.0,
         minChildSize: 0.60,
         builder: (context, scrollContoller) => SingleChildScrollView(
-          child: ContestStocks(),
+          child: QueDialogBox(),
         ),
       ));
 }

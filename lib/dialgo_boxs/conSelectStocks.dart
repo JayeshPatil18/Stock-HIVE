@@ -14,7 +14,6 @@ class ContestStocks extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         margin: EdgeInsets.only(right: 10, left: 10),
-
         child: Row(
           children: [
             Expanded(
@@ -47,11 +46,11 @@ class ContestStocks extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 75),
         controller: _scrollController,
         child: Container(
           child: Column(
             children: [
-              ContestCardSecondary(),
               Container(
                 child: Column(
                     children: [

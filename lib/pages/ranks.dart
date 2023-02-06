@@ -51,6 +51,7 @@ class RanksPageState extends State<RanksPage>{
     return Scaffold(
       body: Container(
                   child: ScrollablePositionedList.builder(
+                    padding: EdgeInsets.all(4),
                     itemScrollController: itemController,
                       itemCount: arrNames.length,
                       itemBuilder: (context, index){

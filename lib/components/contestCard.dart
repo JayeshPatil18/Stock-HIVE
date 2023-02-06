@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +41,10 @@ class ContestCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
+                          Text(
+                            'Win',
+                            style: textStylePercent(),
+                          ),
                           Icon(
                             Icons.emoji_events,
                             color: starColor(),
@@ -139,6 +145,10 @@ class ContestCardSecondary extends StatelessWidget {
                     children: [
                       Row(
                         children: [
+                          Text(
+                            'Win',
+                            style: textStylePercent(),
+                          ),
                           Icon(
                             Icons.emoji_events,
                             color: starColor(),
@@ -220,6 +230,7 @@ class SortCard extends StatefulWidget {
 
 class SortCardState extends State<SortCard> {
   int _selectedValue = 1;
+  int _closeDelay = 400;
 
   void _updateSelectedValue(int value) {
     setState(() {
@@ -246,6 +257,9 @@ class SortCardState extends State<SortCard> {
                 onChanged: (value) {
                   setState(() {
                     _updateSelectedValue(value!);
+                    Timer(Duration(milliseconds: _closeDelay), () {
+                      Navigator.pop(context);
+                    });
                   });
                 },
               ),
@@ -268,6 +282,9 @@ class SortCardState extends State<SortCard> {
                   onChanged: (value) {
                     setState(() {
                       _updateSelectedValue(value!);
+                      Timer(Duration(milliseconds: _closeDelay), () {
+                        Navigator.pop(context);
+                      });
                     });
                   },
                 ),
@@ -290,6 +307,9 @@ class SortCardState extends State<SortCard> {
                   onChanged: (value) {
                     setState(() {
                       _updateSelectedValue(value!);
+                      Timer(Duration(milliseconds: _closeDelay), () {
+                        Navigator.pop(context);
+                      });
                     });
                   },
                 ),
@@ -312,6 +332,9 @@ class SortCardState extends State<SortCard> {
                   onChanged: (value) {
                     setState(() {
                       _updateSelectedValue(value!);
+                      Timer(Duration(milliseconds: _closeDelay), () {
+                        Navigator.pop(context);
+                      });
                     });
                   },
                 ),
@@ -327,6 +350,9 @@ class SortCardState extends State<SortCard> {
             child: OutlinedButton(
               onPressed: (){
                 _updateSelectedValue(1!);
+                Timer(Duration(milliseconds: _closeDelay), () {
+                  Navigator.pop(context);
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.all(10),
