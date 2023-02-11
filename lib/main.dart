@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/pages/discussion.dart';
 import 'package:stock_prediction/pages/home.dart';
 import 'package:stock_prediction/pages/my_games.dart';
 import 'package:stock_prediction/pages/profile.dart';
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     HomePage(),
+    DiscussionPage(),
     MyGamePage(),
     RanksPage(),
     ProfilePage(),
@@ -80,6 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(
+          'Discussion',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
           'My Games',
           style: TextStyle(color: Colors.black),
         ),
@@ -91,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'My Profile',
+              'Leaderboard',
               style: TextStyle(color: Colors.black),
             ),
             InkWell(
@@ -197,6 +207,9 @@ class _MyHomePageState extends State<MyHomePage> {
               case 3:
                 tabIndex = 3;
                 break;
+              case 4:
+                tabIndex = 4;
+                break;
               default:
                 tabIndex = 0;
             }
@@ -206,6 +219,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Discussion',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events),

@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
 import '../color_helper/defaultColor.dart';
+import '../dialgo_boxs/discussionQue.dart';
+import '../pages/que_ans_page.dart';
 
 class ProfileTabs extends StatelessWidget {
+  var elevationValue = 0.0;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
@@ -239,89 +244,247 @@ class ProfileTabs extends StatelessWidget {
                     ),
                   ),
                   Container(
-                          alignment: Alignment.topCenter,
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Que & Ans', style: textStyleDefault()),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                            ),
+                              onPressed: () {
+                              Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => QueAnsPage()));
+                              },
+                              child: Text('View All', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+                            ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    color: defaultBgColor(),
                           child: Column(
                             children: [
-                              Image.asset('assets/imgs/stock_graph.png'),
-                              Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
+                              SingleChildScrollView(
+                                padding: EdgeInsets.only(top: 10, bottom: 10, right: 10),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        showDialog(context);
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                          width: (MediaQuery.of(context).size.width) - 40,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          elevation: elevationValue,
                                           child: Container(
-                                            padding: EdgeInsets.all(10),
+                                            padding: EdgeInsets.all(20),
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Container(
-                                                    margin: EdgeInsets.only(bottom: 4),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        ImageIcon(AssetImage('assets/icons/sPrediction.png'), size: 18,),
-                                                        Container(
-                                                          margin: EdgeInsets.only(left: 4),
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CircleAvatar(
+                                                      backgroundImage: NetworkImage(
+                                                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                                                      radius: 10,
+                                                    ),
+                                                    Flexible(
+                                                      child: Container(
+                                                          margin: EdgeInsets.only(left: 10),
                                                           child: Text(
-                                                            'Correct Predict',
-                                                            style: textStyleSubTitle(
-                                                                textColor: Colors.black),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )),
-                                                Text(
-                                                      '11',
-                                                      style: textStyleDefault(
-                                                          textColor: Colors.black),
+                                                            'Could I invest in TCS right now yes right now?',
+                                                            style: textStyleDefault(), textAlign: TextAlign.start,
+                                                          )),
                                                     )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
+                                                  ],
+                                                ),
                                                 Container(
-                                                    margin: EdgeInsets.only(bottom: 4),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                                                  height: 1,
+                                                  color: defaultBgColor(),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Row(
                                                       children: [
-                                                        Icon(Icons.emoji_events_outlined, size: 18,),
-                                                        Container(
-                                                          margin: EdgeInsets.only(left: 4),
-                                                          child: Text(
-                                                            'Won Contest',
-                                                            style: textStyleSubTitle(
-                                                                textColor: Colors.black),
-                                                          ),
-                                                        ),
+                                                        Text('Replies: ',
+                                                            style: textStyleBtn()),
+                                                        Text('12', style: textStyleBtn()),
                                                       ],
-                                                    )),
-                                                Text(
-                                                  '14',
-                                                  style: textStyleDefault(
-                                                      textColor: Colors.black),
-                                                )
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                                        Text('Reply', style: textStyleBtn()),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 20),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              CircleAvatar(
+                                                                backgroundImage: NetworkImage(
+                                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                                                                radius: 10,
+                                                              ),
+                                                              Container(
+                                                                  margin: EdgeInsets.only(left: 10, bottom: 10),
+                                                                  child: Text('Jayesh Patil',
+                                                                      style: textStyleBtn())),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                  onTap: (){
+                                                                  },
+                                                                  child: Icon(Icons.favorite_border, size: 20,)),
+                                                              Text('10', style: textStyleSubTitle()),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        child: Text(
+                                                            'Making investment decisions requires a thorough analysis of various factors.',
+                                                            style: textStyleSubTitle()),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        showDialog(context);
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        width: (MediaQuery.of(context).size.width) - 40,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          elevation: elevationValue,
+                                          child: Container(
+                                            padding: EdgeInsets.all(20),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    CircleAvatar(
+                                                      backgroundImage: NetworkImage(
+                                                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                                                      radius: 10,
+                                                    ),
+                                                    Flexible(
+                                                      child: Container(
+                                                          margin: EdgeInsets.only(left: 10),
+                                                          child: Text(
+                                                            'Could I invest in TCS right now yes right now?',
+                                                            style: textStyleDefault(), textAlign: TextAlign.start,
+                                                          )),
+                                                    )
+                                                  ],
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                                                  height: 1,
+                                                  color: defaultBgColor(),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text('Replies: ',
+                                                            style: textStyleBtn()),
+                                                        Text('12', style: textStyleBtn()),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                                        Text('Reply', style: textStyleBtn()),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 20),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              CircleAvatar(
+                                                                backgroundImage: NetworkImage(
+                                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                                                                radius: 10,
+                                                              ),
+                                                              Container(
+                                                                  margin: EdgeInsets.only(left: 10, bottom: 10),
+                                                                  child: Text('Jayesh Patil',
+                                                                      style: textStyleBtn())),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                  onTap: (){
+                                                                  },
+                                                                  child: Icon(Icons.favorite_border, size: 20,)),
+                                                              Text('10', style: textStyleSubTitle()),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        child: Text(
+                                                            'Making investment decisions requires a thorough analysis of various factors.',
+                                                            style: textStyleSubTitle()),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                color: defaultBgColor(),
-                                width: double.infinity,
-                                height: 1,
-                              ),
+
                               Container(
                                 color: Colors.white,
                                 padding: EdgeInsets.all(20),
@@ -450,5 +613,25 @@ class ProfileTabs extends StatelessWidget {
             ),
           ),
     );
+  }
+
+  void showDialog(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30)
+            )
+        ),
+        builder: (context) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.90,
+          maxChildSize: 1.0,
+          minChildSize: 0.60,
+          builder: (context, scrollContoller) => SingleChildScrollView(
+            child: DiscussionQue(),
+          ),
+        ));
   }
 }

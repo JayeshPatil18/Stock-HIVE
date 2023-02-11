@@ -351,7 +351,7 @@ class TabSectionPreState extends State<TabSectionPre>{
 
   List<String> items = [
     'Available',
-    'Live',
+    'Active',
     'Completed',
   ];
 

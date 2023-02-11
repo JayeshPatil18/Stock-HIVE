@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stock_prediction/pages/view_profile.dart';
-
 import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class RanksPage extends StatefulWidget{
   @override
@@ -14,6 +16,13 @@ class RanksPage extends StatefulWidget{
 }
 
 class RanksPageState extends State<RanksPage>{
+
+  List<dynamic> users = [];
+
+  @override
+  void initState() {
+    fetchUsers();
+  }
 
   static void scrollToIndex(int index) => itemController.scrollTo(
       index: index,
@@ -53,8 +62,9 @@ class RanksPageState extends State<RanksPage>{
                   child: ScrollablePositionedList.builder(
                     padding: EdgeInsets.all(4),
                     itemScrollController: itemController,
-                      itemCount: arrNames.length,
+                      itemCount: users.length,
                       itemBuilder: (context, index){
+                      var user = users[index];
                         return Container(
                           decoration: new BoxDecoration(
                             boxShadow: [
@@ -84,17 +94,18 @@ class RanksPageState extends State<RanksPage>{
                                     width: 80,
                                     height: 80,
                                     child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=580&q=80"),
+                                      backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
                                       radius: 40,
                                     ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(arrNames[index], style: textStyleLeader(),),
-                                      Text('@${arrNames[index]}', style: textStyleMinDesc(),),
-                                    ],
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('${user['name']['first'].toString()}', style: textStyleLeader(),),
+                                        Text('${user['email'].toString()}', style: textStyleMinDesc(),),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -119,5 +130,17 @@ class RanksPageState extends State<RanksPage>{
                   ),
                 ),
     );
+  }
+
+  void fetchUsers() async{
+    var url = "https://randomuser.me/api/?results=2";
+    var uri = Uri.parse(url);
+    var response = await http.get(uri);
+    var body = response.body;
+    var json = jsonDecode(body);
+
+    setState(() {
+      users = json['results'];
+    });
   }
 }
