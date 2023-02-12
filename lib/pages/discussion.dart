@@ -9,12 +9,12 @@ import '../font_helper/default_fonts.dart';
 class DiscussionPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return DiscussionPageState();
+    return _DiscussionPageState();
   }
 
 }
 
-class DiscussionPageState extends State<DiscussionPage>{
+class _DiscussionPageState extends State<DiscussionPage>{
   var elevationValue = 0.0;
 
   @override
@@ -93,7 +93,7 @@ class DiscussionPageState extends State<DiscussionPage>{
                                       ),
                                       Row(
                                         children: [
-                                          Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                          Icon(Icons.reply , color: Colors.black, size: 22,),
                                           Text('Reply', style: textStyleBtn()),
                                         ],
                                       ),
@@ -241,7 +241,7 @@ class DiscussionPageState extends State<DiscussionPage>{
                                     ),
                                     Row(
                                       children: [
-                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                        Icon(Icons.reply , color: Colors.black, size: 22,),
                                         Text('Reply', style: textStyleBtn()),
                                       ],
                                     ),
@@ -389,7 +389,7 @@ class DiscussionPageState extends State<DiscussionPage>{
                                     ),
                                     Row(
                                       children: [
-                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                        Icon(Icons.reply , color: Colors.black, size: 22,),
                                         Text('Reply', style: textStyleBtn()),
                                       ],
                                     ),

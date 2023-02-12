@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/discussion.dart';
@@ -7,6 +9,7 @@ import 'package:stock_prediction/pages/profile.dart';
 import 'package:stock_prediction/pages/ranks.dart';
 import 'package:stock_prediction/pages/reels.dart';
 import 'package:stock_prediction/pages/search.dart';
+import 'auth_pages/welcome_page.dart';
 import 'color_helper/defaultColor.dart';
 import 'dialgo_boxs/quePrediction.dart';
 
@@ -29,7 +32,40 @@ class MyApp extends StatelessWidget {
             subtitle2: TextStyle(fontSize: 12 ),
           )
       ),
-      home: MyHomePage(title: 'Flutter Home Page'),
+      home: SplashPage(),
+    );
+  }
+}
+
+class SplashPage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return SplashPageState();
+  }
+
+}
+
+class SplashPageState extends State<SplashPage>{
+  @override
+  void initState() {
+
+    Timer(Duration(seconds: 1), () {
+      if(false){
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home Page',)));
+      }else{
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => WelcomePage()));
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('Splash'),
+      ),
     );
   }
 }
@@ -64,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(
-          'Stock Prediction',
+          'Home',
           style: TextStyle(color: Colors.black),
         ),
         // actions: <Widget>[

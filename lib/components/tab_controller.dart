@@ -323,7 +323,7 @@ class ProfileTabs extends StatelessWidget {
                                                     ),
                                                     Row(
                                                       children: [
-                                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                                        Icon(Icons.reply , color: Colors.black, size: 22,),
                                                         Text('Reply', style: textStyleBtn()),
                                                       ],
                                                     ),
@@ -428,7 +428,7 @@ class ProfileTabs extends StatelessWidget {
                                                     ),
                                                     Row(
                                                       children: [
-                                                        Icon(Icons.reply , color: true ? Colors.transparent : Colors.black,),
+                                                        Icon(Icons.reply , color: Colors.black, size: 22,),
                                                         Text('Reply', style: textStyleBtn()),
                                                       ],
                                                     ),

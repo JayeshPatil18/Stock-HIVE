@@ -7,12 +7,12 @@ import '../font_helper/default_fonts.dart';
 class QueAnsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return QueAnsPageState();
+    return _QueAnsPageState();
   }
 
 }
 
-class QueAnsPageState extends State<QueAnsPage>{
+class _QueAnsPageState extends State<QueAnsPage>{
   var elevationValue = 0.0;
   static int currentIndex = 0;
 
@@ -543,18 +543,18 @@ class TabSectionState extends State<TabSection>{
             return GestureDetector(
               onTap: (){
                 setState((){
-                  QueAnsPageState.currentIndex = index;
+                  _QueAnsPageState.currentIndex = index;
                 });
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: QueAnsPageState.currentIndex == index ? Colors.black : Colors.white,
+                    color: _QueAnsPageState.currentIndex == index ? Colors.black : Colors.white,
                     borderRadius: BorderRadius.circular(14)
                 ),
                 margin: EdgeInsets.only(right: 10),
                 child: Center(child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Text(items[index], style: TextStyle(color: QueAnsPageState.currentIndex == index ? Colors.white : Colors.black),),
+                  child: Text(items[index], style: TextStyle(color: _QueAnsPageState.currentIndex == index ? Colors.white : Colors.black),),
                 )),
               ),
             );
