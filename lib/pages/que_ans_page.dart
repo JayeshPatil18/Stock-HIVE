@@ -500,15 +500,16 @@ class QueAnsPageState extends State<QueAnsPage>{
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-                top: Radius.circular(30)
+                top: Radius.circular(20)
             )
         ),
         builder: (context) => DraggableScrollableSheet(
           expand: false,
-          initialChildSize: 0.90,
-          maxChildSize: 1.0,
+          initialChildSize: 0.80,
+          maxChildSize: 0.96,
           minChildSize: 0.60,
           builder: (context, scrollContoller) => SingleChildScrollView(
+            controller: scrollContoller,
             child: sectionDialog[currentIndex],
           ),
         ));
