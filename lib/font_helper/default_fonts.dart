@@ -31,3 +31,11 @@ TextStyle textStylePercent(){
 TextStyle textStyleLeader({Color textColor = Colors.black}){
   return TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor);
 }
+
+TextStyle textBig({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: textColor);
+}
+
+TextStyle textBigSubtitle({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor);
+}
