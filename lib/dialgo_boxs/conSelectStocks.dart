@@ -1,8 +1,8 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
-import '../components/contestCard.dart';
-import '../components/queCard.dart';
+import '../components/contestModel.dart';
+import '../components/queModel.dart';
 import '../font_helper/default_fonts.dart';
 
 class ContestStocks extends StatelessWidget {

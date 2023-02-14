@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
 
-class ContestCard extends StatelessWidget {
+class ContestModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

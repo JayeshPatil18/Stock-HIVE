@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
-import '../components/queCard.dart';
+import '../components/queModel.dart';
 import '../font_helper/default_fonts.dart';
 
 class QueDialogBox extends StatelessWidget{
@@ -20,9 +20,9 @@ class QueDialogBox extends StatelessWidget{
                   color: defaultBgColor()
               ),
             ),
-          QuestionCard(),
+          QuestionModel(),
           Container(
-            margin: EdgeInsets.only(bottom: 10, right: 20, left: 20),
+            margin: EdgeInsets.only(top: 20, bottom: 10, right: 20, left: 20),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,

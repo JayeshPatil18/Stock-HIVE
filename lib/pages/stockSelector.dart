@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../color_helper/defaultColor.dart';
-import '../components/contestCard.dart';
+import '../components/contestModel.dart';
 import '../dialgo_boxs/conSelectStocks.dart';
 import '../font_helper/default_fonts.dart';
 

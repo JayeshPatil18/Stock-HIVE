@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
-import '../components/queCard.dart';
+import '../components/queModel.dart';
 import '../font_helper/default_fonts.dart';
 
-class DiscussionQue extends StatelessWidget {
+class DiscussDialogBox extends StatelessWidget {
   var elevationValue = 0.0;
 
   @override
@@ -415,7 +415,7 @@ class DiscussionQue extends StatelessWidget {
 
 }
 
-class DiscussionQueSecondary extends StatelessWidget {
+class DiscussDialogBoxSecondary extends StatelessWidget {
   var elevationValue = 0.0;
 
   @override

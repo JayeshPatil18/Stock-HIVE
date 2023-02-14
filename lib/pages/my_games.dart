@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/contest_overview.dart';
 import 'package:stock_prediction/pages/stockSelector.dart';
 import '../color_helper/defaultColor.dart';
-import '../components/contestCard.dart';
-import '../components/queCard.dart';
+import '../components/contestModel.dart';
+import '../components/queModel.dart';
 import '../dialgo_boxs/conSelectStocks.dart';
-import '../dialgo_boxs/quePrediction.dart';
+import '../dialgo_boxs/predictDialogBox.dart';
 
 class MyGamePage extends StatelessWidget{
   static var elevationValue = 0.0;
@@ -90,7 +90,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionCard(),
+                              child: QuestionModel(),
                             )
                         ),
                       ),
@@ -106,7 +106,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionCard(),
+                              child: QuestionModel(),
                             )
                         ),
                       ),
@@ -122,7 +122,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionCard(),
+                              child: QuestionModel(),
                             )
                         ),
                       ),
@@ -138,7 +138,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionCard(),
+                              child: QuestionModel(),
                             )
                         ),
                       ),
@@ -154,7 +154,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionCard(),
+                              child: QuestionModel(),
                             )
                         ),
                       ),
@@ -205,7 +205,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),
@@ -229,7 +229,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),
@@ -253,7 +253,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),
@@ -277,7 +277,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),
@@ -301,7 +301,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),
@@ -325,7 +325,7 @@ class contestTab extends StatelessWidget{
                               borderRadius: BorderRadius.circular(20),
                             ),
                             elevation: MyGamePage.elevationValue,
-                            child: ContestCard(),
+                            child: ContestModel(),
                           )
                       ),
                     ),

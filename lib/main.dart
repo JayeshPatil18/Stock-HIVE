@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/discussion.dart';
@@ -11,7 +10,7 @@ import 'package:stock_prediction/pages/reels.dart';
 import 'package:stock_prediction/pages/search.dart';
 import 'auth_pages/welcome_page.dart';
 import 'color_helper/defaultColor.dart';
-import 'dialgo_boxs/quePrediction.dart';
+import 'dialgo_boxs/predictDialogBox.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +49,7 @@ class SplashPageState extends State<SplashPage>{
   void initState() {
 
     Timer(Duration(seconds: 1), () {
-      if(false){
+      if(true){
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home Page',)));
       }else{
