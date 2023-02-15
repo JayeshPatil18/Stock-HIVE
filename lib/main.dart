@@ -160,24 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: Text(
-          'My Profile',
-          style: TextStyle(color: Colors.black),
-        ),
-          actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.edit,
-            ),
-            onPressed: () {
-              // do something
-            },
-          )
-        ],
-      ),
+      null,
       // AppBar(
       //   centerTitle: true,
       //   elevation: 0,

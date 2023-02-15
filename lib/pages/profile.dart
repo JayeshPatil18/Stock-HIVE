@@ -24,6 +24,258 @@ class ProfilePageState extends State<ProfilePage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'My Profile',
+          style: TextStyle(color: Colors.black),
+        ),
+        actions: <Widget>[
+          Builder(
+              builder: (context) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                );
+              }
+          )
+        ],
+      ),
+      endDrawer: Drawer(
+        backgroundColor: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: <Widget>[
+                Container(
+                  alignment: AlignmentDirectional.centerStart,
+                  padding: EdgeInsets.only(top: 28, left: 20, right: 20),
+                  width: double.infinity,
+                  height: 100, // Sets the height of the drawer header
+                  color: Colors.white,
+                  child: Text('Settings', style: textBigSubtitle()),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.card_giftcard, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Invite and Win',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.edit_outlined, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Edit Profile',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.lock_outlined, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Update Password',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.privacy_tip_outlined, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Privacy Policy',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.note_alt_outlined, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Term and Conditions',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.logout, size: 20,),
+                            Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text('Logout',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 20,),
+                      ],
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+              ],
+            ),
+            Container(
+                color: Colors.white,
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.code, size: 20,),
+                        Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Text('Developer Info',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(fontSize: 16)),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Container(
