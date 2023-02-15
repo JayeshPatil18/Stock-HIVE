@@ -80,7 +80,7 @@ class predictTab extends StatelessWidget{
                     children: [
                       InkWell(
                         onTap: (){
-                          showDialogContest(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -90,13 +90,13 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionModel(),
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false),
                             )
                         ),
                       ),
                       InkWell(
                         onTap: (){
-                          showDialogContest(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -106,13 +106,13 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionModel(),
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false),
                             )
                         ),
                       ),
                       InkWell(
                         onTap: (){
-                          showDialogContest(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -122,13 +122,13 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionModel(),
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false),
                             )
                         ),
                       ),
                       InkWell(
                         onTap: (){
-                          showDialogContest(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -138,13 +138,13 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionModel(),
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false),
                             )
                         ),
                       ),
                       InkWell(
                         onTap: (){
-                          showDialogContest(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -154,7 +154,7 @@ class predictTab extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: MyGamePage.elevationValue,
-                              child: QuestionModel(),
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false),
                             )
                         ),
                       ),
@@ -439,7 +439,7 @@ class TabSectionConState extends State<TabSectionCon>{
   }
 }
 
-void showDialogContest(BuildContext context){
+void showDialogPredict(BuildContext context, int index){
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -455,7 +455,7 @@ void showDialogContest(BuildContext context){
         minChildSize: 0.60,
         builder: (context, scrollContoller) => SingleChildScrollView(
           controller: scrollContoller,
-          child: QueDialogBox(),
+          child: QueDialogBox(selectedIndex: index),
         ),
       ));
 }

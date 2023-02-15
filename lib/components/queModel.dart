@@ -1,74 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../font_helper/default_fonts.dart';
+import 'btnOptionsDialogBox.dart';
 import 'buttonsOption.dart';
 
 class QuestionModel extends StatefulWidget{
+
+  final selectedIndex;
+  final isDialogBox;
+
+  QuestionModel({
+    required this.selectedIndex,
+    required this.isDialogBox
+  });
+
   @override
   State<StatefulWidget> createState() {
-    return QuestionModelState();
+    return QuestionModelState(selectedIndex, isDialogBox);
   }
-
 }
 
 class QuestionModelState extends State<QuestionModel>{
   var elevationValue = 0.0;
+  int selectedIndex = -1;
+  bool isDialogBox = false;
 
-  bool _isSelectedFirst = false;
-  bool _isSelectedSecond = false;
-  bool _isSelectedThird = false;
-  bool _isSelectedFour = false;
-
-  void _toggleSelectionFirst() {
-    setState(() {
-      if(_isSelectedFirst){
-        _isSelectedFirst = false;
-      }else{
-        _isSelectedFirst = true;
-        _isSelectedSecond = false;
-        _isSelectedThird = false;
-        _isSelectedFour = false;
-      }
-    });
-  }
-
-  void _toggleSelectionSecond() {
-    setState(() {
-      if(_isSelectedSecond){
-        _isSelectedSecond = false;
-      }else{
-        _isSelectedFirst = false;
-        _isSelectedSecond = true;
-        _isSelectedThird = false;
-        _isSelectedFour = false;
-      }
-    });
-  }
-
-  void _toggleSelectionThird() {
-    setState(() {
-      if(_isSelectedThird){
-        _isSelectedThird = false;
-      }else{
-        _isSelectedFirst = false;
-        _isSelectedSecond = false;
-        _isSelectedThird = true;
-        _isSelectedFour = false;
-      }
-    });
-  }
-
-  void _toggleSelectionFour() {
-    setState(() {
-      if(_isSelectedFour){
-        _isSelectedFour = false;
-      }else{
-        _isSelectedFirst = false;
-        _isSelectedSecond = false;
-        _isSelectedThird = false;
-        _isSelectedFour = true;
-      }
-    });
+  QuestionModelState(int selectedIndex, bool isDialogBox) {
+    this.selectedIndex = selectedIndex;
+    this.isDialogBox = isDialogBox;
   }
 
   @override
@@ -112,7 +71,7 @@ class QuestionModelState extends State<QuestionModel>{
                   height: 1,
                   // color: defaultBgColor(),
                 ),
-                OptionButtonsFour(label1: 'Pharma', label2: 'Bank', label3: 'IT', label4: 'Media',)
+                isDialogBox == true ? DialogOptionButtonsFour(label1: 'Pharma', label2: 'Bank', label3: 'IT', label4: 'Media', selectedIndex: selectedIndex) : OptionButtonsFour(label1: 'Pharma', label2: 'Bank', label3: 'IT', label4: 'Media')
               ],
             ),
           );

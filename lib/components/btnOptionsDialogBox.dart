@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
+
 import '../dialgo_boxs/predictDialogBox.dart';
+import 'buttonsOption.dart';
 
 
 // Two Options Buttons
-class OptionButtonsTwo extends StatefulWidget {
+class DialogOptionButtonsTwo extends StatefulWidget {
+
+  final int selectedIndex;
 
   final String label1;
   final String label2;
 
-  OptionButtonsTwo({
+  DialogOptionButtonsTwo({
+    required this.selectedIndex,
+
     required this.label1,
     required this.label2,
   });
@@ -20,14 +26,35 @@ class OptionButtonsTwo extends StatefulWidget {
     BtnValues.label1 = label1;
     BtnValues.label2 = label2;
 
-    return _OptionButtonsTwoState();
+    return _DialogOptionButtonsTwoState(selectedIndex);
   }
 }
 
-class _OptionButtonsTwoState extends State<OptionButtonsTwo> {
+class _DialogOptionButtonsTwoState extends State<DialogOptionButtonsTwo> {
+
+  int selectedIndex = -1;
+
+  _DialogOptionButtonsTwoState(int selectedIndex) {
+    this.selectedIndex = selectedIndex;
+  }
+
   bool _isSelectedFirst = false;
   bool _isSelectedSecond = false;
 
+  @override
+  void initState() {
+    setState(() {
+      switch(selectedIndex){
+        case 0:
+          _isSelectedFirst = true;
+          break;
+
+        case 1:
+          _isSelectedSecond = true;
+          break;
+      }
+    });
+  }
 
   void _toggleSelectionFirst() {
     setState(() {
@@ -38,7 +65,6 @@ class _OptionButtonsTwoState extends State<OptionButtonsTwo> {
         _isSelectedSecond = false;
       }
     });
-    showDialogPredict(context,  0);
   }
 
   void _toggleSelectionSecond() {
@@ -50,7 +76,6 @@ class _OptionButtonsTwoState extends State<OptionButtonsTwo> {
         _isSelectedSecond = true;
       }
     });
-    showDialogPredict(context,  1);
   }
 
   @override
@@ -91,38 +116,20 @@ class _OptionButtonsTwoState extends State<OptionButtonsTwo> {
       ),
     );
   }
-
-  void showDialogPredict(BuildContext context, int index){
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20)
-            )
-        ),
-        builder: (context) => DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.80,
-          maxChildSize: 0.96,
-          minChildSize: 0.60,
-          builder: (context, scrollContoller) => SingleChildScrollView(
-            controller: scrollContoller,
-            child: QueDialogBox(selectedIndex: index),
-          ),
-        ));
-  }
 }
 
 
 // Third Options Buttons
-class OptionButtonsThird extends StatefulWidget {
+class DialogOptionButtonsThird extends StatefulWidget {
+
+  final int selectedIndex;
 
   final String label1;
   final String label2;
   final String label3;
 
-  OptionButtonsThird({
+  DialogOptionButtonsThird({
+    required this.selectedIndex,
     required this.label1,
     required this.label2,
     required this.label3,
@@ -135,57 +142,60 @@ class OptionButtonsThird extends StatefulWidget {
     BtnValues.label2 = label2;
     BtnValues.label3 = label3;
 
-    return _OptionButtonsThirdState();
+    return _DialogOptionButtonsThirdState(selectedIndex);
   }
 }
 
-class _OptionButtonsThirdState extends State<OptionButtonsThird> {
+class _DialogOptionButtonsThirdState extends State<DialogOptionButtonsThird> {
+
+  int selectedIndex = -1;
+
+  _DialogOptionButtonsThirdState(int selectedIndex) {
+    this.selectedIndex = selectedIndex;
+  }
+
   bool _isSelectedFirst = false;
   bool _isSelectedSecond = false;
   bool _isSelectedThird = false;
 
   void _toggleSelectionFirst() {
     setState(() {
-      if(_isSelectedFirst){
+      if (_isSelectedFirst) {
         _isSelectedFirst = false;
-      }else{
+      } else {
         _isSelectedFirst = true;
         _isSelectedSecond = false;
         _isSelectedThird = false;
       }
     });
-    showDialogPredict(context,  0);
   }
 
   void _toggleSelectionSecond() {
     setState(() {
-      if(_isSelectedSecond){
+      if (_isSelectedSecond) {
         _isSelectedSecond = false;
-      }else{
+      } else {
         _isSelectedFirst = false;
         _isSelectedSecond = true;
         _isSelectedThird = false;
       }
     });
-    showDialogPredict(context,  1);
   }
 
   void _toggleSelectionThird() {
     setState(() {
-      if(_isSelectedThird){
+      if (_isSelectedThird) {
         _isSelectedThird = false;
-      }else{
+      } else {
         _isSelectedFirst = false;
         _isSelectedSecond = false;
         _isSelectedThird = true;
       }
     });
-    showDialogPredict(context,  2);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         children: [
@@ -197,10 +207,13 @@ class _OptionButtonsThirdState extends State<OptionButtonsThird> {
                 _toggleSelectionFirst();
               },
               style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0))),
-                backgroundColor: MaterialStateProperty.all<Color>(_isSelectedFirst ? Colors.black : Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(13.0))),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    _isSelectedFirst ? Colors.black : Colors.white),
               ),
-              child: Text(BtnValues.getLabel1(), style: textStyleBtn(textColor: _isSelectedFirst ? Colors.white : Colors.black)),
+              child: Text(BtnValues.getLabel1(), style: textStyleBtn(
+                  textColor: _isSelectedFirst ? Colors.white : Colors.black)),
             ),
           ),
           Container(
@@ -211,10 +224,13 @@ class _OptionButtonsThirdState extends State<OptionButtonsThird> {
                 _toggleSelectionSecond();
               },
               style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0))),
-                backgroundColor: MaterialStateProperty.all<Color>(_isSelectedSecond ? Colors.black : Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(13.0))),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    _isSelectedSecond ? Colors.black : Colors.white),
               ),
-              child: Text(BtnValues.getLabel2(), style: textStyleBtn(textColor: _isSelectedSecond ? Colors.white : Colors.black)),
+              child: Text(BtnValues.getLabel2(), style: textStyleBtn(
+                  textColor: _isSelectedSecond ? Colors.white : Colors.black)),
             ),
           ),
           Container(
@@ -225,49 +241,35 @@ class _OptionButtonsThirdState extends State<OptionButtonsThird> {
                 _toggleSelectionThird();
               },
               style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0))),
-                backgroundColor: MaterialStateProperty.all<Color>(_isSelectedThird ? Colors.black : Colors.white),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(13.0))),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    _isSelectedThird ? Colors.black : Colors.white),
               ),
-              child: Text(BtnValues.getLabel3(), style: textStyleBtn(textColor: _isSelectedThird ? Colors.white : Colors.black)),
+              child: Text(BtnValues.getLabel3(), style: textStyleBtn(
+                  textColor: _isSelectedThird ? Colors.white : Colors.black)),
             ),
           ),
         ],
       ),
     );
   }
-
-  void showDialogPredict(BuildContext context, int index){
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20)
-            )
-        ),
-        builder: (context) => DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.80,
-          maxChildSize: 0.96,
-          minChildSize: 0.60,
-          builder: (context, scrollContoller) => SingleChildScrollView(
-            controller: scrollContoller,
-            child: QueDialogBox(selectedIndex: index),
-          ),
-        ));
-  }
 }
 
 
 // Four Options Buttons
-class OptionButtonsFour extends StatefulWidget {
+class DialogOptionButtonsFour extends StatefulWidget {
+
+  final int selectedIndex;
 
   final String label1;
   final String label2;
   final String label3;
   final String label4;
 
-  OptionButtonsFour({
+  DialogOptionButtonsFour({
+    required this.selectedIndex,
+
     required this.label1,
     required this.label2,
     required this.label3,
@@ -282,16 +284,44 @@ class OptionButtonsFour extends StatefulWidget {
     BtnValues.label3 = label3;
     BtnValues.label4 = label4;
 
-    return _OptionButtonsFourState();
+    return _DialogOptionButtonsFourState(selectedIndex);
   }
 }
 
-class _OptionButtonsFourState extends State<OptionButtonsFour> {
+class _DialogOptionButtonsFourState extends State<DialogOptionButtonsFour> {
+
+  int selectedIndex = -1;
+
+  _DialogOptionButtonsFourState(int selectedIndex) {
+    this.selectedIndex = selectedIndex;
+  }
+
   bool _isSelectedFirst = false;
   bool _isSelectedSecond = false;
   bool _isSelectedThird = false;
   bool _isSelectedFour = false;
 
+  @override
+  void initState() {
+    setState(() {
+      switch(selectedIndex){
+        case 0:
+          _isSelectedFirst = true;
+          break;
+
+        case 1:
+          _isSelectedSecond = true;
+          break;
+
+        case 2:
+          _isSelectedThird = true;
+          break;
+
+        case 3:
+          _isSelectedFour = true;
+      }
+    });
+  }
 
   void _toggleSelectionFirst() {
     setState(() {
@@ -304,7 +334,6 @@ class _OptionButtonsFourState extends State<OptionButtonsFour> {
         _isSelectedFour = false;
       }
     });
-    showDialogPredict(context,  0);
   }
 
   void _toggleSelectionSecond() {
@@ -318,7 +347,6 @@ class _OptionButtonsFourState extends State<OptionButtonsFour> {
         _isSelectedFour = false;
       }
     });
-    showDialogPredict(context,  1);
   }
 
   void _toggleSelectionThird() {
@@ -332,7 +360,6 @@ class _OptionButtonsFourState extends State<OptionButtonsFour> {
         _isSelectedFour = false;
       }
     });
-    showDialogPredict(context,  2);
   }
 
   void _toggleSelectionFour() {
@@ -346,7 +373,6 @@ class _OptionButtonsFourState extends State<OptionButtonsFour> {
         _isSelectedFour = true;
       }
     });
-    showDialogPredict(context,  3);
   }
 
   @override
@@ -414,27 +440,6 @@ class _OptionButtonsFourState extends State<OptionButtonsFour> {
         ],
       ),
     );
-  }
-
-  void showDialogPredict(BuildContext context, int index){
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20)
-            )
-        ),
-        builder: (context) => DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.80,
-          maxChildSize: 0.96,
-          minChildSize: 0.60,
-          builder: (context, scrollContoller) => SingleChildScrollView(
-            controller: scrollContoller,
-            child: QueDialogBox(selectedIndex: index),
-          ),
-        ));
   }
 }
 

@@ -88,7 +88,7 @@ class HomePageState extends State<HomePage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          showDialogPredict(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -98,7 +98,7 @@ class HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               elevation: elevationValue,
-                              child: QuestionModel()
+                              child: QuestionModel(selectedIndex: -1, isDialogBox: false)
                             )),
                       ),
                       InkWell(
@@ -118,7 +118,7 @@ class HomePageState extends State<HomePage> {
                       ),
                       InkWell(
                         onTap: () {
-                          showDialogPredict(context);
+                          showDialogPredict(context, -1);
                         },
                         child: Container(
                             margin: EdgeInsets.only(top: 8),
@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 elevation: elevationValue,
-                                child: QuestionModel()
+                                child: QuestionModel(selectedIndex: -1, isDialogBox: false)
                             )),
                       ),
                       InkWell(
@@ -144,6 +144,21 @@ class HomePageState extends State<HomePage> {
                               ),
                               elevation: elevationValue,
                               child: DiscussModel(),
+                            )),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialogPredict(context, -1);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 8),
+                            width: double.infinity,
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                elevation: elevationValue,
+                                child: QuestionModel(selectedIndex: -1, isDialogBox: false)
                             )),
                       ),
                     ],
@@ -156,7 +171,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void showDialogPredict(BuildContext context){
+  void showDialogPredict(BuildContext context, int index){
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -172,7 +187,7 @@ class HomePageState extends State<HomePage> {
           minChildSize: 0.60,
           builder: (context, scrollContoller) => SingleChildScrollView(
             controller: scrollContoller,
-            child: QueDialogBox(),
+            child: QueDialogBox(selectedIndex: index),
           ),
         ));
   }
