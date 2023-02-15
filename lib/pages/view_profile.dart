@@ -262,22 +262,6 @@ class ViewProfile extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Que & Ans', style: textStyleDefault()),
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                      ),
-                      onPressed: () {
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.add, color: Colors.black),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text('Ask Question', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

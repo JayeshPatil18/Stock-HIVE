@@ -3,6 +3,7 @@ import '../color_helper/defaultColor.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
+import 'ask_question.dart';
 
 class ProfilePage extends StatefulWidget{
   @override
@@ -265,6 +266,7 @@ class ProfilePageState extends State<ProfilePage>{
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                       ),
                       onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AskQuestion()));
                       },
                       child: Row(
                         children: [

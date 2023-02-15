@@ -13,6 +13,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class ForgotPasswordState extends State<ForgotPassword> {
+  String _buttonText = 'Conform';
   var boarderWidth = 1.4;
 
   bool _passwordVisible = true;
@@ -102,10 +103,14 @@ class ForgotPasswordState extends State<ForgotPassword> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(13))),
                         onPressed: () {
-                          Navigator.pop(context);
+                          setState(() {
+                            _buttonText = 'Changed!';
+                          });
+                          Future.delayed(const Duration(seconds: 1), () {
+                            Navigator.pop(context);
+                          });
                         },
-                        child: Text(
-                          'Conform',
+                        child: Text(_buttonText,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
