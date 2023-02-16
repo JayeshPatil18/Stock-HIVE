@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/discussModel.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
 import 'ask_question.dart';
+import 'settings_page.dart';
 
 class ProfilePage extends StatefulWidget{
   @override
@@ -14,13 +16,71 @@ class ProfilePage extends StatefulWidget{
 }
 
 class ProfilePageState extends State<ProfilePage>{
-
   var elevationValue = 0.0;
 
   static final sectionDialog = <Widget>[
     DiscussDialogBox(),
     DiscussDialogBoxSecondary(),
   ];
+
+  void show(){
+    showDialog(context: context,
+    builder: (context){
+      return AlertDialog(
+        title: Text('Invite and Earn', style: textBigSubtitle() ,textAlign: TextAlign.center,),
+        content: Container(
+          height: 240,
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: Lottie.asset('assets/anim/coins_loading.json',
+                    height: 240, reverse: false, repeat: true, fit: BoxFit.cover),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text('Invite more friends and you will get points when they will join app through your link', style: TextStyle(fontSize: 14, color: Colors.black),textAlign: TextAlign.center),
+              SizedBox(
+                height: 10,
+              ),
+              Text('10 Points for each user', style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
+            ],
+          ),
+        ),
+        actions: [
+          Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13))),
+                  onPressed: () {
+                  },
+                  child: Text('Invite',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 18),
+                  ))),
+        ],
+      );
+    }
+    );
+  }
+
+  void closeDialogBox(){
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,29 +129,35 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
-                Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.card_giftcard, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Invite and Win',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                InkWell(
+                  onTap: (){
+                    closeDialogBox();
+                    show();
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.card_giftcard, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Invite and Earn',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -99,29 +165,35 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
-                Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.edit_outlined, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Edit Profile',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SettingPage(0)));
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.edit_outlined, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Edit Profile',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -129,29 +201,35 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
-                Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.lock_outlined, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Update Password',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SettingPage(1)));
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.numbers, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Change Phone number',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -159,29 +237,35 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
-                Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.privacy_tip_outlined, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Privacy Policy',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SettingPage(2)));
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.lock_outlined, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Update Password',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -189,29 +273,71 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SettingPage(3)));
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.privacy_tip_outlined, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Privacy Policy',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
+                ),
                 Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.note_alt_outlined, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Term and Conditions',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  color: defaultBgColor(),
+                  width: double.infinity,
+                  height: 1,
+                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SettingPage(4)));
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.note_alt_outlined, size: 20,),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Terms and Conditions',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.arrow_forward_ios, size: 20,),
+                        ],
+                      )
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -289,17 +415,24 @@ class ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.person,
-                            size: 80,
-                          )),
-                      backgroundColor: Colors.black12,
-                      radius: 50,
-                    ),
+                    Stack(children: [
+                      CircleAvatar(
+                        child: Container(
+                            width: 100,
+                            height: 100,
+                            child: Icon(
+                              Icons.person,
+                              size: 80,
+                            )),
+                        backgroundColor: Colors.black12,
+                        radius: 50,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Icon(Icons.add_circle, color: Colors.black, size: 30),
+                      ),
+                    ]),
                     Expanded(
                       child: Container(
                           margin: EdgeInsets.only(left: 20),
