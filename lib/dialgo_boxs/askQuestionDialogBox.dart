@@ -32,7 +32,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                 color: defaultBgColor()),
           ),
           Container(
-              margin: EdgeInsets.only(top: 20,bottom: 70),
+              margin: EdgeInsets.only(top: 20,bottom: 60),
               child: Text('Ask Your Question', style: textBigSubtitle())),
           TextField(
             decoration: InputDecoration(
@@ -47,7 +47,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                         color: Colors.black, width: boarderWidth))),
           ),
           SizedBox(
-            height: 80,
+            height: 60,
           ),
           Container(
               height: 50,
