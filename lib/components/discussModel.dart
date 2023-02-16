@@ -23,13 +23,26 @@ class DiscussModelState extends State<DiscussModel>{
           Container(
               margin: EdgeInsets.only(bottom: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.date_range,
-                      size: 16),
-                  Container(
-                      margin: EdgeInsets.only(left: 4),
-                      child: Text("03/05/2022", style: textStyleMinDesc())),
+                  Row(
+                    children: [
+                      Icon(Icons.person_outline,
+                          size: 16),
+                      Container(
+                          margin: EdgeInsets.only(left: 4),
+                          child: Text("@username", style: textStyleMinDesc())),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.date_range,
+                          size: 16),
+                      Container(
+                          margin: EdgeInsets.only(left: 4),
+                          child: Text("03/05/2022", style: textStyleMinDesc())),
+                    ],
+                  ),
                 ],
               )),
           Row(
