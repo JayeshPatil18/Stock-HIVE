@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:stock_prediction/auth_pages/welcome_page.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/discussModel.dart';
 import '../components/tabSection.dart';
+import '../dialgo_boxs/askQuestionDialogBox.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
-import 'ask_question.dart';
 import 'settings_page.dart';
 
-class ProfilePage extends StatefulWidget{
+class ProfilePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return ProfilePageState();
   }
 }
 
-class ProfilePageState extends State<ProfilePage>{
+class ProfilePageState extends State<ProfilePage> {
   var elevationValue = 0.0;
 
   static final sectionDialog = <Widget>[
@@ -23,60 +24,120 @@ class ProfilePageState extends State<ProfilePage>{
     DiscussDialogBoxSecondary(),
   ];
 
-  void show(){
-    showDialog(context: context,
-    builder: (context){
-      return AlertDialog(
-        title: Text('Invite and Earn', style: textBigSubtitle() ,textAlign: TextAlign.center,),
-        content: Container(
-          height: 240,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: Lottie.asset('assets/anim/coins_loading.json',
-                    height: 240, reverse: false, repeat: true, fit: BoxFit.cover),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Text('Invite more friends and you will get points when they will join app through your link', style: TextStyle(fontSize: 14, color: Colors.black),textAlign: TextAlign.center),
-              SizedBox(
-                height: 10,
-              ),
-              Text('10 Points for each user', style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),textAlign: TextAlign.center,)
-            ],
-          ),
-        ),
-        actions: [
-          Container(
-              height: 50,
-              width: double.infinity,
-              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13))),
-                  onPressed: () {
-                  },
-                  child: Text('Invite',
+  void showInviteDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Invite and Earn',
+              style: textBigSubtitle(),
+              textAlign: TextAlign.center,
+            ),
+            content: Container(
+              height: 240,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: Lottie.asset('assets/anim/coins_loading.json',
+                        height: 240,
+                        reverse: false,
+                        repeat: true,
+                        fit: BoxFit.cover),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                      'Invite more friends and you will get points when they will join app through your link',
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      textAlign: TextAlign.center),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '10 Points for each user',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 18),
-                  ))),
-        ],
-      );
-    }
-    );
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+            actions: [
+              Container(
+                  height: 50,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(13))),
+                      onPressed: () {},
+                      child: Text(
+                        'Invite',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 18),
+                      ))),
+            ],
+          );
+        });
   }
 
-  void closeDialogBox(){
+  void showLogoutDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Logout', style: textStyleBtn()),
+            content: Text('Do you really want to logout?',
+                style: textStyleSubTitle()),
+            actions: [
+              Container(
+                width: 400,
+                padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          WelcomePage()));
+                            },
+                            child: Text('Yes',
+                                style: TextStyle(color: Colors.red)))),
+                    SizedBox(width: 20),
+                    Expanded(
+                        child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('No',
+                                style: TextStyle(color: Colors.green)))),
+                  ],
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  void closeDialogBox() {
     setState(() {
       Navigator.pop(context);
     });
@@ -94,18 +155,16 @@ class ProfilePageState extends State<ProfilePage>{
           style: TextStyle(color: Colors.black),
         ),
         actions: <Widget>[
-          Builder(
-              builder: (context) {
-                return IconButton(
-                  icon: Icon(
-                    Icons.settings,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                );
-              }
-          )
+          Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.settings,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            );
+          })
         ],
       ),
       endDrawer: Drawer(
@@ -119,7 +178,8 @@ class ProfilePageState extends State<ProfilePage>{
                   alignment: AlignmentDirectional.centerStart,
                   padding: EdgeInsets.only(top: 28, left: 20, right: 20),
                   width: double.infinity,
-                  height: 100, // Sets the height of the drawer header
+                  height: 100,
+                  // Sets the height of the drawer header
                   color: Colors.white,
                   child: Text('Settings', style: textBigSubtitle()),
                 ),
@@ -130,9 +190,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     closeDialogBox();
-                    show();
+                    showInviteDialog();
                   },
                   child: Container(
                       color: Colors.white,
@@ -143,7 +203,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.card_giftcard, size: 20,),
+                              Icon(
+                                Icons.card_giftcard,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Invite and Earn',
@@ -154,10 +217,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -166,9 +231,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SettingPage(0)));
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingPage(0)));
                   },
                   child: Container(
                       color: Colors.white,
@@ -179,7 +244,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.edit_outlined, size: 20,),
+                              Icon(
+                                Icons.edit_outlined,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Edit Profile',
@@ -190,10 +258,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -202,9 +272,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SettingPage(1)));
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingPage(1)));
                   },
                   child: Container(
                       color: Colors.white,
@@ -215,7 +285,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.numbers, size: 20,),
+                              Icon(
+                                Icons.numbers,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Change Phone number',
@@ -226,10 +299,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -238,9 +313,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SettingPage(2)));
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingPage(2)));
                   },
                   child: Container(
                       color: Colors.white,
@@ -251,7 +326,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.lock_outlined, size: 20,),
+                              Icon(
+                                Icons.lock_outlined,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Update Password',
@@ -262,10 +340,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -274,9 +354,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SettingPage(3)));
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingPage(3)));
                   },
                   child: Container(
                       color: Colors.white,
@@ -287,7 +367,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.privacy_tip_outlined, size: 20,),
+                              Icon(
+                                Icons.privacy_tip_outlined,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Privacy Policy',
@@ -298,10 +381,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -310,9 +395,9 @@ class ProfilePageState extends State<ProfilePage>{
                   height: 1,
                 ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SettingPage(4)));
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingPage(4)));
                   },
                   child: Container(
                       color: Colors.white,
@@ -323,7 +408,10 @@ class ProfilePageState extends State<ProfilePage>{
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.note_alt_outlined, size: 20,),
+                              Icon(
+                                Icons.note_alt_outlined,
+                                size: 20,
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text('Terms and Conditions',
@@ -334,10 +422,12 @@ class ProfilePageState extends State<ProfilePage>{
                               ),
                             ],
                           ),
-                          Icon(Icons.arrow_forward_ios, size: 20,),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -345,29 +435,40 @@ class ProfilePageState extends State<ProfilePage>{
                   width: double.infinity,
                   height: 1,
                 ),
-                Container(
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.logout, size: 20,),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text('Logout',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .subtitle2!
-                                      .copyWith(fontSize: 16)),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_forward_ios, size: 20,),
-                      ],
-                    )
+                InkWell(
+                  onTap: () {
+                    closeDialogBox();
+                    showLogoutDialog();
+                  },
+                  child: Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.logout,
+                                size: 20,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Text('Logout',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(fontSize: 16)),
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
+                        ],
+                      )),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20),
@@ -386,7 +487,10 @@ class ProfilePageState extends State<ProfilePage>{
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.code, size: 20,),
+                        Icon(
+                          Icons.code,
+                          size: 20,
+                        ),
                         Container(
                           margin: EdgeInsets.only(left: 10),
                           child: Text('Developer Info',
@@ -398,8 +502,7 @@ class ProfilePageState extends State<ProfilePage>{
                       ],
                     ),
                   ],
-                )
-            ),
+                )),
           ],
         ),
       ),
@@ -430,7 +533,8 @@ class ProfilePageState extends State<ProfilePage>{
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: Icon(Icons.add_circle, color: Colors.black, size: 30),
+                        child: Icon(Icons.add_circle,
+                            color: Colors.black, size: 30),
                       ),
                     ]),
                     Expanded(
@@ -515,7 +619,10 @@ class ProfilePageState extends State<ProfilePage>{
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.account_balance_wallet_outlined, size: 16,),
+                                      Icon(
+                                        Icons.account_balance_wallet_outlined,
+                                        size: 16,
+                                      ),
                                       Container(
                                         margin: EdgeInsets.only(left: 4),
                                         child: Text(
@@ -563,7 +670,10 @@ class ProfilePageState extends State<ProfilePage>{
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.card_giftcard, size: 16,),
+                                      Icon(
+                                        Icons.card_giftcard,
+                                        size: 16,
+                                      ),
                                       Container(
                                         margin: EdgeInsets.only(left: 4),
                                         child: Text(
@@ -607,7 +717,10 @@ class ProfilePageState extends State<ProfilePage>{
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.leaderboard_outlined, size: 16,),
+                                      Icon(
+                                        Icons.leaderboard_outlined,
+                                        size: 16,
+                                      ),
                                       Container(
                                         margin: EdgeInsets.only(left: 4),
                                         child: Text(
@@ -649,10 +762,11 @@ class ProfilePageState extends State<ProfilePage>{
                     Text('Que & Ans', style: textStyleDefault()),
                     OutlinedButton(
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AskQuestion()));
+                        showDialogAsk(context, -1);
                       },
                       child: Row(
                         children: [
@@ -660,7 +774,11 @@ class ProfilePageState extends State<ProfilePage>{
                           SizedBox(
                             width: 4,
                           ),
-                          Text('Ask Question', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)),
+                          Text('Ask Question',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
                         ],
                       ),
                     ),
@@ -713,12 +831,11 @@ class ProfilePageState extends State<ProfilePage>{
                               margin: EdgeInsets.only(top: 8),
                               width: double.infinity,
                               child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                elevation: elevationValue,
-                                child: DiscussModel()
-                              )),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  elevation: elevationValue,
+                                  child: DiscussModel())),
                         ),
                       ],
                     ),
@@ -737,6 +854,24 @@ class ProfilePageState extends State<ProfilePage>{
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        builder: (context) => DraggableScrollableSheet(
+              expand: false,
+              initialChildSize: 0.80,
+              maxChildSize: 0.96,
+              minChildSize: 0.60,
+              builder: (context, scrollContoller) => SingleChildScrollView(
+                controller: scrollContoller,
+                child: sectionDialog[TabSection1State.currentIndex],
+              ),
+            ));
+  }
+
+  void showDialogAsk(BuildContext context, int index){
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
                 top: Radius.circular(20)
             )
@@ -748,7 +883,7 @@ class ProfilePageState extends State<ProfilePage>{
           minChildSize: 0.60,
           builder: (context, scrollContoller) => SingleChildScrollView(
             controller: scrollContoller,
-            child: sectionDialog[TabSection1State.currentIndex],
+            child: AskQueDialogBox(),
           ),
         ));
   }
