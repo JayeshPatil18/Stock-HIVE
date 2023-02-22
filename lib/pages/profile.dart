@@ -805,7 +805,7 @@ class ProfilePageState extends State<ProfilePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 elevation: elevationValue,
-                                child: DiscussModel(),
+                                child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
                               )),
                         ),
                         InkWell(
@@ -820,7 +820,7 @@ class ProfilePageState extends State<ProfilePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 elevation: elevationValue,
-                                child: DiscussModel(),
+                                child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
                               )),
                         ),
                         InkWell(
@@ -835,7 +835,7 @@ class ProfilePageState extends State<ProfilePage> {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   elevation: elevationValue,
-                                  child: DiscussModel())),
+                                  child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',))),
                         ),
                       ],
                     ),

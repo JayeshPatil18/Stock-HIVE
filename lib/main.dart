@@ -12,6 +12,8 @@ import 'auth_pages/welcome_page.dart';
 import 'color_helper/defaultColor.dart';
 import 'dialgo_boxs/predictDialogBox.dart';
 
+String globalApiUrl = "https://project-api-jayesh.onrender.com";
+
 void main() {
   runApp(const MyApp());
 }

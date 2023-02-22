@@ -7,6 +7,8 @@ import '../data_models/UserModel.dart';
 import '../font_helper/default_fonts.dart';
 import 'package:http/http.dart' as http;
 
+import '../main.dart';
+
 class RanksPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -149,7 +151,7 @@ class RanksPageState extends State<RanksPage> {
 
   Future<List<UserModel>> getUsers() async {
     final response =
-        await http.get(Uri.parse('http://13.233.93.79:3000/users/list'));
+        await http.get(Uri.parse('$globalApiUrl/users/list'));
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       for (Map i in data) {

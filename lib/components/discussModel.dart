@@ -3,16 +3,44 @@ import 'package:flutter/material.dart';
 import '../color_helper/defaultColor.dart';
 import '../font_helper/default_fonts.dart';
 import 'buttonsOption.dart';
+import 'package:intl/intl.dart';
+
 
 class DiscussModel extends StatefulWidget{
+
+  String username;
+  String tTxt;
+  String tDate;
+  String tUrl;
+
+  DiscussModel({
+    required this.username,
+    required this.tTxt,
+    required this.tDate,
+    required this.tUrl
+});
+
   @override
   State<StatefulWidget> createState() {
-    return DiscussModelState();
+    return DiscussModelState(username,tTxt,tDate,tUrl);
   }
 
 }
 
 class DiscussModelState extends State<DiscussModel>{
+
+  String username = "null";
+  String tTxt = "null";
+  String tDate = "null";
+  String tUrl = "null";
+
+  DiscussModelState(String username, String tTxt, String tDate, String tUrl){
+    this.username = username;
+    this.tTxt = tTxt;
+    this.tUrl = tUrl;
+
+    this.tDate = timeAgoCustom(DateTime.parse(tDate));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +59,7 @@ class DiscussModelState extends State<DiscussModel>{
                           size: 16),
                       Container(
                           margin: EdgeInsets.only(left: 4),
-                          child: Text("@username", style: textStyleMinDesc())),
+                          child: Text(username, style: textStyleMinDesc())),
                     ],
                   ),
                   Row(
@@ -40,7 +68,7 @@ class DiscussModelState extends State<DiscussModel>{
                           size: 16),
                       Container(
                           margin: EdgeInsets.only(left: 4),
-                          child: Text("03/05/2022", style: textStyleMinDesc())),
+                          child: Text(tDate, style: textStyleMinDesc())),
                     ],
                   ),
                 ],
@@ -49,15 +77,13 @@ class DiscussModelState extends State<DiscussModel>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                backgroundImage: NetworkImage(tUrl),
                 radius: 10,
               ),
               Flexible(
                 child: Container(
                     margin: EdgeInsets.only(left: 10),
-                    child: Text(
-                      'Could I invest in TCS right now yes right now?',
+                    child: Text(tTxt,
                       style: textStyleDefault(),
                     )),
               )
@@ -98,8 +124,7 @@ class DiscussModelState extends State<DiscussModel>{
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                          backgroundImage: NetworkImage(tUrl),
                           radius: 10,
                         ),
                         Container(
@@ -163,5 +188,22 @@ class DiscussModelState extends State<DiscussModel>{
         ],
       ),
     );
+  }
+
+  String timeAgoCustom(DateTime d) {             // <-- Custom method Time Show  (Display Example  ==> 'Today 7:00 PM')     // WhatsApp Time Show Status Shimila
+    Duration diff = DateTime.now().difference(d);
+    if (diff.inDays > 365)
+      return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
+    if (diff.inDays > 30)
+      return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "month" : "months"} ago";
+    if (diff.inDays > 7)
+      return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
+    if (diff.inDays > 0)
+      return "${DateFormat.E().add_jm().format(d)}";
+    if (diff.inHours > 0)
+      return "Today ${DateFormat('jm').format(d)}";
+    if (diff.inMinutes > 0)
+      return "${diff.inMinutes} ${diff.inMinutes == 1 ? "minute" : "minutes"} ago";
+    return "just now";
   }
 }

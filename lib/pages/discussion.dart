@@ -1,11 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:stock_prediction/color_helper/defaultColor.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:stock_prediction/color_helper/defaultColor.dart';
+import 'package:stock_prediction/components/tabSection.dart';
+import 'package:stock_prediction/main.dart';
 import '../components/discussModel.dart';
 import '../components/queModel.dart';
+import '../data_models/TweetsModel.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../dialgo_boxs/predictDialogBox.dart';
 import '../font_helper/default_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class DiscussionPage extends StatefulWidget{
   @override
@@ -18,70 +24,64 @@ class DiscussionPage extends StatefulWidget{
 class _DiscussionPageState extends State<DiscussionPage>{
   var elevationValue = 0.0;
 
+  List<TweetsModel> tweetsList = [];
+
+  @override
+  void initState() {
+    getTweets();
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          child: SingleChildScrollView(
-            child: Container(
-              margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      showDialogDiscuss(context);
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: elevationValue,
-                          child: DiscussModel(),
-                        )),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showDialogDiscuss(context);
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: elevationValue,
-                          child: DiscussModel(),
-                        )),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showDialogDiscuss(context);
-                    },
-                    child: Container(
-                        margin: EdgeInsets.only(top: 8),
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          elevation: elevationValue,
-                          child: DiscussModel(),
-                        )),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      body: FutureBuilder(
+        future: getTweets(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Center(child: Text('Loading...'),);
+          } else {
+            return ListView.builder(
+              padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+              itemCount: tweetsList.length,
+              itemBuilder: (context, index) {
+                var tweet = tweetsList[index];
+                return GestureDetector(
+                  onTap: (){
+                    showDialogDiscuss(context);
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(top: 8),
+                      width: double.infinity,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: elevationValue,
+                        child: DiscussModel(username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDate.toString(), tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
+                      )),
+                );
+              }
+            );
+          }
+        },
       ),
     );
+  }
+
+  Future<List<TweetsModel>> getTweets() async {
+    final response =
+    await http.get(Uri.parse('$globalApiUrl/tweets/list'));
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      for (Map i in data) {
+        tweetsList.add(TweetsModel.fromJson(i));
+      }
+      return tweetsList;
+    } else {
+      return tweetsList;
+    }
   }
 
   void showDialogDiscuss(BuildContext context) {
