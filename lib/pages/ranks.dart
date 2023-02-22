@@ -4,7 +4,6 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stock_prediction/pages/view_profile.dart';
 import '../color_helper/defaultColor.dart';
 import '../data_models/UserModel.dart';
-import '../data_models/user.dart';
 import '../font_helper/default_fonts.dart';
 import 'package:http/http.dart' as http;
 
