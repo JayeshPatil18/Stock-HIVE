@@ -47,7 +47,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                         color: Colors.black, width: boarderWidth))),
           ),
           SizedBox(
-            height: 60,
+            height: 40,
           ),
           Container(
               height: 50,

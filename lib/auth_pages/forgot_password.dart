@@ -31,9 +31,8 @@ class ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 40, bottom: 40, left: 40, right: 40),
+      body: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 80, bottom: 40, left: 40, right: 40),
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +128,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
             ),
           ),
         ),
-      ),
     );
   }
 }

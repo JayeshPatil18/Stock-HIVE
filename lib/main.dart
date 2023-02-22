@@ -51,7 +51,7 @@ class SplashPageState extends State<SplashPage>{
   void initState() {
 
     Timer(Duration(seconds: 1), () {
-      if(true){
+      if(false){
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home Page',)));
       }else{

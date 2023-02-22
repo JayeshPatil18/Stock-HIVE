@@ -25,9 +25,8 @@ class SignUpState extends State<SignUp>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(top: 40, bottom: 40, left: 40, right: 40),
+      body: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 60, bottom: 40, left: 40, right: 40),
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +148,6 @@ class SignUpState extends State<SignUp>{
             ),
           ),
         ),
-      ),
     );
   }
 }
