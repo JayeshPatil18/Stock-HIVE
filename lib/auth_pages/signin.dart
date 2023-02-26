@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:stock_prediction/auth_pages/forgot_password.dart';
 import 'package:stock_prediction/auth_pages/signup.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
@@ -16,6 +17,8 @@ class SignInState extends State<SignIn> {
   var boarderWidth = 1.4;
   bool _passwordVisible = true;
   bool _obscureText = true;
+
+  String phoneNo = "";
 
   @override
   void initState() {
@@ -34,17 +37,23 @@ class SignInState extends State<SignIn> {
                 Container(
                     margin: EdgeInsets.only(top: 20, bottom: 50),
                     child: Text('Sign In Now', style: textBig())),
-                TextField(
+                IntlPhoneField(
                   decoration: InputDecoration(
-                      labelText: 'Phone number or Username',
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth))),
+                    labelText: 'Phone Number',
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(13),
+                        borderSide: BorderSide(
+                            color: Colors.black, width: boarderWidth)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(13),
+                        borderSide: BorderSide(
+                            color: Colors.black, width: boarderWidth)),
+                  ),
+
+                  initialCountryCode: 'IN',
+                  onChanged: (phone) {
+                    phoneNo = phone.completeNumber;
+                  },
                 ),
                 SizedBox(
                   height: 25,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/pages/discussion.dart';
 import 'package:stock_prediction/pages/home.dart';
@@ -11,10 +12,13 @@ import 'package:stock_prediction/pages/search.dart';
 import 'auth_pages/welcome_page.dart';
 import 'color_helper/defaultColor.dart';
 import 'dialgo_boxs/predictDialogBox.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

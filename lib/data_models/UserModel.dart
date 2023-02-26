@@ -3,7 +3,7 @@ class UserModel {
       this.uId, 
       this.username, 
       this.uFullname, 
-      this.uEmail, 
+      this.uPhoneNo,
       this.uPassword, 
       this.uPoints, 
       this.uRevenue, 
@@ -16,7 +16,7 @@ class UserModel {
     uId = json['u_id'];
     username = json['username'];
     uFullname = json['u_fullname'];
-    uEmail = json['u_email'];
+    uPhoneNo = json['u_phoneno'];
     uPassword = json['u_password'];
     uPoints = json['u_points'];
     uRevenue = json['u_revenue'];
@@ -28,7 +28,7 @@ class UserModel {
   int? uId;
   String? username;
   String? uFullname;
-  String? uEmail;
+  String? uPhoneNo;
   String? uPassword;
   int? uPoints;
   int? uRevenue;
@@ -42,7 +42,7 @@ class UserModel {
     map['u_id'] = uId;
     map['username'] = username;
     map['u_fullname'] = uFullname;
-    map['u_email'] = uEmail;
+    map['u_phoneno'] = uPhoneNo;
     map['u_password'] = uPassword;
     map['u_points'] = uPoints;
     map['u_revenue'] = uRevenue;

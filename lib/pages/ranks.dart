@@ -31,30 +31,6 @@ class RanksPageState extends State<RanksPage> {
 
   static final itemController = ItemScrollController();
 
-  var arrNames = [
-    'Raman',
-    'Ramanauan',
-    'Rajesh',
-    "James",
-    "Hoan",
-    "Rahim" 'Ramanauan',
-    'Rajesh',
-    "James",
-    "Hoan",
-    "Rahim" 'Ramanauan',
-    'Rajesh',
-    "James",
-    "Hoan",
-    "Rahim",
-    "Hoan",
-    "Rahim",
-    'Ramanauan',
-    'Rajesh',
-    "James",
-    "Hoan",
-    "Rahim"
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
