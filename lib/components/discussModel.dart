@@ -64,8 +64,8 @@ class DiscussModelState extends State<DiscussModel>{
                   ),
                   Row(
                     children: [
-                      Icon(Icons.date_range,
-                          size: 16),
+                      // Icon(Icons.date_range,
+                      //     size: 16),
                       Container(
                           margin: EdgeInsets.only(left: 4),
                           child: Text(tDate, style: textStyleMinDesc())),

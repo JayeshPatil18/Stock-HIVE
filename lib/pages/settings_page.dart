@@ -72,24 +72,34 @@ class EditProfileState extends State<EditProfile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Stack(children: [
-                  CircleAvatar(
-                    child: Container(
-                        width: 100,
-                        height: 100,
-                        child: Icon(
-                          Icons.person,
-                          size: 90,
-                        )),
-                    backgroundColor: Colors.black12,
-                    radius: 60,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Icon(Icons.add_circle, color: Colors.black, size: 40),
-                  ),
-                ]),
+                GestureDetector(
+                  onTap: (){
+                    uploadImg();
+                  },
+                  child: Stack(children: [
+                    CircleAvatar(
+                      child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            Icons.person,
+                            size: 90,
+                          )),
+                      backgroundColor: Colors.black12,
+                      radius: 60,
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Set the background color of the icon
+                            shape: BoxShape.circle, // Set the shape of the background to a circle
+                          ),
+                          child: Icon(Icons.add_circle, color: Colors.black, size: 40)),
+                    ),
+                  ]),
+                ),
                 SizedBox(
                   height: 60,
                 ),
@@ -153,6 +163,10 @@ class EditProfileState extends State<EditProfile> {
           ),
         ),
     );
+  }
+
+  void uploadImg() {
+
   }
 }
 

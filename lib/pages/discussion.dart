@@ -28,7 +28,6 @@ class _DiscussionPageState extends State<DiscussionPage>{
 
   @override
   void initState() {
-    getTweets();
   }
 
   @override
@@ -59,7 +58,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
                           borderRadius: BorderRadius.circular(20),
                         ),
                         elevation: elevationValue,
-                        child: DiscussModel(username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDate.toString(), tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
+                        child: DiscussModel(username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
                       )),
                 );
               }

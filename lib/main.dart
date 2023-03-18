@@ -14,7 +14,9 @@ import 'color_helper/defaultColor.dart';
 import 'dialgo_boxs/predictDialogBox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// AWS URL -> http://43.204.32.121:3000
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
+String username = "jeet49";
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

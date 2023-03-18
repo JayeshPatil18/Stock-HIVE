@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
 import '../components/queModel.dart';
 import '../font_helper/default_fonts.dart';
-
+import '../main.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class AskQueDialogBox extends StatefulWidget {
   @override
@@ -15,6 +19,8 @@ class AskQueDialogBox extends StatefulWidget {
 class AskQueDialogBoxState extends State<AskQueDialogBox> {
   String _buttonText = 'Ask Question';
   var boarderWidth = 1.4;
+
+  final tweetController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +41,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
               margin: EdgeInsets.only(top: 20,bottom: 60),
               child: Text('Ask Your Question', style: textBigSubtitle())),
           TextField(
+            controller: tweetController,
             decoration: InputDecoration(
                 labelText: 'Question',
                 focusedBorder: OutlineInputBorder(
@@ -62,6 +69,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                       _buttonText = 'Submitted!';
                     });
                     Future.delayed(const Duration(seconds: 1), () {
+                      askQuestion();
                       Navigator.pop(context);
                     });
                   },
@@ -74,5 +82,29 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
         ],
       ),
     );
+  }
+
+  void askQuestion() async{
+    String tweet = tweetController.text;
+    DateTime currentTime = DateTime.now();
+    String currentTimeStr = DateFormat('yyyy-MM-dd HH:mm:ss').format(currentTime);
+
+    try{
+      final url = Uri.parse('$globalApiUrl/tweets/add');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({
+        'tweet': tweet,
+        'username': username,
+        'datetime': currentTimeStr
+      });
+      final response = await http.post(url, headers: headers, body: body);
+      if(response.statusCode == 200){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Question Asked Successfully.')));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+      }
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+    }
   }
 }
