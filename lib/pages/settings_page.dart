@@ -85,14 +85,12 @@ class EditProfileState extends State<EditProfile> {
                   uploadImg();
                 },
                 child: Stack(children: [
+                  _imageFile != null ? CircleAvatar(
+                      backgroundImage: FileImage(_imageFile!),
+                      radius: 60,
+                  ) :
                   CircleAvatar(
-                    child: Container(
-                        width: 100,
-                        height: 100,
-                        child: _imageFile != null
-                            ? Image.file(_imageFile!)
-                            : defaultUserAvatar()),
-                    backgroundColor: Colors.black12,
+                    backgroundImage: NetworkImage("https://media.wired.com/photos/5c57c3e3ce277c2cb23d575b/4:3/w_2749,h_2062,c_limit/Culture_Facebook_TheSocialNetwork.jpg"),
                     radius: 60,
                   ),
                   Positioned(
@@ -103,7 +101,7 @@ class EditProfileState extends State<EditProfile> {
                           color: Colors.white, // Set the background color of the icon
                           shape: BoxShape.circle, // Set the shape of the background to a circle
                         ),
-                        child: Icon(Icons.add_circle, color: Colors.black, size: 40)),
+                        child: Icon(Icons.add_circle, color: Colors.black, size: 35)),
                   ),
                 ]),
               ),
@@ -177,6 +175,7 @@ class EditProfileState extends State<EditProfile> {
       final pickedFile = await picker.pickImage(source: imgFrom ? ImageSource.gallery : ImageSource.camera);
       if (pickedFile != null) {
         setState(() {
+          Navigator.pop(context);
           _imageFile = File(pickedFile.path);
         });
       }

@@ -1,4 +1,8 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stock_prediction/auth_pages/welcome_page.dart';
 import '../color_helper/defaultColor.dart';
@@ -18,6 +22,8 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   var elevationValue = 0.0;
+  File? _imageFile;
+  final picker = ImagePicker();
 
   static final sectionDialog = <Widget>[
     DiscussDialogBox(),
@@ -518,25 +524,31 @@ class ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(children: [
-                      CircleAvatar(
-                        child: Container(
-                            width: 100,
-                            height: 100,
-                            child: Icon(
-                              Icons.person,
-                              size: 80,
-                            )),
-                        backgroundColor: Colors.black12,
-                        radius: 50,
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Icon(Icons.add_circle,
-                            color: Colors.black, size: 30),
-                      ),
-                    ]),
+                    GestureDetector(
+                      onTap: (){
+                        uploadImg();
+                      },
+                      child: Stack(children: [
+                        _imageFile != null ? CircleAvatar(
+                          backgroundImage: FileImage(_imageFile!),
+                          radius: 50,
+                        ) :
+                        CircleAvatar(
+                          backgroundImage: NetworkImage("https://media.wired.com/photos/5c57c3e3ce277c2cb23d575b/4:3/w_2749,h_2062,c_limit/Culture_Facebook_TheSocialNetwork.jpg"),
+                          radius: 50,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white, // Set the background color of the icon
+                                shape: BoxShape.circle, // Set the shape of the background to a circle
+                              ),
+                              child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
+                        ),
+                      ]),
+                    ),
                     Expanded(
                       child: Container(
                           margin: EdgeInsets.only(left: 20),
@@ -846,6 +858,54 @@ class ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+    );
+  }
+
+  pickImage(bool imgFrom) async{
+    try{
+      final pickedFile = await picker.pickImage(source: imgFrom ? ImageSource.gallery : ImageSource.camera);
+      if (pickedFile != null) {
+        setState(() {
+          Navigator.pop(context);
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } catch (error){
+      debugPrint(error.toString());
+    }
+  }
+
+  void uploadImg() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Gallary'),
+                onTap: (){
+                  pickImage(true);
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                color: defaultBgColor(),
+                height: 1,
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('Camera'),
+                onTap: (){
+                  pickImage(false);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
