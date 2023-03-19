@@ -1,6 +1,8 @@
 
+import 'dart:convert';
 import 'dart:io';
-
+import '../data_models/UserModel.dart';
+import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/default_avatar.dart';
 import '../font_helper/default_fonts.dart';
+import '../main.dart';
+import 'package:http/http.dart' as http;
 
 
 class SettingPage extends StatelessWidget {
@@ -68,8 +72,77 @@ class EditProfileState extends State<EditProfile> {
   String _buttonText = 'Update Profile';
   var boarderWidth = 1.4;
 
+  final Reference storageRef = FirebaseStorage.instance.ref().child('profile_imgs');
+
+  var imgUrl;
   File? _imageFile;
   final picker = ImagePicker();
+
+  String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
+
+  final nameController = TextEditingController(text: fullname);
+  final usernameController = TextEditingController(text: username);
+
+  @override
+  void initState() {
+    getProfileImg();
+  }
+
+  Future _uploadFile(String path) async{
+    try{
+      storageRef.child('${username}').putFile(_imageFile!);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  pickImage(ImageSource source) async{
+    try{
+      final pickedFile = await picker.pickImage(source: source);
+      if (pickedFile != null) {
+        setState(() {
+          Navigator.pop(context);
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } catch (error){
+      debugPrint(error.toString());
+    }
+  }
+
+  void pickSource() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Gallary'),
+                onTap: (){
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                color: defaultBgColor(),
+                height: 1,
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('Camera'),
+                onTap: (){
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +155,15 @@ class EditProfileState extends State<EditProfile> {
             children: [
               GestureDetector(
                 onTap: (){
-                  uploadImg();
+                  pickSource();
                 },
                 child: Stack(children: [
                   _imageFile != null ? CircleAvatar(
-                      backgroundImage: FileImage(_imageFile!),
-                      radius: 60,
+                    backgroundImage: FileImage(_imageFile!),
+                    radius: 60,
                   ) :
                   CircleAvatar(
-                    backgroundImage: NetworkImage("https://media.wired.com/photos/5c57c3e3ce277c2cb23d575b/4:3/w_2749,h_2062,c_limit/Culture_Facebook_TheSocialNetwork.jpg"),
+                    backgroundImage: NetworkImage(profileUrl),
                     radius: 60,
                   ),
                   Positioned(
@@ -109,6 +182,7 @@ class EditProfileState extends State<EditProfile> {
                 height: 60,
               ),
               TextField(
+                controller: nameController,
                 decoration: InputDecoration(
                     labelText: 'Full Name',
                     focusedBorder: OutlineInputBorder(
@@ -124,6 +198,7 @@ class EditProfileState extends State<EditProfile> {
                 height: 25,
               ),
               TextField(
+                controller: usernameController,
                 decoration: InputDecoration(
                     labelText: 'Username',
                     focusedBorder: OutlineInputBorder(
@@ -147,10 +222,13 @@ class EditProfileState extends State<EditProfile> {
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13))),
-                      onPressed: () {
+                      onPressed: () async{
+                        await _uploadFile(_imageFile!.path);
+                        updateProfile();
                         setState(() {
                           _buttonText = 'Updated!';
 
+                          FocusManager.instance.primaryFocus?.unfocus();
                           Future.delayed(const Duration(milliseconds: 500), () {
                             Navigator.pop(context);
                           });
@@ -170,52 +248,42 @@ class EditProfileState extends State<EditProfile> {
     );
   }
 
-  pickImage(bool imgFrom) async{
+  void updateProfile() async{
+    String newUsername = usernameController.text;
+    String fullname = nameController.text;
+
     try{
-      final pickedFile = await picker.pickImage(source: imgFrom ? ImageSource.gallery : ImageSource.camera);
-      if (pickedFile != null) {
-        setState(() {
-          Navigator.pop(context);
-          _imageFile = File(pickedFile.path);
-        });
+      final url = Uri.parse('$globalApiUrl/users/edit/profile');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({
+        'username': username,
+        'new_username': newUsername,
+        'fullname': fullname
+      });
+      final response = await http.post(url, headers: headers, body: body);
+      if(response.statusCode == 200){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile Updated Successfully.')));
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
       }
-    } catch (error){
-      debugPrint(error.toString());
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
     }
   }
 
-  void uploadImg() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Gallary'),
-                onTap: (){
-                  pickImage(true);
-                },
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
-                color: defaultBgColor(),
-                height: 1,
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
-                onTap: (){
-                  pickImage(false);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  void getProfileImg() async{
+    final url = Uri.parse('$globalApiUrl/users/info');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'username': username
+    });
+    final response = await http.post(url, headers: headers, body: body);
+
+    final jsonData = jsonDecode(response.body);
+
+    setState(() {
+      profileUrl = jsonData[0]['u_profileurl'];
+    });
   }
 }
 

@@ -1,6 +1,8 @@
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -11,7 +13,9 @@ import '../components/tabSection.dart';
 import '../dialgo_boxs/askQuestionDialogBox.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
+import '../main.dart';
 import 'settings_page.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -22,13 +26,23 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   var elevationValue = 0.0;
+  final Reference storageRef = FirebaseStorage.instance.ref().child('profile_imgs');
+
+  var imgUrl;
   File? _imageFile;
   final picker = ImagePicker();
+
+  String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
   static final sectionDialog = <Widget>[
     DiscussDialogBox(),
     DiscussDialogBoxSecondary(),
   ];
+
+  @override
+  void initState() {
+    getProfileImg();
+  }
 
   void showInviteDialog() {
     showDialog(
@@ -147,6 +161,63 @@ class ProfilePageState extends State<ProfilePage> {
     setState(() {
       Navigator.pop(context);
     });
+  }
+
+  Future _uploadFile(String path) async{
+    try{
+      storageRef.child('${username}').putFile(_imageFile!);
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
+  pickImage(ImageSource source) async{
+    try{
+      final pickedFile = await picker.pickImage(source: source);
+      if (pickedFile != null) {
+        setState(() {
+          Navigator.pop(context);
+          _imageFile = File(pickedFile.path);
+        });
+        await _uploadFile(_imageFile!.path);
+      }
+    } catch (error){
+      debugPrint(error.toString());
+    }
+  }
+
+  void pickSource() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.photo),
+                title: Text('Gallary'),
+                onTap: (){
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                color: defaultBgColor(),
+                height: 1,
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('Camera'),
+                onTap: (){
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -525,8 +596,8 @@ class ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: (){
-                        uploadImg();
+                      onTap: () {
+                        pickSource();
                       },
                       child: Stack(children: [
                         _imageFile != null ? CircleAvatar(
@@ -534,7 +605,7 @@ class ProfilePageState extends State<ProfilePage> {
                           radius: 50,
                         ) :
                         CircleAvatar(
-                          backgroundImage: NetworkImage("https://media.wired.com/photos/5c57c3e3ce277c2cb23d575b/4:3/w_2749,h_2062,c_limit/Culture_Facebook_TheSocialNetwork.jpg"),
+                          backgroundImage: NetworkImage(profileUrl),
                           radius: 50,
                         ),
                         Positioned(
@@ -861,52 +932,19 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  pickImage(bool imgFrom) async{
-    try{
-      final pickedFile = await picker.pickImage(source: imgFrom ? ImageSource.gallery : ImageSource.camera);
-      if (pickedFile != null) {
-        setState(() {
-          Navigator.pop(context);
-          _imageFile = File(pickedFile.path);
-        });
-      }
-    } catch (error){
-      debugPrint(error.toString());
-    }
-  }
+  void getProfileImg() async{
+    final url = Uri.parse('$globalApiUrl/users/info');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'username': username
+    });
+    final response = await http.post(url, headers: headers, body: body);
 
-  void uploadImg() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Gallary'),
-                onTap: (){
-                  pickImage(true);
-                },
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10, right: 10),
-                color: defaultBgColor(),
-                height: 1,
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_camera),
-                title: Text('Camera'),
-                onTap: (){
-                  pickImage(false);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    final jsonData = jsonDecode(response.body);
+
+    setState(() {
+      profileUrl = jsonData[0]['u_profileurl'];
+    });
   }
 
   void showDialogDiscuss(BuildContext context) {
