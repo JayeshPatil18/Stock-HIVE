@@ -80,8 +80,8 @@ class EditProfileState extends State<EditProfile> {
 
   String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
-  final nameController = TextEditingController(text: fullname);
-  final usernameController = TextEditingController(text: username);
+  final nameController = TextEditingController(text: logfullname);
+  final usernameController = TextEditingController(text: logusername);
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class EditProfileState extends State<EditProfile> {
 
   Future _uploadFile(String path) async{
     try{
-      storageRef.child('${username}').putFile(_imageFile!);
+      storageRef.child('${logusername}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -256,7 +256,7 @@ class EditProfileState extends State<EditProfile> {
       final url = Uri.parse('$globalApiUrl/users/edit/profile');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
-        'username': username,
+        'username': logusername,
         'new_username': newUsername,
         'fullname': fullname
       });
@@ -275,7 +275,7 @@ class EditProfileState extends State<EditProfile> {
     final url = Uri.parse('$globalApiUrl/users/info');
     final headers = {'Content-Type': 'application/json'};
     final body = json.encode({
-      'username': username
+      'username': logusername
     });
     final response = await http.post(url, headers: headers, body: body);
 

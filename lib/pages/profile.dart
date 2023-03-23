@@ -165,7 +165,7 @@ class ProfilePageState extends State<ProfilePage> {
 
   Future _uploadFile(String path) async{
     try{
-      storageRef.child('${username}').putFile(_imageFile!);
+      storageRef.child('${logusername}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -888,7 +888,7 @@ class ProfilePageState extends State<ProfilePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 elevation: elevationValue,
-                                child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
+                                child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
                               )),
                         ),
                         InkWell(
@@ -903,7 +903,7 @@ class ProfilePageState extends State<ProfilePage> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 elevation: elevationValue,
-                                child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
+                                child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
                               )),
                         ),
                         InkWell(
@@ -918,7 +918,7 @@ class ProfilePageState extends State<ProfilePage> {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   elevation: elevationValue,
-                                  child: DiscussModel(username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',))),
+                                  child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1")),),
                         ),
                       ],
                     ),
@@ -936,7 +936,7 @@ class ProfilePageState extends State<ProfilePage> {
     final url = Uri.parse('$globalApiUrl/users/info');
     final headers = {'Content-Type': 'application/json'};
     final body = json.encode({
-      'username': username
+      'username': logusername
     });
     final response = await http.post(url, headers: headers, body: body);
 

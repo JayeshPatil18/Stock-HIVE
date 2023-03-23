@@ -39,3 +39,19 @@ TextStyle textBig({Color textColor = Colors.black}){
 TextStyle textBigSubtitle({Color textColor = Colors.black}){
   return TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor);
 }
+
+TextStyle textTweet({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 18, color: textColor);
+}
+
+TextStyle textTweetName({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor);
+}
+
+TextStyle textTweetUsername({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 16, color: textColor);
+}
+
+TextStyle textTweetDate({Color textColor = Colors.black}){
+  return TextStyle(fontSize: 13, color: textColor);
+}

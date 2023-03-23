@@ -94,8 +94,9 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
         'tweet': tweet,
-        'username': username,
-        'datetime': currentTimeStr
+        'username': logusername,
+        'datetime': currentTimeStr,
+        'parent': -1
       });
       final response = await http.post(url, headers: headers, body: body);
       if(response.statusCode == 200){

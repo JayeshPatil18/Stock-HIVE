@@ -58,7 +58,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
                           borderRadius: BorderRadius.circular(20),
                         ),
                         elevation: elevationValue,
-                        child: DiscussModel(username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s',),
+                        child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
                       )),
                 );
               }
@@ -71,7 +71,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
 
   Future<List<TweetsModel>> getTweets() async {
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/list'));
+    await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       for (Map i in data) {

@@ -16,8 +16,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // AWS URL -> http://43.204.32.121:3000
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
-String username = "jeet49";
-String fullname = "jeetenar kumar";
+String logusername = "jeet49";
+String logfullname = "jeetenar kumar";
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
