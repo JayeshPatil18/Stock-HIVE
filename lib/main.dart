@@ -18,6 +18,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
 String logusername = "jeet49";
 String logfullname = "jeetenar kumar";
+var appBarElevation = 0.5;
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final appBars = [
       AppBar(
-        elevation: 0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
         title: Text(
           'Home',
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // ],
       ),
       AppBar(
-        elevation: 0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
         title: Text(
           'Discussion',
@@ -131,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       AppBar(
-        elevation: 0,
+        elevation: 0.0,
         backgroundColor: Colors.white,
         title: Text(
           'My Games',
@@ -139,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       AppBar(
-        elevation: 0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
       null,
       // AppBar(
       //   centerTitle: true,
-      //   elevation: 0,
+      //   elevation: appBarElevation,
       //   backgroundColor: Colors.white,
       //   title: InkWell(
       //     onTap: () {

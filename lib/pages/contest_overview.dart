@@ -10,11 +10,12 @@ import '../font_helper/default_fonts.dart';
 import 'my_games.dart';
 
 class ContestOverview extends StatelessWidget {
+  var elevationValue = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: elevationValue,
         backgroundColor: Colors.white,
         title: Text('Contest'),
         bottom: PreferredSize(

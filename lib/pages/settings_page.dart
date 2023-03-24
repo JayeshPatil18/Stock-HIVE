@@ -52,7 +52,7 @@ class SettingPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
         title: Text(appBarTitles[pageIndex]),
-        elevation: 0.0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
       ),
       body: settingPages[pageIndex],

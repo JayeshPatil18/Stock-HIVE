@@ -225,7 +225,7 @@ class ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
         title: Text(
           'My Profile',

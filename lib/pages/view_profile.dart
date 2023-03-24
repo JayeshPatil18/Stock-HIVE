@@ -5,10 +5,9 @@ import '../components/discussModel.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
+import '../main.dart';
 
 class ViewProfile extends StatelessWidget{
-
-  var elevationValue = 0.0;
 
   static final sectionDialog = <Widget>[
     DiscussDialogBox(),
@@ -19,7 +18,7 @@ class ViewProfile extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
         title: Text(
           'Profile',
@@ -285,7 +284,7 @@ class ViewProfile extends StatelessWidget{
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                elevation: elevationValue,
+                                elevation: appBarElevation,
                                 child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
                               )),
                         ),
@@ -300,7 +299,7 @@ class ViewProfile extends StatelessWidget{
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                elevation: elevationValue,
+                                elevation: appBarElevation,
                                 child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
                               )),
                         ),
@@ -315,7 +314,7 @@ class ViewProfile extends StatelessWidget{
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  elevation: elevationValue,
+                                  elevation: appBarElevation,
                                   child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",)
                               )),
                         ),

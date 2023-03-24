@@ -5,6 +5,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
 import 'package:stock_prediction/components/tabSection.dart';
 import 'package:stock_prediction/main.dart';
+import 'package:stock_prediction/pages/tweet.dart';
 import '../components/discussModel.dart';
 import '../components/queModel.dart';
 import '../data_models/TweetsModel.dart';
@@ -48,7 +49,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
                 var tweet = tweetsList[index];
                 return GestureDetector(
                   onTap: (){
-                    showDialogDiscuss(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString(), tweetsModel: tweet,)));
                   },
                   child: Container(
                       margin: EdgeInsets.only(top: 8),

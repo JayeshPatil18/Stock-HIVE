@@ -5,13 +5,14 @@ import '../color_helper/defaultColor.dart';
 import '../components/contestModel.dart';
 import '../dialgo_boxs/conSelectStocks.dart';
 import '../font_helper/default_fonts.dart';
+import '../main.dart';
 
 class StockSelector extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          elevation: appBarElevation,
           backgroundColor: Colors.white,
           title: Text('Contest'),
           bottom: PreferredSize(
