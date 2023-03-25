@@ -56,19 +56,19 @@ class TweetPageState extends State<TweetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _refresh,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: appBarElevation,
-          backgroundColor: Colors.white,
-          title: Text(
-            'Tweet',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: appBarElevation,
         backgroundColor: Colors.white,
-        body: Column(
+        title: Text(
+          'Tweet',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: Column(
           children: [
             DiscussModel(
               tId: tweet.tId.toString(),
