@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stock_prediction/data_models/TweetsModel.dart';
 import 'package:stock_prediction/main.dart';
 import '../color_helper/defaultColor.dart';
+import '../components/commentModel.dart';
 import '../components/discussModel.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
@@ -48,6 +49,11 @@ class TweetPageState extends State<TweetPage> {
       commentsList.clear();
       commentsList = list;
     });
+  }
+
+  _refresh() {
+    _refreshTweets();
+    _refreshComments();
   }
 
   @override
@@ -121,7 +127,7 @@ class TweetPageState extends State<TweetPage> {
                                         builder: (context) => TweetPage(
                                               tId: tweet.tId.toString()
                                             ))).then((value) => setState(() {
-                                      _refreshComments();
+                                  _refresh();
                                     }));
                               },
                               child: Container(
@@ -132,7 +138,7 @@ class TweetPageState extends State<TweetPage> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     elevation: elevationValue,
-                                    child: DiscussModel(
+                                    child: CommentModel(
                                       tId: tweet.tId.toString(),
                                       fullname: tweet.fullname.toString(),
                                       username: tweet.username.toString(),
