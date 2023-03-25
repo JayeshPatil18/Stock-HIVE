@@ -14,9 +14,8 @@ import 'package:http/http.dart' as http;
 
 class TweetPage extends StatefulWidget {
   String tId;
-  TweetsModel tweetsModel;
 
-  TweetPage({required this.tId, required this.tweetsModel});
+  TweetPage({required this.tId});
 
   @override
   State<StatefulWidget> createState() {
@@ -26,32 +25,34 @@ class TweetPage extends StatefulWidget {
 
 class TweetPageState extends State<TweetPage> {
   int tId = -1;
-  late TweetsModel tweet;
 
   var elevationValue = 0.0;
   List<TweetsModel> tweetsList = [];
+  List<TweetsModel> commentsList = [];
 
   TweetPageState(String tId) {
     this.tId = int.parse(tId);
   }
 
-  fetchTweet() async {
-    tweet = await getTweet(tId, logusername);
-  }
-
-  Future _refresh() async {
-    var list = await getTweets();
+  Future _refreshTweets() async {
+    var list = await getTweet(tId, logusername);
     setState(() {
       tweetsList.clear();
       tweetsList = list;
     });
   }
 
+  Future _refreshComments() async {
+    var list = await getComments();
+    setState(() {
+      commentsList.clear();
+      commentsList = list;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    tweet = widget.tweetsModel;
-    fetchTweet();
   }
 
   @override
@@ -67,19 +68,31 @@ class TweetPageState extends State<TweetPage> {
       ),
       backgroundColor: Colors.white,
       body: RefreshIndicator(
-        onRefresh: _refresh,
+        onRefresh: _refreshComments,
         child: Column(
           children: [
-            DiscussModel(
-              tId: tweet.tId.toString(),
-              fullname: tweet.fullname.toString(),
-              username: tweet.username.toString(),
-              tTxt: tweet.tTxt.toString(),
-              tDate: tweet.tDateTime.toString(),
-              tLikes: tweet.tLikes.toString(),
-              tComments: tweet.tComments.toString(),
-              tUrl: tweet.tUrl.toString(),
-              isLiked: tweet.isLiked.toString(),
+            FutureBuilder(
+              future: getTweet(tId, logusername),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (tweetsList.isEmpty) {
+                  return SizedBox(
+                      height: 151,
+                      child: const Center(child: CircularProgressIndicator()));
+                } else {
+                  var tweet = tweetsList[0];
+                  return DiscussModel(
+                    tId: tweet.tId.toString(),
+                    fullname: tweet.fullname.toString(),
+                    username: tweet.username.toString(),
+                    tTxt: tweet.tTxt.toString(),
+                    tDate: tweet.tDateTime.toString(),
+                    tLikes: tweet.tLikes.toString(),
+                    tComments: tweet.tComments.toString(),
+                    tUrl: tweet.tUrl.toString(),
+                    isLiked: tweet.isLiked.toString(),
+                  );
+                }
+              },
             ),
             Container(
               color: Colors.grey,
@@ -89,27 +102,26 @@ class TweetPageState extends State<TweetPage> {
               child: Container(
                 color: defaultBgColor(),
                 child: FutureBuilder(
-                  future: getTweets(),
+                  future: getComments(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (tweetsList.isEmpty) {
+                    if (commentsList.isEmpty) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
                       return ListView.builder(
                           padding: const EdgeInsets.only(
                               bottom: 10, left: 10, right: 10),
-                          itemCount: tweetsList.length,
+                          itemCount: commentsList.length,
                           itemBuilder: (context, index) {
-                            var tweet = tweetsList[index];
+                            var tweet = commentsList[index];
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => TweetPage(
-                                              tId: tweet.tId.toString(),
-                                              tweetsModel: tweet,
+                                              tId: tweet.tId.toString()
                                             ))).then((value) => setState(() {
-                                      _refresh();
+                                      _refreshComments();
                                     }));
                               },
                               child: Container(
@@ -145,9 +157,10 @@ class TweetPageState extends State<TweetPage> {
     );
   }
 
-  Future<List<TweetsModel>> getTweets() async {
-    final response = await http
-        .get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+  Future<List<TweetsModel>> getTweet(int t_id, String username) async{
+
+    final response =
+    await http.get(Uri.parse('$globalApiUrl/tweets/tweet?username=${username}&t_id=${t_id}'));
     var data = jsonDecode(response.body);
     if (response.statusCode == 200) {
       for (Map i in data) {
@@ -156,6 +169,20 @@ class TweetPageState extends State<TweetPage> {
       return tweetsList;
     } else {
       return tweetsList;
+    }
+  }
+
+  Future<List<TweetsModel>> getComments() async {
+    final response = await http
+        .get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      for (Map i in data) {
+        commentsList.add(TweetsModel.fromJson(i));
+      }
+      return commentsList;
+    } else {
+      return commentsList;
     }
   }
 }

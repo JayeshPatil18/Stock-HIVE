@@ -58,7 +58,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
                   var tweet = tweetsList[index];
                   return GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString(), tweetsModel: tweet,)))
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
                       .then((value) => setState(() {
                         _refresh();
                       }));
