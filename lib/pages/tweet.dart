@@ -188,13 +188,17 @@ class TweetPageState extends State<TweetPage> {
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
                     ),
                     onPressed: () async {
-                      Future<bool> isReplied = askQuestion(tId, replyController.text);
-                      replyController.text = "";
-                      if(await isReplied){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Replied Successfully.')));
-                        _refresh();
+                      if(replyController.text.isNotEmpty){
+                        Future<bool> isReplied = askQuestion(tId, replyController.text);
+                        replyController.text = "";
+                        if(await isReplied){
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Replied Successfully.')));
+                          _refresh();
+                        }else{
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+                        }
                       }else{
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Enter your reply.')));
                       }
                     },
                     child: Text("Reply", style: TextStyle(color: Colors.white)),
