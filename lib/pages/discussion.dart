@@ -48,7 +48,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
         child: FutureBuilder(
           future: getTweets(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (tweetsList.isEmpty) {
+            if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             } else {
               return ListView.builder(

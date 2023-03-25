@@ -31,6 +31,8 @@ class TweetPageState extends State<TweetPage> {
   List<TweetsModel> tweetsList = [];
   List<TweetsModel> commentsList = [];
 
+  final replyController = TextEditingController();
+
   TweetPageState(String tId) {
     this.tId = int.parse(tId);
   }
@@ -44,14 +46,14 @@ class TweetPageState extends State<TweetPage> {
   }
 
   Future _refreshComments() async {
-    var list = await getComments();
+    var list = await getComments(tId, logusername);
     setState(() {
       commentsList.clear();
       commentsList = list;
     });
   }
 
-  _refresh() {
+  Future _refresh() async {
     _refreshTweets();
     _refreshComments();
   }
@@ -74,13 +76,13 @@ class TweetPageState extends State<TweetPage> {
       ),
       backgroundColor: Colors.white,
       body: RefreshIndicator(
-        onRefresh: _refreshComments,
+        onRefresh: _refresh,
         child: Column(
           children: [
             FutureBuilder(
               future: getTweet(tId, logusername),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (tweetsList.isEmpty) {
+                if (!snapshot.hasData) {
                   return SizedBox(
                       height: 151,
                       child: const Center(child: CircularProgressIndicator()));
@@ -108,9 +110,9 @@ class TweetPageState extends State<TweetPage> {
               child: Container(
                 color: defaultBgColor(),
                 child: FutureBuilder(
-                  future: getComments(),
+                  future: getComments(tId, logusername),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (commentsList.isEmpty) {
+                    if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
                       return ListView.builder(
@@ -157,6 +159,49 @@ class TweetPageState extends State<TweetPage> {
                 ),
               ),
             ),
+            Container(
+              padding: EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 0.5,
+                ),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: TextField(
+                        controller: replyController,
+                        decoration: InputDecoration(
+                          hintText: "Reply Tweet...",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                    onPressed: () async {
+                      Future<bool> isReplied = askQuestion(tId, replyController.text);
+                      replyController.text = "";
+                      if(await isReplied){
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Replied Successfully.')));
+                        _refresh();
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+                      }
+                    },
+                    child: Text("Reply", style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -167,6 +212,7 @@ class TweetPageState extends State<TweetPage> {
     final response =
     await http.get(Uri.parse('$globalApiUrl/tweets/tweet?username=${username}&t_id=${t_id}'));
     var data = jsonDecode(response.body);
+    tweetsList.clear();
     if (response.statusCode == 200) {
       for (Map i in data) {
         tweetsList.add(TweetsModel.fromJson(i));
@@ -177,10 +223,11 @@ class TweetPageState extends State<TweetPage> {
     }
   }
 
-  Future<List<TweetsModel>> getComments() async {
+  Future<List<TweetsModel>> getComments(int t_id, String username) async {
     final response = await http
-        .get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+        .get(Uri.parse('$globalApiUrl/tweets/comments?username=${username}&t_id=${t_id}'));
     var data = jsonDecode(response.body);
+    commentsList.clear();
     if (response.statusCode == 200) {
       for (Map i in data) {
         commentsList.add(TweetsModel.fromJson(i));
