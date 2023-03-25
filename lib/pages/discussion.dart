@@ -49,11 +49,11 @@ class _DiscussionPageState extends State<DiscussionPage>{
         child: FutureBuilder(
           future: getTweets(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Center(child: Text('Loading...'),);
+            if (tweetsList.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
             } else {
               return ListView.builder(
-                padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                 itemCount: tweetsList.length,
                 itemBuilder: (context, index) {
                   var tweet = tweetsList[index];
