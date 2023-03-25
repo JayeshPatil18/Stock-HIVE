@@ -24,7 +24,6 @@ class DiscussionPage extends StatefulWidget{
 
 class _DiscussionPageState extends State<DiscussionPage>{
   var elevationValue = 0.0;
-
   List<TweetsModel> tweetsList = [];
 
   Future _refresh() async{
