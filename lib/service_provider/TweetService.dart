@@ -23,19 +23,3 @@ Future<bool> updateLike(int t_id, String username) async{
     return false;
   }
 }
-
-Future<TweetsModel> getTweet(int t_id, String username) async{
-
-  final response =
-  await http.get(Uri.parse('$globalApiUrl/tweets/tweet?username=${username}&t_id=${t_id}'));
-  var data = jsonDecode(response.body);
-  List<TweetsModel>? tweet = [];
-  if (response.statusCode == 200) {
-    for (Map i in data) {
-      tweet.add(TweetsModel.fromJson(i));
-    }
-  } else {
-    tweet = null;
-  }
-  return tweet![0];
-}
