@@ -133,7 +133,7 @@ class RanksPageState extends State<RanksPage> {
     final response =
         await http.get(Uri.parse('$globalApiUrl/users/list'));
     var data = jsonDecode(response.body);
-
+    usersList.clear();
     if (response.statusCode == 200) {
       for (Map i in data) {
         usersList.add(UserModel.fromJson(i));
