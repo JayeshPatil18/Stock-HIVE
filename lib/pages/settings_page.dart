@@ -85,7 +85,7 @@ class EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    getProfileInfo();
+    getProfileInfo(logusername);
   }
 
   Future _uploadFile(String path) async{
@@ -271,8 +271,8 @@ class EditProfileState extends State<EditProfile> {
     }
   }
 
-  void getProfileInfo() async{
-    final url = Uri.parse('$globalApiUrl/users/info?username=${logusername}');
+  void getProfileInfo(String username) async{
+    final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
     final response = await http.get(url);
 
     final jsonData = jsonDecode(response.body);

@@ -37,7 +37,7 @@ class RanksPageState extends State<RanksPage> {
         future: getUsers(),
         builder: (context, snapshot){
           if(!snapshot.hasData){
-            return Center(child: Text('Loading...'),);
+            return const Center(child: CircularProgressIndicator());
           }else{
             return ScrollablePositionedList.builder(
                 padding: EdgeInsets.all(4),

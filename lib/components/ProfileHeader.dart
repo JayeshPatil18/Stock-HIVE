@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stock_prediction/data_models/UserModel.dart';
 
 import '../color_helper/defaultColor.dart';
+import '../data_models/TweetsModel.dart';
 import '../font_helper/default_fonts.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
@@ -17,276 +19,296 @@ class ProfileHeader extends StatefulWidget{
 }
 
 class ProfileHeaderState extends State<ProfileHeader>{
+  List<UserModel> usersList = [];
   var elevationValue = 0.0;
 
   String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
   final Reference storageRef = FirebaseStorage.instance.ref().child('profile_imgs');
 
+  int maxStarCount = 5;
+
   var imgUrl;
   File? _imageFile;
   final picker = ImagePicker();
 
-  @override
-  void initState() {
-    getProfileImg();
+  Future _refresh() async {
+    var list = await getProfileInfo(logusername);
+    setState(() {
+      usersList.clear();
+      usersList = list;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.all(20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    pickSource();
-                  },
-                  child: Stack(children: [
-                    _imageFile != null ? CircleAvatar(
-                      backgroundImage: FileImage(_imageFile!),
-                      radius: 50,
-                    ) :
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(profileUrl),
-                      radius: 50,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white, // Set the background color of the icon
-                            shape: BoxShape.circle, // Set the shape of the background to a circle
-                          ),
-                          child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
-                    ),
-                  ]),
-                ),
-                Expanded(
-                  child: Container(
-                      margin: EdgeInsets.only(left: 20),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: starColor(),
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: starColor(),
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: starColor(),
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: defaultBgColor(),
-                              ),
-                              Icon(
-                                Icons.star,
-                                color: defaultBgColor(),
-                              ),
-                            ],
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(top: 6),
-                              alignment: Alignment.topLeft,
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: FutureBuilder(
+        future: getProfileInfo(logusername),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (!snapshot.hasData) {
+            return Container(
+              color: Colors.white,
+                height: 223,
+                child: const Center(child: CircularProgressIndicator()));
+          } else {
+            var user = usersList[0];
+            int? starCount = user.uStarcount;
+            return Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            pickSource();
+                          },
+                          child: Stack(children: [
+                            user.uProfileurl.toString() != "img_url"
+                                ? CircleAvatar(
+                              backgroundImage: NetworkImage(user.uProfileurl.toString()),
+                              radius: 50,
+                            )
+                                : const CircleAvatar(
+                              backgroundImage:
+                              AssetImage("assets/icons/default_avatar.jpg"),
+                              radius: 50,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white, // Set the background color of the icon
+                                    shape: BoxShape.circle, // Set the shape of the background to a circle
+                                  ),
+                                  child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
+                            ),
+                          ]),
+                        ),
+                        Expanded(
+                          child: Container(
+                              margin: EdgeInsets.only(left: 20),
                               child: Column(
                                 children: [
-                                  Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text('Jayesh Patil',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline1!
-                                              .copyWith(fontSize: 25))),
-                                  Container(
-                                      alignment: Alignment.topLeft,
+                                Container(
+                                height: 22,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: maxStarCount,
+                                  itemBuilder: (context, index) {
+                                    if(index < starCount!){
+                                      return Icon(
+                                        Icons.star,
+                                        color: starColor(),
+                                      );
+                                    }else{
+                                      return Icon(
+                                        Icons.star,
+                                        color: defaultBgColor(),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                              Container(
                                       margin: EdgeInsets.only(top: 6),
-                                      child: Text('@username',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(fontSize: 16)))
+                                      alignment: Alignment.topLeft,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                              alignment: Alignment.topLeft,
+                                              child: Text('${user.uFullname}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline1!
+                                                      .copyWith(fontSize: 25))),
+                                          Container(
+                                              alignment: Alignment.topLeft,
+                                              margin: EdgeInsets.only(top: 6),
+                                              child: Text('${user.username}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .subtitle2!
+                                                      .copyWith(fontSize: 16)))
+                                        ],
+                                      )),
                                 ],
                               )),
-                        ],
-                      )),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 20),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    elevation: 4,
-                    margin: EdgeInsets.only(left: 10, right: 5),
-                    color: Colors.white,
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.account_balance_wallet_outlined,
-                                    size: 16,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 4),
-                                    child: Text(
-                                      'Revenue',
-                                      style: textStyleSubTitle(
-                                          textColor: Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '1000',
-                                style: textStyleDefault(
-                                    textColor: Colors.black),
-                              ),
-                              Icon(
-                                Icons.currency_rupee,
-                                color: Colors.black,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    elevation: 4,
-                    margin: EdgeInsets.only(left: 5, right: 5),
-                    color: Colors.white,
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 4,
+                            margin: EdgeInsets.only(left: 10, right: 5),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    Icons.card_giftcard,
-                                    size: 16,
-                                  ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 4),
-                                    child: Text(
-                                      'Points',
-                                      style: textStyleSubTitle(
-                                          textColor: Colors.black),
-                                    ),
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.account_balance_wallet_outlined,
+                                            size: 16,
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4),
+                                            child: Text(
+                                              'Revenue',
+                                              style: textStyleSubTitle(
+                                                  textColor: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '${user.uRevenue}',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                      Icon(
+                                        Icons.currency_rupee,
+                                        color: Colors.black,
+                                      )
+                                    ],
                                   ),
                                 ],
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '1000',
-                                style: textStyleDefault(
-                                    textColor: Colors.black),
                               ),
-                            ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    elevation: 4,
-                    margin: EdgeInsets.only(left: 5, right: 10),
-                    color: Colors.white,
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(bottom: 4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Expanded(
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 4,
+                            margin: EdgeInsets.only(left: 5, right: 5),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    Icons.leaderboard_outlined,
-                                    size: 16,
-                                  ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 4),
-                                    child: Text(
-                                      'Rank',
-                                      style: textStyleSubTitle(
-                                          textColor: Colors.black),
-                                    ),
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.card_giftcard,
+                                            size: 16,
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4),
+                                            child: Text(
+                                              'Points',
+                                              style: textStyleSubTitle(
+                                                  textColor: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '${user.uPoints}',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              )),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '#',
-                                style: textStyleDefault(
-                                    textColor: Colors.black),
                               ),
-                              Text(
-                                '1000',
-                                style: textStyleDefault(
-                                    textColor: Colors.black),
-                              ),
-                            ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 4,
+                            margin: EdgeInsets.only(left: 5, right: 10),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.leaderboard_outlined,
+                                            size: 16,
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4),
+                                            child: Text(
+                                              'Rank',
+                                              style: textStyleSubTitle(
+                                                  textColor: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '#',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                      Text(
+                                        '${user.uRank}',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -348,20 +370,18 @@ class ProfileHeaderState extends State<ProfileHeader>{
     );
   }
 
-
-
-  void getProfileImg() async{
-    final url = Uri.parse('$globalApiUrl/users/info');
-    final headers = {'Content-Type': 'application/json'};
-    final body = json.encode({
-      'username': logusername
-    });
-    final response = await http.post(url, headers: headers, body: body);
-
-    final jsonData = jsonDecode(response.body);
-
-    setState(() {
-      profileUrl = jsonData[0]['u_profileurl'];
-    });
+  Future<List<UserModel>> getProfileInfo(String username) async{
+    final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
+    final response = await http.get(url);
+    final data = jsonDecode(response.body);
+    usersList.clear();
+    if (response.statusCode == 200) {
+      for (Map i in data) {
+        usersList.add(UserModel.fromJson(i));
+      }
+      return usersList;
+    } else {
+      return usersList;
+    }
   }
 }
