@@ -120,6 +120,15 @@ class TweetPageState extends State<TweetPage> {
                               bottom: 10, left: 10, right: 10),
                           itemCount: commentsList.length,
                           itemBuilder: (context, index) {
+                            commentsList.sort((a, b) {
+                              if (a.username == logusername && b.username != logusername) {
+                                return -1;
+                              } else if (a.username != logusername && b.username == logusername) {
+                                return 1;
+                              } else {
+                                return 0;
+                              }
+                            });
                             var tweet = commentsList[index];
                             return GestureDetector(
                               onTap: () {
