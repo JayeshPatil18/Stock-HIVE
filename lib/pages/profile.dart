@@ -221,6 +221,11 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void navigateToEditPage(int index) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => SettingPage(index)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -322,8 +327,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingPage(0)));
+                    navigateToEditPage(0);
                   },
                   child: Container(
                       color: Colors.white,
@@ -363,8 +367,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingPage(1)));
+                    navigateToEditPage(1);
                   },
                   child: Container(
                       color: Colors.white,
@@ -404,8 +407,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingPage(2)));
+                    navigateToEditPage(2);
                   },
                   child: Container(
                       color: Colors.white,
@@ -445,8 +447,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingPage(3)));
+                    navigateToEditPage(3);
                   },
                   child: Container(
                       color: Colors.white,
@@ -486,8 +487,7 @@ class ProfilePageState extends State<ProfilePage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingPage(4)));
+                    navigateToEditPage(4);
                   },
                   child: Container(
                       color: Colors.white,
@@ -606,316 +606,316 @@ class ProfilePageState extends State<ProfilePage> {
               return [
                 SliverList(
                   delegate: SliverChildListDelegate(
-                    [
-                      Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.all(20),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      pickSource();
-                                    },
-                                    child: Stack(children: [
-                                      _imageFile != null ? CircleAvatar(
-                                        backgroundImage: FileImage(_imageFile!),
-                                        radius: 50,
-                                      ) :
-                                      CircleAvatar(
-                                        backgroundImage: NetworkImage(profileUrl),
-                                        radius: 50,
-                                      ),
-                                      Positioned(
-                                        bottom: 0,
-                                        right: 0,
+                      [
+                        Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                margin: EdgeInsets.all(20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        pickSource();
+                                      },
+                                      child: Stack(children: [
+                                        _imageFile != null ? CircleAvatar(
+                                          backgroundImage: FileImage(_imageFile!),
+                                          radius: 50,
+                                        ) :
+                                        CircleAvatar(
+                                          backgroundImage: NetworkImage(profileUrl),
+                                          radius: 50,
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white, // Set the background color of the icon
+                                                shape: BoxShape.circle, // Set the shape of the background to a circle
+                                              ),
+                                              child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
+                                        ),
+                                      ]),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                          margin: EdgeInsets.only(left: 20),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: starColor(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: starColor(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: starColor(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: defaultBgColor(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: defaultBgColor(),
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                  margin: EdgeInsets.only(top: 6),
+                                                  alignment: Alignment.topLeft,
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                          alignment: Alignment.topLeft,
+                                                          child: Text('Jayesh Patil',
+                                                              style: Theme.of(context)
+                                                                  .textTheme
+                                                                  .headline1!
+                                                                  .copyWith(fontSize: 25))),
+                                                      Container(
+                                                          alignment: Alignment.topLeft,
+                                                          margin: EdgeInsets.only(top: 6),
+                                                          child: Text('@username',
+                                                              style: Theme.of(context)
+                                                                  .textTheme
+                                                                  .subtitle2!
+                                                                  .copyWith(fontSize: 16)))
+                                                    ],
+                                                  )),
+                                            ],
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 20),
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        elevation: 4,
+                                        margin: EdgeInsets.only(left: 10, right: 5),
+                                        color: Colors.white,
                                         child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white, // Set the background color of the icon
-                                              shape: BoxShape.circle, // Set the shape of the background to a circle
-                                            ),
-                                            child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
+                                          padding: EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.only(bottom: 4),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.account_balance_wallet_outlined,
+                                                        size: 16,
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(left: 4),
+                                                        child: Text(
+                                                          'Revenue',
+                                                          style: textStyleSubTitle(
+                                                              textColor: Colors.black),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '1000',
+                                                    style: textStyleDefault(
+                                                        textColor: Colors.black),
+                                                  ),
+                                                  Icon(
+                                                    Icons.currency_rupee,
+                                                    color: Colors.black,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ]),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                        margin: EdgeInsets.only(left: 20),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Icon(
-                                                  Icons.star,
-                                                  color: starColor(),
-                                                ),
-                                                Icon(
-                                                  Icons.star,
-                                                  color: starColor(),
-                                                ),
-                                                Icon(
-                                                  Icons.star,
-                                                  color: starColor(),
-                                                ),
-                                                Icon(
-                                                  Icons.star,
-                                                  color: defaultBgColor(),
-                                                ),
-                                                Icon(
-                                                  Icons.star,
-                                                  color: defaultBgColor(),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                                margin: EdgeInsets.only(top: 6),
-                                                alignment: Alignment.topLeft,
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                        alignment: Alignment.topLeft,
-                                                        child: Text('Jayesh Patil',
-                                                            style: Theme.of(context)
-                                                                .textTheme
-                                                                .headline1!
-                                                                .copyWith(fontSize: 25))),
-                                                    Container(
-                                                        alignment: Alignment.topLeft,
-                                                        margin: EdgeInsets.only(top: 6),
-                                                        child: Text('@username',
-                                                            style: Theme.of(context)
-                                                                .textTheme
-                                                                .subtitle2!
-                                                                .copyWith(fontSize: 16)))
-                                                  ],
-                                                )),
-                                          ],
-                                        )),
-                                  )
-                                ],
+                                    ),
+                                    Expanded(
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        elevation: 4,
+                                        margin: EdgeInsets.only(left: 5, right: 5),
+                                        color: Colors.white,
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.only(bottom: 4),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.card_giftcard,
+                                                        size: 16,
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(left: 4),
+                                                        child: Text(
+                                                          'Points',
+                                                          style: textStyleSubTitle(
+                                                              textColor: Colors.black),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '1000',
+                                                    style: textStyleDefault(
+                                                        textColor: Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        elevation: 4,
+                                        margin: EdgeInsets.only(left: 5, right: 10),
+                                        color: Colors.white,
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.only(bottom: 4),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.leaderboard_outlined,
+                                                        size: 16,
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(left: 4),
+                                                        child: Text(
+                                                          'Rank',
+                                                          style: textStyleSubTitle(
+                                                              textColor: Colors.black),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '#',
+                                                    style: textStyleDefault(
+                                                        textColor: Colors.black),
+                                                  ),
+                                                  Text(
+                                                    '1000',
+                                                    style: textStyleDefault(
+                                                        textColor: Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(bottom: 20),
-                              width: double.infinity,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      elevation: 4,
-                                      margin: EdgeInsets.only(left: 10, right: 5),
-                                      color: Colors.white,
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                                margin: EdgeInsets.only(bottom: 4),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.account_balance_wallet_outlined,
-                                                      size: 16,
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(left: 4),
-                                                      child: Text(
-                                                        'Revenue',
-                                                        style: textStyleSubTitle(
-                                                            textColor: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  '1000',
-                                                  style: textStyleDefault(
-                                                      textColor: Colors.black),
-                                                ),
-                                                Icon(
-                                                  Icons.currency_rupee,
-                                                  color: Colors.black,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      elevation: 4,
-                                      margin: EdgeInsets.only(left: 5, right: 5),
-                                      color: Colors.white,
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                                margin: EdgeInsets.only(bottom: 4),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.card_giftcard,
-                                                      size: 16,
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(left: 4),
-                                                      child: Text(
-                                                        'Points',
-                                                        style: textStyleSubTitle(
-                                                            textColor: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  '1000',
-                                                  style: textStyleDefault(
-                                                      textColor: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      elevation: 4,
-                                      margin: EdgeInsets.only(left: 5, right: 10),
-                                      color: Colors.white,
-                                      child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                                margin: EdgeInsets.only(bottom: 4),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.leaderboard_outlined,
-                                                      size: 16,
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(left: 4),
-                                                      child: Text(
-                                                        'Rank',
-                                                        style: textStyleSubTitle(
-                                                            textColor: Colors.black),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  '#',
-                                                  style: textStyleDefault(
-                                                      textColor: Colors.black),
-                                                ),
-                                                Text(
-                                                  '1000',
-                                                  style: textStyleDefault(
-                                                      textColor: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ]
+                      ]
                   ),
                 )
               ];
             },
             body: Container(
-                color: Colors.transparent,
-                child: Column(
-                  children: [
-                    Container(
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            height: 40,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(width: 2,
-                                    color: Colors.black),
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: TabBar(
-                                indicator: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(20)
-                                ),
-                                labelColor: Colors.white,
-                                unselectedLabelColor: Colors.black,
-                                tabs: [
-                                  Tab(text: "Tweets",),
-                                  Tab(text: "Replies",),
-                                  Tab(text: "Likes",),
-                                ]),
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 2,
+                                  color: Colors.black),
+                              borderRadius: BorderRadius.circular(20)
                           ),
-                          Container(
-                            color: Colors.grey,
-                            height: 0.3,
-                          )
-                        ],
-                      ),
+                          child: TabBar(
+                              indicator: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              labelColor: Colors.white,
+                              unselectedLabelColor: Colors.black,
+                              tabs: [
+                                Tab(text: "Tweets",),
+                                Tab(text: "Replies",),
+                                Tab(text: "Likes",),
+                              ]),
+                        ),
+                        Container(
+                          color: Colors.grey,
+                          height: 0.3,
+                        )
+                      ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          TweetsTab(),
-                          RepliesTab(),
-                          LikesTab()
-                        ],
-                      ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        TweetsTab(),
+                        RepliesTab(),
+                        LikesTab()
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
           ),
         ),
       ),
@@ -950,15 +950,15 @@ class ProfilePageState extends State<ProfilePage> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         builder: (context) => DraggableScrollableSheet(
-              expand: false,
-              initialChildSize: 0.80,
-              maxChildSize: 0.96,
-              minChildSize: 0.60,
-              builder: (context, scrollContoller) => SingleChildScrollView(
-                controller: scrollContoller,
-                child: sectionDialog[TabSection1State.currentIndex],
-              ),
-            ));
+          expand: false,
+          initialChildSize: 0.80,
+          maxChildSize: 0.96,
+          minChildSize: 0.60,
+          builder: (context, scrollContoller) => SingleChildScrollView(
+            controller: scrollContoller,
+            child: sectionDialog[TabSection1State.currentIndex],
+          ),
+        ));
   }
 
   void showDialogAsk(BuildContext context){
