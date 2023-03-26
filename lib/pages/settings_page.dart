@@ -80,12 +80,12 @@ class EditProfileState extends State<EditProfile> {
 
   String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
-  final nameController = TextEditingController(text: logfullname);
+  final nameController = TextEditingController();
   final usernameController = TextEditingController(text: logusername);
 
   @override
   void initState() {
-    getProfileImg();
+    getProfileInfo();
   }
 
   Future _uploadFile(String path) async{
@@ -271,22 +271,18 @@ class EditProfileState extends State<EditProfile> {
     }
   }
 
-  void getProfileImg() async{
-    final url = Uri.parse('$globalApiUrl/users/info');
-    final headers = {'Content-Type': 'application/json'};
-    final body = json.encode({
-      'username': logusername
-    });
-    final response = await http.post(url, headers: headers, body: body);
+  void getProfileInfo() async{
+    final url = Uri.parse('$globalApiUrl/users/info?username=${logusername}');
+    final response = await http.get(url);
 
     final jsonData = jsonDecode(response.body);
 
     setState(() {
       profileUrl = jsonData[0]['u_profileurl'];
+      nameController.text = jsonData[0]['u_fullname'];
     });
   }
 }
-
 
 class ChangePhoneNum extends StatefulWidget {
   @override
