@@ -76,9 +76,14 @@ class RanksPageState extends State<RanksPage> {
                               margin: EdgeInsets.only(right: 10),
                               width: 80,
                               height: 80,
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s"),
+                              child: user.uProfileurl.toString() != "img_url"
+                                  ? CircleAvatar(
+                                backgroundImage: NetworkImage(user.uProfileurl.toString()),
+                                radius: 40,
+                              )
+                                  : const CircleAvatar(
+                                backgroundImage:
+                                AssetImage("assets/icons/default_avatar.jpg"),
                                 radius: 40,
                               ),
                             ),
