@@ -9,6 +9,7 @@ import 'package:stock_prediction/pages/tweet.dart';
 import '../components/discussModel.dart';
 import '../components/queModel.dart';
 import '../data_models/TweetsModel.dart';
+import '../dialgo_boxs/askQuestionDialogBox.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../dialgo_boxs/predictDialogBox.dart';
 import '../font_helper/default_fonts.dart';
@@ -52,7 +53,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
               return const Center(child: CircularProgressIndicator());
             } else {
               return ListView.builder(
-                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
                 itemCount: tweetsList.length,
                 itemBuilder: (context, index) {
                   var tweet = tweetsList[index];
@@ -80,6 +81,14 @@ class _DiscussionPageState extends State<DiscussionPage>{
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () {
+          showDialogAsk(context);
+          _refresh();
+        },
+        child: Icon(Icons.edit, color: Colors.white),
+      ),
     );
   }
 
@@ -97,7 +106,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
     }
   }
 
-  void showDialogDiscuss(BuildContext context) {
+  void showDialogAsk(BuildContext context){
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -113,7 +122,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
           minChildSize: 0.60,
           builder: (context, scrollContoller) => SingleChildScrollView(
             controller: scrollContoller,
-            child: DiscussDialogBox(),
+            child: AskQueDialogBox(),
           ),
         ));
   }
