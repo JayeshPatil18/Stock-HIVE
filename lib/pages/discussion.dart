@@ -85,7 +85,6 @@ class _DiscussionPageState extends State<DiscussionPage>{
         backgroundColor: Colors.black,
         onPressed: () {
           showDialogAsk(context);
-          _refresh();
         },
         child: Icon(Icons.edit, color: Colors.white),
       ),
@@ -96,6 +95,7 @@ class _DiscussionPageState extends State<DiscussionPage>{
     final response =
     await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
     var data = jsonDecode(response.body);
+    tweetsList.clear();
     if (response.statusCode == 200) {
       for (Map i in data) {
         tweetsList.add(TweetsModel.fromJson(i));
