@@ -17,45 +17,41 @@ class MyGamePage extends StatelessWidget{
       length: 2,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 10, right: 10),
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 2,
-                          color: Colors.black),
+        body: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 10),
+              height: 40,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 2,
+                      color: Colors.black),
+                  borderRadius: BorderRadius.circular(20)
+              ),
+              child: TabBar(
+                  indicator: BoxDecoration(
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(20)
                   ),
-                  child: TabBar(
-                      indicator: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20)
-                      ),
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        Tab(text: "Predict",),
-                        Tab(text: "Contest",),
-                      ]),
-                ),
-
-                Expanded(child: Container(
-                  color: defaultBgColor(),
-                  margin: EdgeInsets.only(top: 10),
-                  child: TabBarView(
-                    children: [
-                      predictTab(),
-                      contestTab(),
-                    ],
-                  ),
-                ))
-              ],
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  tabs: [
+                    Tab(text: "Predict",),
+                    Tab(text: "Contest",),
+                  ]),
             ),
-          ),
+
+            Expanded(child: Container(
+              color: defaultBgColor(),
+              margin: EdgeInsets.only(top: 10),
+              child: TabBarView(
+                children: [
+                  predictTab(),
+                  contestTab(),
+                ],
+              ),
+            ))
+          ],
         ),
       ),
     );
