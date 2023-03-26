@@ -102,9 +102,17 @@ class CommentModelState extends State<CommentModel> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                fullname,
-                                style: textTweetName(),
+                              Row(
+                                children: [
+                                  Text(
+                                    fullname,
+                                    style: textTweetName(),
+                                  ),
+                                  Text(
+                                    ' • Replying',
+                                    style: textTweetReplying(),
+                                  ),
+                                ],
                               ),
                               Text(
                                 username,

@@ -55,3 +55,7 @@ TextStyle textTweetUsername({Color textColor = Colors.black}){
 TextStyle textTweetDate({Color textColor = Colors.black}){
   return TextStyle(fontSize: 13, color: textColor);
 }
+
+TextStyle textTweetReplying({Color textColor = Colors.grey}){
+  return TextStyle(fontSize: 16, color: textColor);
+}

@@ -68,7 +68,7 @@ class TweetsTabState extends State<TweetsTab>{
 
   Future<List<TweetsModel>> getTweets() async {
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/tweets?username=${logusername}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {
@@ -116,7 +116,7 @@ class RepliesTabState extends State<RepliesTab>{
                 var tweet = tweetsList[index];
                 return GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tParent.toString())))
                         .then((value) => setState(() {
                       _refresh();
                     }));
@@ -141,7 +141,7 @@ class RepliesTabState extends State<RepliesTab>{
 
   Future<List<TweetsModel>> getTweets() async {
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/comments?username=${logusername}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {
@@ -214,7 +214,7 @@ class LikesTabState extends State<LikesTab>{
 
   Future<List<TweetsModel>> getTweets() async {
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/likes?username=${logusername}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {

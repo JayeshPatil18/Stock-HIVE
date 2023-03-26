@@ -9,6 +9,7 @@ class TweetsModel {
       this.tComments,
       this.tUrl,
       this.isLiked,
+      this.tParent,
   });
 
   TweetsModel.fromJson(dynamic json) {
@@ -21,6 +22,7 @@ class TweetsModel {
     tComments = json['t_comments'];
     tUrl = json['u_profileurl'];
     isLiked = json['is_liked'];
+    tParent = json['t_parent'];
   }
   int? tId;
   String? fullname;
@@ -31,6 +33,7 @@ class TweetsModel {
   int? tComments;
   String? tUrl;
   int? isLiked;
+  int? tParent;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -43,6 +46,7 @@ class TweetsModel {
     map['t_comments'] = tComments;
     map['u_profileurl'] = tUrl;
     map['is_liked'] = isLiked;
+    map['t_parent'] = tParent;
     return map;
   }
 
