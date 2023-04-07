@@ -18,6 +18,9 @@ class SignInState extends State<SignIn> {
   bool _passwordVisible = true;
   bool _obscureText = true;
 
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   String phoneNo = "";
 
   @override
@@ -37,28 +40,24 @@ class SignInState extends State<SignIn> {
                 Container(
                     margin: EdgeInsets.only(top: 20, bottom: 50),
                     child: Text('Sign In Now', style: textBig())),
-                IntlPhoneField(
+                TextField(
+                  controller: usernameController,
                   decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                  ),
-
-                  initialCountryCode: 'IN',
-                  onChanged: (phone) {
-                    phoneNo = phone.completeNumber;
-                  },
+                      labelText: 'Username',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth))),
                 ),
                 SizedBox(
                   height: 25,
                 ),
                 TextField(
+                  controller: passwordController,
                   obscureText: _obscureText,
                   decoration: InputDecoration(
                       suffixIcon: IconButton(onPressed: (){
