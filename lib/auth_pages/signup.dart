@@ -57,6 +57,7 @@ class SignUpState extends State<SignUp>{
                   TextFormField(
                     controller: nameController,
                     validator: (String? msg){
+                      msg = msg?.trim();
                       if(msg!.isEmpty){
                         return "Please enter name";
                       }if(msg.length > 50){
@@ -82,6 +83,7 @@ class SignUpState extends State<SignUp>{
                   TextFormField(
                     controller: usernameController,
                     validator: (String? msg){
+                      msg = msg?.trim();
                       if(msg!.isEmpty){
                         return "Please enter Username";
                       }if(msg.length > 50){
@@ -177,9 +179,9 @@ class SignUpState extends State<SignUp>{
 
                             if(isValid){
 
-                            name = nameController.text;
-                            username = usernameController.text;
-                            phoneNo = phoneNo;
+                            name = nameController.text.trim();
+                            username = usernameController.text.trim();
+                            phoneNo = phoneNo.trim();
                             password = passwordController.text;
 
                               // Verification Code sending
@@ -200,8 +202,6 @@ class SignUpState extends State<SignUp>{
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           VerifyUser(name: name, username: username, phoneNo: phoneNo, password: password,)));
-                            }else{
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Input')));
                             }
                           },
                           child: Text(

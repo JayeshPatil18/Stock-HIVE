@@ -21,6 +21,8 @@ class SignInState extends State<SignIn> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  var _myFormKey = GlobalKey<FormState>();
+
   String phoneNo = "";
 
   @override
@@ -34,106 +36,130 @@ class SignInState extends State<SignIn> {
       body: SingleChildScrollView(
           padding: EdgeInsets.only(top: 80, bottom: 40, left: 40, right: 40),
           child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 50),
-                    child: Text('Sign In Now', style: textBig())),
-                TextField(
-                  controller: usernameController,
-                  decoration: InputDecoration(
-                      labelText: 'Username',
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth))),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                TextField(
-                  controller: passwordController,
-                  obscureText: _obscureText,
-                  decoration: InputDecoration(
-                      suffixIcon: IconButton(onPressed: (){
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                          _obscureText = !_obscureText;
-                        });
-                      }, icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off
-                      )),
-                      labelText: 'Password',
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(13),
-                          borderSide: BorderSide(
-                              color: Colors.black, width: boarderWidth))),
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
-                      },
-                        child: Text("Forgot Password?", textAlign: TextAlign.center)),
+            child: Form(
+              key: _myFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(top: 20, bottom: 50),
+                      child: Text('Sign In Now', style: textBig())),
+                  TextFormField(
+                    controller: usernameController,
+                    validator: (String? msg){
+                      msg = msg?.trim();
+                      if(msg!.isEmpty){
+                        return "Please enter Username";
+                      }else{
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Username',
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: BorderSide(
+                                color: Colors.black, width: boarderWidth)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: BorderSide(
+                                color: Colors.black, width: boarderWidth))),
+                                
                   ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                    height: 50,
-                    width: double.infinity,
-                    margin: EdgeInsets.only(bottom: 60),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(13))),
-                        onPressed: () {
-                          Navigator.of(context).popUntil((route) => route.isFirst);
-
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyHomePage(title: 'Home Page')));
+                  SizedBox(
+                    height: 25,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: _obscureText,
+                    validator: (String? msg){
+                      if(msg!.isEmpty){
+                        return "Please enter Password";
+                      }else{
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(onPressed: (){
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                            _obscureText = !_obscureText;
+                          });
+                        }, icon: Icon(
+                            _passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off
+                        )),
+                        labelText: 'Password',
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: BorderSide(
+                                color: Colors.black, width: boarderWidth)),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            borderSide: BorderSide(
+                                color: Colors.black, width: boarderWidth))),
+                  ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
                         },
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 18),
-                        ))),
-                Text("Don't have an account?"),
-                Container(
-                  height: 4,
-                ),
-                InkWell(
-                  onTap: (){
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
-                  },
-                  child: Text(
-                    "Sign Up",
-                    style: textStyleLeader(),
+                          child: Text("Forgot Password?", textAlign: TextAlign.center)),
+                    ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                      height: 50,
+                      width: double.infinity,
+                      margin: EdgeInsets.only(bottom: 60),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13))),
+                          onPressed: () {
+
+                            bool isValid = _myFormKey.currentState!.validate();
+
+                            if(isValid){
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+            
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyHomePage(title: 'Home Page')));
+                            }
+                          },
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 18),
+                          ))),
+                  Text("Don't have an account?"),
+                  Container(
+                    height: 4,
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => SignUp()));
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: textStyleLeader(),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

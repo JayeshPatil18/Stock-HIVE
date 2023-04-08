@@ -197,22 +197,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
     ];
 
-    final iconItems = <Widget>[
-      Icon(
-        Icons.home,
-        size: 30,
-      ),
-      Icon(
-        Icons.search,
-        size: 30,
-      ),
-      ImageIcon(AssetImage('assets/icons/sPrediction.png'), size: 30,),
-      ImageIcon(AssetImage('assets/icons/rank2.png'), size: 28,),
-      Icon(
-        Icons.person,
-        size: 30,
-      ),
-    ];
 
     return Scaffold(
       backgroundColor: defaultBgColor(),

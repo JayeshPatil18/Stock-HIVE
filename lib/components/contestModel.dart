@@ -349,7 +349,7 @@ class SortCardState extends State<SortCard> {
             margin: EdgeInsets.only(top: 20),
             child: OutlinedButton(
               onPressed: (){
-                _updateSelectedValue(1!);
+                _updateSelectedValue(1);
                 Timer(Duration(milliseconds: _closeDelay), () {
                   Navigator.pop(context);
                 });
