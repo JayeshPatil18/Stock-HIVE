@@ -58,9 +58,23 @@ class SplashPageState extends State<SplashPage> {
   static const String KEY_LOGIN_DETAILS = "isLogin";
 
   @override
-  void initState() async {
+  void initState() {
+    super.initState();
+    logInPageSkip();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('Splash'),
+      ),
+    );
+  }
+
+  void logInPageSkip() async {
     var shardPref = await SharedPreferences.getInstance();
-    var isLoggedIn = shardPref.getBool(KEY_LOGIN);
+    var isLoggedIn = shardPref.getBool(SplashPageState.KEY_LOGIN);
 
     Timer(Duration(seconds: 1), () {
       if (isLoggedIn != null) {
@@ -75,20 +89,11 @@ class SplashPageState extends State<SplashPage> {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => WelcomePage()));
         }
-      } else{
+      } else {
         Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => WelcomePage()));
+            context, MaterialPageRoute(builder: (context) => WelcomePage()));
       }
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Splash'),
-      ),
-    );
   }
 }
 

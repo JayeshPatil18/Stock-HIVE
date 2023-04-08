@@ -139,7 +139,7 @@ class SignInState extends State<SignIn> {
                             username = usernameController.text.trim();
                             password = passwordController.text;
 
-                            Future<int> result = logIn(username, password);
+                            int result = await logIn(username, password);
 
                             if (result == 200) {
                               // successful loggedIn
@@ -232,7 +232,7 @@ class SignInState extends State<SignIn> {
         // already logged
         return 10;
       } else if (response.statusCode == 401 &&
-          data['message'] == "invalid credential") {
+          data['message'] == "invalid credentials") {
         // invalid credential
         return 1;
       } else if (response.statusCode == 404 &&

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/auth_pages/signup.dart';
+import 'package:stock_prediction/auth_pages/welcome_page.dart';
 import 'package:stock_prediction/font_helper/default_fonts.dart';
 import 'package:stock_prediction/main.dart';
 import 'package:http/http.dart' as http;
@@ -126,13 +127,11 @@ class VerifyUserState extends State<VerifyUser> {
 
                             createUser();
 
-                            Navigator.of(context).popUntil((route) => route.isFirst);
-
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        MyHomePage(title: 'Home Page')));
+                                        WelcomePage()));
 
                           }catch(e){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Verification Code')));
