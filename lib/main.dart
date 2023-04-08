@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock_prediction/pages/discussion.dart';
 import 'package:stock_prediction/pages/home.dart';
 import 'package:stock_prediction/pages/my_games.dart';
@@ -19,8 +20,7 @@ String globalApiUrl = "https://project-api-jayesh.onrender.com";
 String logusername = "jeet49";
 var appBarElevation = 0.5;
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -37,34 +37,47 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.grey,
           textTheme: TextTheme(
-            headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-            subtitle2: TextStyle(fontSize: 12 ),
-          )
-      ),
+            headline1: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+            subtitle2: TextStyle(fontSize: 12),
+          )),
       home: SplashPage(),
     );
   }
 }
 
-class SplashPage extends StatefulWidget{
+class SplashPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return SplashPageState();
   }
-
 }
 
-class SplashPageState extends State<SplashPage>{
+class SplashPageState extends State<SplashPage> {
+  static const String KEY_LOGIN = "isLogin";
+  static const String KEY_LOGIN_DETAILS = "isLogin";
+
   @override
-  void initState() {
+  void initState() async {
+    var shardPref = await SharedPreferences.getInstance();
+    var isLoggedIn = shardPref.getBool(KEY_LOGIN);
 
     Timer(Duration(seconds: 1), () {
-      if(false){
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => MyHomePage(title: 'Home Page',)));
-      }else{
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => WelcomePage()));
+      if (isLoggedIn != null) {
+        if (isLoggedIn) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(
+                        title: 'Home Page',
+                      )));
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => WelcomePage()));
+        }
+      } else{
+        Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => WelcomePage()));
       }
     });
   }
@@ -103,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final appBars = [
       AppBar(
         elevation: appBarElevation,
@@ -150,19 +162,26 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(color: Colors.black),
             ),
             InkWell(
-              onTap: (){
+              onTap: () {
                 RanksPageState.scrollToIndex(11); // Scrolling Index for My Rank
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(20)
-                ),
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20)),
                 padding: EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 4),
                 child: Row(
                   children: [
-                    Icon(Icons.keyboard_arrow_down, color: Colors.white,size: 25,),
-                    Text('My Rank', style: TextStyle(color: Colors.white,fontSize: 14), textAlign: TextAlign.start,),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    Text(
+                      'My Rank',
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      textAlign: TextAlign.start,
+                    ),
                   ],
                 ),
               ),
@@ -197,16 +216,15 @@ class _MyHomePageState extends State<MyHomePage> {
       // ),
     ];
 
-
     return Scaffold(
       backgroundColor: defaultBgColor(),
       appBar: appBars[tabIndex],
       bottomNavigationBar: BottomNavigationBar(
-          type : BottomNavigationBarType.fixed,
-          onTap: (index){
-          setState((){
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          setState(() {
             pageIndex = index;
-            switch(pageIndex){
+            switch (pageIndex) {
               case 0:
                 tabIndex = 0;
                 break;
@@ -241,7 +259,10 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Games',
           ),
           BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/icons/rank2.png'), size: 28,),
+            icon: ImageIcon(
+              AssetImage('assets/icons/rank2.png'),
+              size: 28,
+            ),
             label: 'Rank',
           ),
           BottomNavigationBarItem(
@@ -252,10 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: pageIndex,
         selectedItemColor: defaultColorTabSe(),
       ),
-
-      body: Container(
-          color: defaultBgColor(),
-          child: screens[pageIndex]),
+      body: Container(color: defaultBgColor(), child: screens[pageIndex]),
     );
   }
 }
