@@ -74,11 +74,12 @@ class SplashPageState extends State<SplashPage> {
 
   void logInPageSkip() async {
     var shardPref = await SharedPreferences.getInstance();
-    var isLoggedIn = shardPref.getBool(SplashPageState.KEY_LOGIN);
+    var isLoggedIn = shardPref.getBool(KEY_LOGIN);
 
     Timer(Duration(seconds: 1), () {
       if (isLoggedIn != null) {
         if (isLoggedIn) {
+          // Failling to check is user logged In or not
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

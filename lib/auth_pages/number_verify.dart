@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/auth_pages/forgot_password.dart';
 import 'package:stock_prediction/auth_pages/signin.dart';
 import 'package:stock_prediction/auth_pages/signup.dart';
 import 'package:stock_prediction/auth_pages/welcome_page.dart';
@@ -10,32 +11,23 @@ import 'package:stock_prediction/font_helper/default_fonts.dart';
 import 'package:stock_prediction/main.dart';
 import 'package:http/http.dart' as http;
 
-class VerifyUser extends StatefulWidget {
+class VerifyPhoneNo extends StatefulWidget {
 
-  String name;
-  String username;
   String phoneNo;
-  String password;
 
-  VerifyUser({
-  required this.name,
-  required this.username,
+  VerifyPhoneNo({
   required this.phoneNo,
-  required this.password
   });
 
   @override
   State<StatefulWidget> createState() {
-    return VerifyUserState(name, username, phoneNo, password);
+    return VerifyPhoneNoState(phoneNo);
   }
 }
 
-class VerifyUserState extends State<VerifyUser> {
+class VerifyPhoneNoState extends State<VerifyPhoneNo> {
 
-  String name = "";
-  String username = "";
   String phoneNo = "";
-  String password = "";
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -50,11 +42,8 @@ class VerifyUserState extends State<VerifyUser> {
 
   var boarderWidth = 1.4;
 
-  VerifyUserState(String name, String username, String phoneNo, String password){
-    this.name = name;
-    this.username = username;
+  VerifyPhoneNoState(String phoneNo){
     this.phoneNo = phoneNo;
-    this.password = password;
   }
 
   @override
@@ -126,13 +115,11 @@ class VerifyUserState extends State<VerifyUser> {
 
                             // await auth.signInWithCredential(credential);
 
-                            createUser();
-
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        SignIn()));
+                                        ForgotPassword(phoneNo: phoneNo,)));
 
                           }catch(e){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Verification Code')));
@@ -175,37 +162,6 @@ class VerifyUserState extends State<VerifyUser> {
           ),
         ),
     );
-  }
-
-  void createUser() async {
-
-    try{
-      final url = Uri.parse('$globalApiUrl/users/add');
-      final headers = {'Content-Type': 'application/json'};
-      final body = json.encode({
-        'username': username,
-        'name': name,
-        'phoneNo': phoneNo,
-        'password': password
-      });
-
-      final response = await http.post(url, headers: headers, body: body);
-
-      if(response.statusCode == 200){
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account Created Successfully.')));
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
-
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.pop(context);
-        });
-      }
-    }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
-      Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pop(context);
-      });
-    }
   }
 }
 

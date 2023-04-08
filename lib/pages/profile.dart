@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock_prediction/auth_pages/welcome_page.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/ProfileHeader.dart';
@@ -122,8 +123,17 @@ class ProfilePageState extends State<ProfilePage> {
                   children: [
                     Expanded(
                         child: OutlinedButton(
-                            onPressed: () {
-                              Navigator.of(context).popUntil((route) => route.isFirst);
+                            onPressed: () async{
+
+                              var shardPref =
+                                  await SharedPreferences.getInstance();
+                              shardPref.setBool(
+                                  SplashPageState.KEY_LOGIN, false);
+                              shardPref.setString(
+                                  SplashPageState.KEY_LOGIN_DETAILS, "null");
+
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
 
                               Navigator.pushReplacement(
                                   context,
