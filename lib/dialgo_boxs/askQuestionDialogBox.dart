@@ -17,10 +17,20 @@ class AskQueDialogBox extends StatefulWidget {
 }
 
 class AskQueDialogBoxState extends State<AskQueDialogBox> {
-  String _buttonText = 'Ask Question';
+  String _buttonText = postLabelName;
   var boarderWidth = 1.4;
 
   final tweetController = TextEditingController();
+
+  bool isClicked = false;
+
+  var _myFormKey = GlobalKey<FormState>();
+
+  _setButtonText(String btnText) {
+    setState(() {
+      _buttonText = btnText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +48,31 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                 color: defaultBgColor()),
           ),
           Container(
-              margin: EdgeInsets.only(top: 20,bottom: 60),
+              margin: EdgeInsets.only(top: 20, bottom: 60),
               child: Text('Ask Your Question', style: textBigSubtitle())),
-          TextField(
-            controller: tweetController,
-            decoration: InputDecoration(
-                labelText: 'Question',
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                    borderSide: BorderSide(
-                        color: Colors.black, width: boarderWidth)),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(13),
-                    borderSide: BorderSide(
-                        color: Colors.black, width: boarderWidth))),
+          Form(
+            key: _myFormKey,
+            child: TextFormField(
+              controller: tweetController,
+              validator: (String? msg) {
+                msg = msg?.trim();
+                if (msg!.isEmpty) {
+                  return "Please ${postLabelName}";
+                } else {
+                  return null;
+                }
+              },
+              decoration: InputDecoration(
+                  labelText: postLabelName,
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(13),
+                      borderSide:
+                          BorderSide(color: Colors.black, width: boarderWidth)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(13),
+                      borderSide:
+                          BorderSide(color: Colors.black, width: boarderWidth))),
+            ),
           ),
           SizedBox(
             height: 40,
@@ -64,16 +85,38 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                       backgroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13))),
-                  onPressed: () {
-                    setState(() {
-                      _buttonText = 'Submitted!';
-                    });
-                    Future.delayed(const Duration(seconds: 1), () {
-                      askQuestion();
-                      Navigator.pop(context);
-                    });
+                  onPressed: () async {
+                    if (!isClicked) {
+                      isClicked = true;
+
+                      bool isValid = _myFormKey.currentState!.validate();
+
+                          if (isValid) {
+
+                            _setButtonText("Loading...");
+
+                      bool isDone = await askQuestion();
+
+                      if (isDone) {
+                        _setButtonText("Submitted!");
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Navigator.pop(context);
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Something Went Wrong.')));
+                                _setButtonText(postLabelName);
+                      }
+                          }
+
+                      
+
+                      isClicked = false;
+                    }
                   },
-                  child: Text(_buttonText,
+                  child: Text(
+                    _buttonText,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -84,12 +127,13 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
     );
   }
 
-  void askQuestion() async{
+  Future<bool> askQuestion() async {
     String tweet = tweetController.text;
     DateTime currentTime = DateTime.now();
-    String currentTimeStr = DateFormat('yyyy-MM-dd HH:mm:ss').format(currentTime);
+    String currentTimeStr =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(currentTime);
 
-    try{
+    try {
       final url = Uri.parse('$globalApiUrl/tweets/add');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
@@ -99,13 +143,13 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
         'parent': -1
       });
       final response = await http.post(url, headers: headers, body: body);
-      if(response.statusCode == 200){
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Question Asked Successfully.')));
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
-    }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+    } catch (e) {
+      return false;
     }
   }
 }
