@@ -70,8 +70,8 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
                           BorderSide(color: Colors.black, width: boarderWidth)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(13),
-                      borderSide:
-                          BorderSide(color: Colors.black, width: boarderWidth))),
+                      borderSide: BorderSide(
+                          color: Colors.black, width: boarderWidth))),
             ),
           ),
           SizedBox(
@@ -91,26 +91,23 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
 
                       bool isValid = _myFormKey.currentState!.validate();
 
-                          if (isValid) {
+                      if (isValid) {
+                        _setButtonText("Loading...");
 
-                            _setButtonText("Loading...");
+                        bool isDone = await askQuestion();
 
-                      bool isDone = await askQuestion();
-
-                      if (isDone) {
-                        _setButtonText("Submitted!");
-                        Future.delayed(const Duration(seconds: 1), () {
-                          Navigator.pop(context);
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Something Went Wrong.')));
-                                _setButtonText(postLabelName);
+                        if (isDone) {
+                          _setButtonText("Submitted!");
+                          Future.delayed(const Duration(seconds: 1), () {
+                            Navigator.pop(context);
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Something Went Wrong.')));
+                          _setButtonText(postLabelName);
+                        }
                       }
-                          }
-
-                      
 
                       isClicked = false;
                     }

@@ -1,6 +1,6 @@
-
 import 'dart:convert';
 import 'dart:io';
+import '../auth_pages/phoneno.dart';
 import '../data_models/UserModel.dart';
 import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/cupertino.dart';
@@ -13,11 +13,10 @@ import '../font_helper/default_fonts.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 
-
 class SettingPage extends StatelessWidget {
   int pageIndex = -1;
 
-  SettingPage(int pageIndex){
+  SettingPage(int pageIndex) {
     this.pageIndex = pageIndex;
   }
 
@@ -32,7 +31,7 @@ class SettingPage extends StatelessWidget {
   final settingPages = [
     EditProfile(),
     ChangePhoneNum(),
-    UpdatePassword(),
+    PhoneNum(),
     PrivacyPolicy(),
     TermsCondition(),
   ];
@@ -45,7 +44,7 @@ class SettingPage extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
-            Future.delayed(const Duration(milliseconds: 500), (){
+            Future.delayed(const Duration(milliseconds: 500), () {
               Navigator.pop(context);
             });
           },
@@ -60,7 +59,6 @@ class SettingPage extends StatelessWidget {
   }
 }
 
-
 class EditProfile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -72,32 +70,44 @@ class EditProfileState extends State<EditProfile> {
   String _buttonText = 'Update Profile';
   var boarderWidth = 1.4;
 
-  final Reference storageRef = FirebaseStorage.instance.ref().child('profile_imgs');
+  final Reference storageRef =
+      FirebaseStorage.instance.ref().child('profile_imgs');
 
   var imgUrl;
   File? _imageFile;
   final picker = ImagePicker();
 
-  String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
+  String profileUrl =
+      "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
   final nameController = TextEditingController();
   final usernameController = TextEditingController(text: logusername);
+
+  bool isClicked = false;
+
+  var _myFormKey = GlobalKey<FormState>();
+
+  _setButtonText(String btnText) {
+    setState(() {
+      _buttonText = btnText;
+    });
+  }
 
   @override
   void initState() {
     getProfileInfo(logusername);
   }
 
-  Future _uploadFile(String path) async{
-    try{
+  Future _uploadFile(String path) async {
+    try {
       storageRef.child('${logusername}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
   }
 
-  pickImage(ImageSource source) async{
-    try{
+  pickImage(ImageSource source) async {
+    try {
       final pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null) {
         setState(() {
@@ -105,7 +115,7 @@ class EditProfileState extends State<EditProfile> {
           _imageFile = File(pickedFile.path);
         });
       }
-    } catch (error){
+    } catch (error) {
       debugPrint(error.toString());
     }
   }
@@ -121,7 +131,7 @@ class EditProfileState extends State<EditProfile> {
               ListTile(
                 leading: Icon(Icons.photo),
                 title: Text('Gallary'),
-                onTap: (){
+                onTap: () {
                   pickImage(ImageSource.gallery);
                 },
               ),
@@ -133,7 +143,7 @@ class EditProfileState extends State<EditProfile> {
               ListTile(
                 leading: Icon(Icons.photo_camera),
                 title: Text('Camera'),
-                onTap: (){
+                onTap: () {
                   pickImage(ImageSource.camera);
                 },
               ),
@@ -148,111 +158,157 @@ class EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 40,bottom: 40, left: 40, right: 40),
+        padding: EdgeInsets.only(top: 40, bottom: 40, left: 40, right: 40),
         child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: (){
-                  pickSource();
-                },
-                child: Stack(children: [
-                  _imageFile != null ? CircleAvatar(
-                    backgroundImage: FileImage(_imageFile!),
-                    radius: 60,
-                  ) :
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(profileUrl),
-                    radius: 60,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color of the icon
-                          shape: BoxShape.circle, // Set the shape of the background to a circle
-                        ),
-                        child: Icon(Icons.add_circle, color: Colors.black, size: 35)),
-                  ),
-                ]),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth))),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                    labelText: 'Username',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth))),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(bottom: 60),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13))),
-                      onPressed: () async{
-                        await _uploadFile(_imageFile!.path);
-                        updateProfile();
-                        setState(() {
-                          _buttonText = 'Updated!';
+          child: Form(
+            key: _myFormKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    pickSource();
+                  },
+                  child: Stack(children: [
+                    _imageFile != null
+                        ? CircleAvatar(
+                            backgroundImage: FileImage(_imageFile!),
+                            radius: 60,
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(profileUrl),
+                            radius: 60,
+                          ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors
+                                .white, // Set the background color of the icon
+                            shape: BoxShape
+                                .circle, // Set the shape of the background to a circle
+                          ),
+                          child: Icon(Icons.add_circle,
+                              color: Colors.black, size: 35)),
+                    ),
+                  ]),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                TextFormField(
+                  controller: nameController,
+                  validator: (String? msg) {
+                    msg = msg?.trim();
+                    if (msg!.isEmpty) {
+                      return "Please enter Name";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Full Name',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth))),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                TextFormField(
+                  controller: usernameController,
+                  validator: (String? msg) {
+                    msg = msg?.trim();
+                    if (msg!.isEmpty) {
+                      return "Please enter Username";
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Username',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth))),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                Container(
+                    height: 50,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: 60),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13))),
+                        onPressed: () async {
+                          if (!isClicked) {
+                            isClicked = true;
 
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          Future.delayed(const Duration(milliseconds: 500), () {
-                            Navigator.pop(context);
-                          });
-                        });
-                      },
-                      child: Text(
-                        _buttonText,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 18),
-                      ))),
-            ],
+                            bool isValid = _myFormKey.currentState!.validate();
+
+                            if (isValid) {
+                              _setButtonText("Loading...");
+
+                              try {
+                                await _uploadFile(_imageFile!.path);
+                              } catch(e){}
+
+                              bool isUpdated = await updateProfile();
+
+                              if (isUpdated) {
+                                _setButtonText("Updated!");
+
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                Future.delayed(
+                                    const Duration(milliseconds: 500), () {
+                                  Navigator.pop(context);
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Something Went Wrong.')));
+                                _setButtonText("Update Profile");
+                              }
+                            }
+
+                            isClicked = false;
+                          }
+                        },
+                        child: Text(
+                          _buttonText,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 18),
+                        ))),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void updateProfile() async{
+  Future<bool> updateProfile() async {
     String newUsername = usernameController.text;
     String fullname = nameController.text;
 
-    try{
+    try {
       final url = Uri.parse('$globalApiUrl/users/edit/profile');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
@@ -261,17 +317,17 @@ class EditProfileState extends State<EditProfile> {
         'fullname': fullname
       });
       final response = await http.post(url, headers: headers, body: body);
-      if(response.statusCode == 200){
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile Updated Successfully.')));
-      }else{
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
       }
-    }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Something Went Wrong.')));
+    } catch (e) {
+      return false;
     }
   }
 
-  void getProfileInfo(String username) async{
+  void getProfileInfo(String username) async {
     final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
     final response = await http.get(url);
 
@@ -295,27 +351,51 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
   String _buttonText = 'Change';
   var boarderWidth = 1.4;
 
+  final phoneNoController = TextEditingController();
+
+  bool isClicked = false;
+
+  var _myFormKey = GlobalKey<FormState>();
+
+  _setButtonText(String btnText) {
+    setState(() {
+      _buttonText = btnText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 80,bottom: 40, left: 40, right: 40),
+        padding: EdgeInsets.only(top: 80, bottom: 40, left: 40, right: 40),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    labelText: 'Phone number',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth))),
+              Form(
+                key: _myFormKey,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: phoneNoController,
+                  validator: (String? msg) {
+                msg = msg?.trim();
+                if (msg!.isEmpty) {
+                  return "Please enter Phone no.";
+                } else {
+                  return null;
+                }
+              },
+                  decoration: InputDecoration(
+                      labelText: 'Phone number',
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(13),
+                          borderSide: BorderSide(
+                              color: Colors.black, width: boarderWidth))),
+                ),
               ),
               SizedBox(
                 height: 60,
@@ -329,14 +409,32 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13))),
-                      onPressed: () {
-                        setState(() {
-                          _buttonText = 'Changed!';
+                      onPressed: () async{
+                        if (!isClicked) {
+                      isClicked = true;
 
-                          Future.delayed(const Duration(milliseconds: 500), () {
+                      bool isValid = _myFormKey.currentState!.validate();
+
+                      if (isValid) {
+                        _setButtonText("Loading...");
+
+                        bool isDone = await isPhoneNoUpdated(logusername, phoneNoController.text);
+
+                        if (isDone) {
+                          _setButtonText("Changed!");
+                          Future.delayed(const Duration(seconds: 1), () {
                             Navigator.pop(context);
                           });
-                        });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Something Went Wrong.')));
+                          _setButtonText("Change");
+                        }
+                      }
+
+                      isClicked = false;
+                    }
                       },
                       child: Text(
                         _buttonText,
@@ -351,125 +449,142 @@ class ChangePhoneNumState extends State<ChangePhoneNum> {
       ),
     );
   }
-}
 
-
-class UpdatePassword extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return UpdatePasswordState();
+  Future<bool> isPhoneNoUpdated(String username, String phoneNo) async {
+    try {
+      final url = Uri.parse('$globalApiUrl/users/edit/phoneno');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({
+        'username': username,
+        'phoneNo': phoneNo,
+      });
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 }
 
-class UpdatePasswordState extends State<UpdatePassword> {
-  String _buttonText = 'Update Password';
-  var boarderWidth = 1.4;
+// class UpdatePassword extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     return UpdatePasswordState();
+//   }
+// }
 
-  bool _passwordVisible1 = true;
-  bool _obscureText1 = true;
-  bool _passwordVisible2 = true;
-  bool _obscureText2 = true;
+// class UpdatePasswordState extends State<UpdatePassword> {
+//   String _buttonText = 'Update Password';
+//   var boarderWidth = 1.4;
 
-  @override
-  void initState() {
-    _passwordVisible1 = true;
-    _passwordVisible2 = true;
-  }
+//   bool _passwordVisible1 = true;
+//   bool _obscureText1 = true;
+//   bool _passwordVisible2 = true;
+//   bool _obscureText2 = true;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 80,bottom: 40, left: 40, right: 40),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TextField(
-                obscureText: _obscureText1,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(onPressed: (){
-                      setState(() {
-                        _passwordVisible1 = !_passwordVisible1;
-                        _obscureText1 = !_obscureText1;
-                      });
-                    }, icon: Icon(
-                        _passwordVisible1
-                            ? Icons.visibility
-                            : Icons.visibility_off
-                    )),
-                    labelText: 'Password',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth))),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              TextField(
-                obscureText: _obscureText2,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(onPressed: (){
-                      setState(() {
-                        _passwordVisible2 = !_passwordVisible2;
-                        _obscureText2 = !_obscureText2;
-                      });
-                    }, icon: Icon(
-                        _passwordVisible2
-                            ? Icons.visibility
-                            : Icons.visibility_off
-                    )),
-                    labelText: 'Repeate Password',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(13),
-                        borderSide: BorderSide(
-                            color: Colors.black, width: boarderWidth))),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Container(
-                  height: 50,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(bottom: 60),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13))),
-                      onPressed: () {
-                        setState(() {
-                          _buttonText = 'Updated!';
+//   @override
+//   void initState() {
+//     _passwordVisible1 = true;
+//     _passwordVisible2 = true;
+//   }
 
-                          Future.delayed(const Duration(milliseconds: 500), () {
-                            Navigator.pop(context);
-                          });
-                        });
-                      },
-                      child: Text(
-                        _buttonText,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 18),
-                      ))),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SingleChildScrollView(
+//         padding: EdgeInsets.only(top: 80, bottom: 40, left: 40, right: 40),
+//         child: Container(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             children: [
+//               TextField(
+//                 obscureText: _obscureText1,
+//                 decoration: InputDecoration(
+//                     suffixIcon: IconButton(
+//                         onPressed: () {
+//                           setState(() {
+//                             _passwordVisible1 = !_passwordVisible1;
+//                             _obscureText1 = !_obscureText1;
+//                           });
+//                         },
+//                         icon: Icon(_passwordVisible1
+//                             ? Icons.visibility
+//                             : Icons.visibility_off)),
+//                     labelText: 'Password',
+//                     focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(13),
+//                         borderSide: BorderSide(
+//                             color: Colors.black, width: boarderWidth)),
+//                     border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(13),
+//                         borderSide: BorderSide(
+//                             color: Colors.black, width: boarderWidth))),
+//               ),
+//               SizedBox(
+//                 height: 25,
+//               ),
+//               TextField(
+//                 obscureText: _obscureText2,
+//                 decoration: InputDecoration(
+//                     suffixIcon: IconButton(
+//                         onPressed: () {
+//                           setState(() {
+//                             _passwordVisible2 = !_passwordVisible2;
+//                             _obscureText2 = !_obscureText2;
+//                           });
+//                         },
+//                         icon: Icon(_passwordVisible2
+//                             ? Icons.visibility
+//                             : Icons.visibility_off)),
+//                     labelText: 'Repeate Password',
+//                     focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(13),
+//                         borderSide: BorderSide(
+//                             color: Colors.black, width: boarderWidth)),
+//                     border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(13),
+//                         borderSide: BorderSide(
+//                             color: Colors.black, width: boarderWidth))),
+//               ),
+//               SizedBox(
+//                 height: 60,
+//               ),
+//               Container(
+//                   height: 50,
+//                   width: double.infinity,
+//                   margin: EdgeInsets.only(bottom: 60),
+//                   child: ElevatedButton(
+//                       style: ElevatedButton.styleFrom(
+//                           backgroundColor: Colors.black,
+//                           shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(13))),
+//                       onPressed: () {
+//                         setState(() {
+//                           _buttonText = 'Updated!';
 
+//                           Future.delayed(const Duration(milliseconds: 500), () {
+//                             Navigator.pop(context);
+//                           });
+//                         });
+//                       },
+//                       child: Text(
+//                         _buttonText,
+//                         style: TextStyle(
+//                             fontWeight: FontWeight.bold,
+//                             color: Colors.white,
+//                             fontSize: 18),
+//                       ))),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class PrivacyPolicy extends StatefulWidget {
   @override
@@ -532,7 +647,6 @@ class PrivacyPolicyState extends State<PrivacyPolicy> {
     );
   }
 }
-
 
 class TermsCondition extends StatefulWidget {
   @override

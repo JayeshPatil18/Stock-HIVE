@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock_prediction/auth_pages/signin.dart';
 import 'package:stock_prediction/auth_pages/signup.dart';
 import 'package:stock_prediction/auth_pages/welcome_page.dart';
@@ -165,15 +166,43 @@ class ForgotPasswordState extends State<ForgotPassword> {
                                 if (isUpdated) {
                                   _buttonTextChange("Updated!");
                                   Future.delayed(const Duration(seconds: 1),
-                                      () {
-                                    Navigator.of(context)
-                                        .popUntil((route) => route.isFirst);
+                                      () async {
+                                    var shardPref =
+                                        await SharedPreferences.getInstance();
+                                    var isLoggedIn = shardPref
+                                        .getBool(SplashPageState.KEY_LOGIN);
 
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                WelcomePage()));
+                                    if (isLoggedIn != null) {
+                                      if (isLoggedIn) {
+                                        Navigator.of(context)
+                                            .popUntil((route) => route.isFirst);
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MyHomePage(
+                                                      title: 'Home Page',
+                                                    )));
+                                      } else {
+                                        Navigator.of(context)
+                                            .popUntil((route) => route.isFirst);
+
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WelcomePage()));
+                                      }
+                                    } else {
+                                      Navigator.of(context)
+                                          .popUntil((route) => route.isFirst);
+
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WelcomePage()));
+                                    }
                                   });
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
