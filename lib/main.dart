@@ -79,7 +79,6 @@ class SplashPageState extends State<SplashPage> {
     Timer(Duration(seconds: 1), () {
       if (isLoggedIn != null) {
         if (isLoggedIn) {
-          // Failling to check is user logged In or not
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

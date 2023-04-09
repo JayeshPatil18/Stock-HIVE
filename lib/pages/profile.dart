@@ -129,8 +129,6 @@ class ProfilePageState extends State<ProfilePage> {
                                   await SharedPreferences.getInstance();
                               shardPref.setBool(
                                   SplashPageState.KEY_LOGIN, false);
-                              shardPref.setString(
-                                  SplashPageState.KEY_LOGIN_DETAILS, "null");
 
                               Navigator.of(context)
                                   .popUntil((route) => route.isFirst);
