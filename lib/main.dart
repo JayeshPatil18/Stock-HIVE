@@ -10,6 +10,7 @@ import 'package:stock_prediction/pages/profile.dart';
 import 'package:stock_prediction/pages/ranks.dart';
 import 'package:stock_prediction/pages/reels.dart';
 import 'package:stock_prediction/pages/search.dart';
+import 'package:stock_prediction/utils/token_helper.dart';
 import 'auth_pages/welcome_page.dart';
 import 'color_helper/defaultColor.dart';
 import 'dialgo_boxs/predictDialogBox.dart';
@@ -19,6 +20,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
 String postLabelName = "Ask Question";
 var appBarElevation = 0.5;
+int scrollIndex = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -167,8 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(color: Colors.black),
             ),
             InkWell(
-              onTap: () {
-                RanksPageState.scrollToIndex(11); // Scrolling Index for My Rank
+              onTap: () async{
+                RanksPageState.scrollToIndex(scrollIndex); // Scrolling Index for My Rank
               },
               child: Container(
                 decoration: BoxDecoration(
