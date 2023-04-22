@@ -130,7 +130,7 @@ class RanksPageState extends State<RanksPage> {
                         EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ViewProfile()));
+                              builder: (context) => ViewProfile(imageUrl: user.uProfileurl.toString(), userId: user.uId)));
                         },
                         onLongPress: () {},
                       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stock_prediction/components/ProfileHeaderView.dart';
 import '../color_helper/defaultColor.dart';
 import '../components/ProfileHeader.dart';
 import '../components/ProfileTabs.dart';
+import '../components/ProfileTabsView.dart';
 import '../components/discussModel.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
@@ -10,6 +12,14 @@ import '../font_helper/default_fonts.dart';
 import '../main.dart';
 
 class ViewProfile extends StatelessWidget{
+
+  final imageUrl;
+  final userId;
+
+  ViewProfile({
+    required this.imageUrl,
+    required this.userId
+  });
 
   static final sectionDialog = <Widget>[
     DiscussDialogBox(),
@@ -36,7 +46,7 @@ class ViewProfile extends StatelessWidget{
               SliverList(
                 delegate: SliverChildListDelegate(
                     [
-                      ProfileHeader(),
+                      ProfileHeaderView(imageUrl: imageUrl, userId: userId),
                     ]
                 ),
               )
@@ -82,9 +92,9 @@ class ViewProfile extends StatelessWidget{
                 Expanded(
                   child: TabBarView(
                     children: [
-                      TweetsTab(),
-                      RepliesTab(),
-                      LikesTab()
+                      TweetsTabView(userId: userId),
+                      RepliesTabView(userId: userId),
+                      LikesTabView(userId: userId)
                     ],
                   ),
                 ),

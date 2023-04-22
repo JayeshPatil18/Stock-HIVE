@@ -1269,9 +1269,9 @@ class ContestRankState extends State<ContestRank>{
                     ),
                     contentPadding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                     onTap: (){
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ViewProfile())
-                      );
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => ViewProfile())
+                      // );
                     },
                     onLongPress: (){},
                   ),
