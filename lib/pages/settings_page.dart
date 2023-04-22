@@ -72,6 +72,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class EditProfileState extends State<EditProfile> {
+  String username = "";
   String _buttonText = 'Update Profile';
   var boarderWidth = 1.4;
 
@@ -98,8 +99,25 @@ class EditProfileState extends State<EditProfile> {
     });
   }
 
+  Future<String>_getTokenUsername() async{
+    String username = await getTokenUsername();
+    return username;
+  }
+  
+  Future<void> _getImageUrl() async {
+    try {
+      profileUrl = await _getTokenUsername();
+      Reference ref = storageRef.child(profileUrl);
+
+      profileUrl = await ref.getDownloadURL();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   void initState() {
+    _getImageUrl();
     getProfileInfo();
   }
 
@@ -277,7 +295,11 @@ class EditProfileState extends State<EditProfile> {
 
                               if (isUpdated) {
                                 _setButtonText("Updated!");
-
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('Profile image updating shortly.')));
+                                _setButtonText("Update Profile");
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 Future.delayed(
                                     const Duration(seconds: 1), () {
@@ -342,7 +364,6 @@ class EditProfileState extends State<EditProfile> {
     final jsonData = jsonDecode(response.body);
 
     setState(() {
-      profileUrl = jsonData[0]['u_profileurl'];
       nameController.text = jsonData[0]['u_fullname'];
       usernameController.text = jsonData[0]['username'];
     });

@@ -175,7 +175,7 @@ class ProfilePageState extends State<ProfilePage> {
 
   Future<void> _launchURL() async {
     String url = "live-portfolio.netlify.app";
-    final Uri uri = Uri(scheme: "http", host: url);
+    final Uri uri = Uri(scheme: "https", host: url);
     if(!await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,

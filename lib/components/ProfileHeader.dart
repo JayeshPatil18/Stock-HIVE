@@ -35,6 +35,22 @@ class ProfileHeaderState extends State<ProfileHeader> {
   File? _imageFile;
   final picker = ImagePicker();
 
+  Future<String>_getTokenUsername() async{
+    String username = await getTokenUsername();
+    return username;
+  }
+  
+  Future<void> _getImageUrl() async {
+    try {
+      profileUrl = await _getTokenUsername();
+      Reference ref = FirebaseStorage.instance.ref().child('profile_imgs').child(profileUrl);
+
+      profileUrl = await ref.getDownloadURL();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -63,17 +79,15 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           pickSource();
                         },
                         child: Stack(children: [
-                          user.uProfileurl.toString() != "img_url"
-                              ? CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(user.uProfileurl.toString()),
-                                  radius: 50,
-                                )
-                              : const CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      "assets/icons/default_avatar.jpg"),
-                                  radius: 50,
-                                ),
+                          _imageFile != null
+                        ? CircleAvatar(
+                            backgroundImage: FileImage(_imageFile!),
+                            radius: 50,
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(profileUrl),
+                            radius: 50,
+                          ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -440,6 +454,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
   }
 
   Future<List<UserModel>> getProfileInfo() async {
+    _getImageUrl();
     int userId = await getTokenId();
     final url = Uri.parse('$globalApiUrl/users/info?userId=${userId}');
     final response = await http.get(url);
