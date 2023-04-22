@@ -35,15 +35,18 @@ class ProfileHeaderState extends State<ProfileHeader> {
   File? _imageFile;
   final picker = ImagePicker();
 
-  Future<String>_getTokenUsername() async{
+  Future<String> _getTokenUsername() async {
     String username = await getTokenUsername();
     return username;
   }
-  
+
   Future<void> _getImageUrl() async {
     try {
       profileUrl = await _getTokenUsername();
-      Reference ref = FirebaseStorage.instance.ref().child('profile_imgs').child(profileUrl);
+      Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('profile_imgs')
+          .child(profileUrl);
 
       profileUrl = await ref.getDownloadURL();
     } catch (e) {
@@ -80,14 +83,14 @@ class ProfileHeaderState extends State<ProfileHeader> {
                         },
                         child: Stack(children: [
                           _imageFile != null
-                        ? CircleAvatar(
-                            backgroundImage: FileImage(_imageFile!),
-                            radius: 50,
-                          )
-                        : CircleAvatar(
-                            backgroundImage: NetworkImage(profileUrl),
-                            radius: 50,
-                          ),
+                              ? CircleAvatar(
+                                  backgroundImage: FileImage(_imageFile!),
+                                  radius: 50,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: NetworkImage(profileUrl),
+                                  radius: 50,
+                                ),
                           Positioned(
                             bottom: 0,
                             right: 0,
@@ -230,14 +233,27 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                       Text(
                                           'Congratulations! You\'re well on your way to increasing your overall rank on our platform. For every 10 likes you receive on a tweet or comment, you\'ll earn 1 point.'),
                                       SizedBox(height: 16),
-                                      Text('Here\'s how it works:', style: TextStyle(fontWeight: FontWeight.w600),),
+                                      Text(
+                                        'Here\'s how it works:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      ),
                                       SizedBox(height: 8),
                                       Text(
-                                          '- Whenever someone likes your tweet or comment, our system keeps track of it.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                        '- Whenever someone likes your tweet or comment, our system keeps track of it.',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400),
+                                      ),
                                       Text(
-                                          '- Once you reach 10 likes, we\'ll automatically award you 1 point.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                        '- Once you reach 10 likes, we\'ll automatically award you 1 point.',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400),
+                                      ),
                                       Text(
-                                          '- The more points you earn, the higher your overall rank will be on our platform.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                        '- The more points you earn, the higher your overall rank will be on our platform.',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400),
+                                      ),
                                       SizedBox(height: 16),
                                       Text(
                                           'So keep posting and engaging with other users to increase your chances of earning more points. Good luck!'),
@@ -316,7 +332,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Congratulations! You\'re doing great on our platform, but there\'s still room to grow. By earning points, you can increase your overall rank and stand out among other users. \n\nTo earn points, simply receive likes on your tweets or comments. For every 10 likes, you\'ll be awarded 1 point. We\'ll keep track of your likes and award points automatically once you reach the 10-like threshold.\n\nSo, keep engaging with other users and sharing great content to increase your chances of earning more points. Your higher rank will make you more visible and recognized on our platform. \n\nThank you for being a part of our community and good luck on your journey to a higher rank!'),
+                                      Text(
+                                          'Congratulations! You\'re doing great on our platform, but there\'s still room to grow. By earning points, you can increase your overall rank and stand out among other users. \n\nTo earn points, simply receive likes on your tweets or comments. For every 10 likes, you\'ll be awarded 1 point. We\'ll keep track of your likes and award points automatically once you reach the 10-like threshold.\n\nSo, keep engaging with other users and sharing great content to increase your chances of earning more points. Your higher rank will make you more visible and recognized on our platform. \n\nThank you for being a part of our community and good luck on your journey to a higher rank!'),
                                     ],
                                   ),
                                   actions: [
@@ -399,6 +416,15 @@ class ProfileHeaderState extends State<ProfileHeader> {
     String username = await getTokenUsername();
     try {
       storageRef.child('${username}').putFile(_imageFile!);
+      bool isUpdated = await updateProfileImage();
+
+      if (isUpdated) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Profile image updating shortly.')));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Something Went Wrong.')));
+      }
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -467,6 +493,25 @@ class ProfileHeaderState extends State<ProfileHeader> {
       return usersList;
     } else {
       return usersList;
+    }
+  }
+
+  Future<bool> updateProfileImage() async {
+    int userId = await getTokenId();
+    await _getImageUrl();
+
+    try {
+      final url = Uri.parse('$globalApiUrl/users/edit/profileimg');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({'userId': userId, 'profile_url': profileUrl});
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 }

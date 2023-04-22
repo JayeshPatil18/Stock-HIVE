@@ -72,7 +72,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class EditProfileState extends State<EditProfile> {
-  String username = "";
   String _buttonText = 'Update Profile';
   var boarderWidth = 1.4;
 
@@ -106,8 +105,8 @@ class EditProfileState extends State<EditProfile> {
   
   Future<void> _getImageUrl() async {
     try {
-      profileUrl = await _getTokenUsername();
-      Reference ref = storageRef.child(profileUrl);
+      String username = await _getTokenUsername();
+      Reference ref = storageRef.child(username);
 
       profileUrl = await ref.getDownloadURL();
     } catch (e) {
@@ -117,6 +116,7 @@ class EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
+    super.initState();
     _getImageUrl();
     getProfileInfo();
   }
@@ -336,6 +336,7 @@ class EditProfileState extends State<EditProfile> {
     int userId = await getTokenId();
     String newUsername = usernameController.text;
     String fullname = nameController.text;
+    await _getImageUrl();
 
     try {
       final url = Uri.parse('$globalApiUrl/users/edit/profile');
@@ -343,7 +344,8 @@ class EditProfileState extends State<EditProfile> {
       final body = json.encode({
         'userId': userId,
         'new_username': newUsername,
-        'fullname': fullname
+        'fullname': fullname,
+        'profile_url': profileUrl
       });
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
