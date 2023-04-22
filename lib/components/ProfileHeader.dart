@@ -10,6 +10,7 @@ import '../data_models/TweetsModel.dart';
 import '../font_helper/default_fonts.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
+import '../utils/token_helper.dart';
 
 class ProfileHeader extends StatefulWidget{
   @override
@@ -35,7 +36,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getProfileInfo(logusername),
+      future: getProfileInfo(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return Container(
@@ -303,8 +304,9 @@ class ProfileHeaderState extends State<ProfileHeader>{
   }
 
   Future _uploadFile(String path) async{
+    String username = await getTokenUsername();
     try{
-      storageRef.child('${logusername}').putFile(_imageFile!);
+      storageRef.child('${username}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -359,9 +361,9 @@ class ProfileHeaderState extends State<ProfileHeader>{
     );
   }
 
-  Future<List<UserModel>> getProfileInfo(String username) async{
-    
-    final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
+  Future<List<UserModel>> getProfileInfo() async{
+    int userId = await getTokenId();
+    final url = Uri.parse('$globalApiUrl/users/info?userId=${userId}');
     final response = await http.get(url);
     final data = jsonDecode(response.body);
     usersList.clear();

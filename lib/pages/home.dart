@@ -19,7 +19,9 @@ class HomePageState extends State<HomePage> {
   var elevationValue = 0.0;
   int currentIndex = 0;
 
-  int? token;
+  int? userId;
+  String? userUsername;
+  String? userPhoneNo;
 
   List<Widget> onboards = [
     //1st Image of Slider 
@@ -43,13 +45,8 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  _getToken() async{
-    token = await getTokenId();
-  }
-
   @override
   void initState() {
-    _getToken();
     super.initState();
   }
 

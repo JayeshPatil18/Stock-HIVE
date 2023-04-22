@@ -15,6 +15,8 @@ import '../dialgo_boxs/predictDialogBox.dart';
 import '../font_helper/default_fonts.dart';
 import 'package:http/http.dart' as http;
 
+import '../utils/token_helper.dart';
+
 class DiscussionPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -92,8 +94,9 @@ class _DiscussionPageState extends State<DiscussionPage>{
   }
 
   Future<List<TweetsModel>> getTweets() async {
+    int userId = await getTokenId();
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/list?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/tweets/list?userId=${userId}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {

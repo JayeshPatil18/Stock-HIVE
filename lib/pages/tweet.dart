@@ -13,6 +13,8 @@ import '../font_helper/default_fonts.dart';
 import '../service_provider/TweetService.dart';
 import 'package:http/http.dart' as http;
 
+import '../utils/token_helper.dart';
+
 class TweetPage extends StatefulWidget {
   String tId;
 
@@ -26,6 +28,7 @@ class TweetPage extends StatefulWidget {
 
 class TweetPageState extends State<TweetPage> {
   int tId = -1;
+  int userId = -1;
 
   var elevationValue = 0.0;
   List<TweetsModel> tweetsList = [];
@@ -38,7 +41,7 @@ class TweetPageState extends State<TweetPage> {
   }
 
   Future _refreshTweets() async {
-    var list = await getTweet(tId, logusername);
+    var list = await getTweet(tId);
     setState(() {
       tweetsList.clear();
       tweetsList = list;
@@ -46,7 +49,7 @@ class TweetPageState extends State<TweetPage> {
   }
 
   Future _refreshComments() async {
-    var list = await getComments(tId, logusername);
+    var list = await getComments(tId);
     setState(() {
       commentsList.clear();
       commentsList = list;
@@ -58,8 +61,13 @@ class TweetPageState extends State<TweetPage> {
     _refreshComments();
   }
 
+  _getTokenId() async{
+    userId = await getTokenId();
+  }
+
   @override
   void initState() {
+    _getTokenId();
     super.initState();
   }
 
@@ -80,7 +88,7 @@ class TweetPageState extends State<TweetPage> {
         child: Column(
           children: [
             FutureBuilder(
-              future: getTweet(tId, logusername),
+              future: getTweet(tId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
                   return SizedBox(
@@ -110,7 +118,7 @@ class TweetPageState extends State<TweetPage> {
               child: Container(
                 color: defaultBgColor(),
                 child: FutureBuilder(
-                  future: getComments(tId, logusername),
+                  future: getComments(tId),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
@@ -121,9 +129,9 @@ class TweetPageState extends State<TweetPage> {
                           itemCount: commentsList.length,
                           itemBuilder: (context, index) {
                             commentsList.sort((a, b) {
-                              if (a.username == logusername && b.username != logusername) {
+                              if (a.username == userId && b.username != userId) {
                                 return -1;
-                              } else if (a.username != logusername && b.username == logusername) {
+                              } else if (a.username != userId && b.username == userId) {
                                 return 1;
                               } else {
                                 return 0;
@@ -221,9 +229,9 @@ class TweetPageState extends State<TweetPage> {
     );
   }
 
-  Future<List<TweetsModel>> getTweet(int t_id, String username) async{
+  Future<List<TweetsModel>> getTweet(int t_id) async{
     final response =
-    await http.get(Uri.parse('$globalApiUrl/tweets/tweet?username=${username}&t_id=${t_id}'));
+    await http.get(Uri.parse('$globalApiUrl/tweets/tweet?userId=${userId}&t_id=${t_id}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {
@@ -236,9 +244,9 @@ class TweetPageState extends State<TweetPage> {
     }
   }
 
-  Future<List<TweetsModel>> getComments(int t_id, String username) async {
+  Future<List<TweetsModel>> getComments(int t_id) async {
     final response = await http
-        .get(Uri.parse('$globalApiUrl/tweets/comments?username=${username}&t_id=${t_id}'));
+        .get(Uri.parse('$globalApiUrl/tweets/comments?userId=${userId}&t_id=${t_id}'));
     var data = jsonDecode(response.body);
     commentsList.clear();
     if (response.statusCode == 200) {

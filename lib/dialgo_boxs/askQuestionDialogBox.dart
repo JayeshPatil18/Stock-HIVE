@@ -9,6 +9,8 @@ import '../main.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../utils/token_helper.dart';
+
 class AskQueDialogBox extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -125,6 +127,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
   }
 
   Future<bool> askQuestion() async {
+    int userId = await getTokenId();
     String tweet = tweetController.text;
     DateTime currentTime = DateTime.now();
     String currentTimeStr =
@@ -135,7 +138,7 @@ class AskQueDialogBoxState extends State<AskQueDialogBox> {
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
         'tweet': tweet,
-        'username': logusername,
+        'userId': userId,
         'datetime': currentTimeStr,
         'parent': -1
       });

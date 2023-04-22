@@ -17,7 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // AWS URL -> http://43.204.32.121:3000
 String globalApiUrl = "https://project-api-jayesh.onrender.com";
-String logusername = "jeet49";
 String postLabelName = "Ask Question";
 var appBarElevation = 0.5;
 

@@ -146,7 +146,7 @@ class DiscussModelState extends State<DiscussModel> {
                     }
                     isLiked = isLiked ? false : true;
                   });
-                  bool result = await updateLike(tId, logusername);
+                  bool result = await updateLike(tId);
                   if(!result){
                     setState(() {
                       if(isLiked) {

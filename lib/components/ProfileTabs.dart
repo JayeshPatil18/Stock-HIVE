@@ -7,6 +7,7 @@ import '../data_models/TweetsModel.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
 import '../pages/tweet.dart';
+import '../utils/token_helper.dart';
 import 'discussModel.dart';
 
 class TweetsTab extends StatefulWidget{
@@ -67,8 +68,9 @@ class TweetsTabState extends State<TweetsTab>{
   }
 
   Future<List<TweetsModel>> getTweets() async {
+    int userId = await getTokenId();
     final response =
-    await http.get(Uri.parse('$globalApiUrl/users/tweets?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/tweets?userId=${userId}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {
@@ -140,8 +142,9 @@ class RepliesTabState extends State<RepliesTab>{
   }
 
   Future<List<TweetsModel>> getTweets() async {
+    int userId = await getTokenId();
     final response =
-    await http.get(Uri.parse('$globalApiUrl/users/comments?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/comments?userId=${userId}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {
@@ -213,8 +216,9 @@ class LikesTabState extends State<LikesTab>{
   }
 
   Future<List<TweetsModel>> getTweets() async {
+    int userId = await getTokenId();
     final response =
-    await http.get(Uri.parse('$globalApiUrl/users/likes?username=${logusername}'));
+    await http.get(Uri.parse('$globalApiUrl/users/likes?userId=${userId}'));
     var data = jsonDecode(response.body);
     tweetsList.clear();
     if (response.statusCode == 200) {

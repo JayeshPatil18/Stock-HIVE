@@ -158,7 +158,7 @@ class CommentModelState extends State<CommentModel> {
                           }
                           isLiked = isLiked ? false : true;
                         });
-                        bool result = await updateLike(tId, logusername);
+                        bool result = await updateLike(tId);
                         if(!result){
                           setState(() {
                             if(isLiked) {

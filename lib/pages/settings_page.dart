@@ -16,6 +16,8 @@ import '../font_helper/default_fonts.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 
+import '../utils/token_helper.dart';
+
 class SettingPage extends StatelessWidget {
   int pageIndex = -1;
 
@@ -84,7 +86,7 @@ class EditProfileState extends State<EditProfile> {
       "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
   final nameController = TextEditingController();
-  final usernameController = TextEditingController(text: logusername);
+  final usernameController = TextEditingController();
 
   bool isClicked = false;
 
@@ -98,12 +100,13 @@ class EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    getProfileInfo(logusername);
+    getProfileInfo();
   }
 
   Future _uploadFile(String path) async {
     try {
-      storageRef.child('${logusername}').putFile(_imageFile!);
+      String username = await getTokenUsername();
+      storageRef.child('${username}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
@@ -308,6 +311,7 @@ class EditProfileState extends State<EditProfile> {
   }
 
   Future<bool> updateProfile() async {
+    int userId = await getTokenId();
     String newUsername = usernameController.text;
     String fullname = nameController.text;
 
@@ -315,7 +319,7 @@ class EditProfileState extends State<EditProfile> {
       final url = Uri.parse('$globalApiUrl/users/edit/profile');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
-        'username': logusername,
+        'userId': userId,
         'new_username': newUsername,
         'fullname': fullname
       });
@@ -330,8 +334,9 @@ class EditProfileState extends State<EditProfile> {
     }
   }
 
-  void getProfileInfo(String username) async {
-    final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
+  void getProfileInfo() async {
+    int userId = await getTokenId();
+    final url = Uri.parse('$globalApiUrl/users/info?userId=${userId}');
     final response = await http.get(url);
 
     final jsonData = jsonDecode(response.body);
@@ -339,6 +344,7 @@ class EditProfileState extends State<EditProfile> {
     setState(() {
       profileUrl = jsonData[0]['u_profileurl'];
       nameController.text = jsonData[0]['u_fullname'];
+      usernameController.text = jsonData[0]['username'];
     });
   }
 }
@@ -830,7 +836,7 @@ class VerifyPhoneNoChangeState extends State<VerifyPhoneNoChange> {
                           // await auth.signInWithCredential(credential);
 
                           bool isDone =
-                              await isPhoneNoUpdated(logusername, phoneNo);
+                              await isPhoneNoUpdated(phoneNo);
 
                           Navigator.pop(context);
                         } catch (e) {
@@ -877,12 +883,13 @@ class VerifyPhoneNoChangeState extends State<VerifyPhoneNoChange> {
     );
   }
 
-  Future<bool> isPhoneNoUpdated(String username, String phoneNo) async {
+  Future<bool> isPhoneNoUpdated(String phoneNo) async {
     try {
+      int userId = await getTokenId();
       final url = Uri.parse('$globalApiUrl/users/edit/phoneno');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode({
-        'username': username,
+        'userId': userId,
         'phoneNo': phoneNo,
       });
       final response = await http.post(url, headers: headers, body: body);
