@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/color_helper/defaultColor.dart';
 import 'package:stock_prediction/components/discussModel.dart';
+import 'package:stock_prediction/utils/token_helper.dart';
 import '../components/queModel.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../dialgo_boxs/predictDialogBox.dart';
@@ -17,6 +18,9 @@ class HomePage extends StatefulWidget{
 class HomePageState extends State<HomePage> {
   var elevationValue = 0.0;
   int currentIndex = 0;
+
+  int? token;
+
   List<Widget> onboards = [
     //1st Image of Slider 
     Image.network('https://media.istockphoto.com/id/1038727610/photo/liquid-shapes-abstract-holographic-3d-wavy-background.jpg?s=612x612&w=0&k=20&c=OSfb3DuCHkjERNJTpK4GzMN851GhHQA6Evn9DKc-kw4='),
@@ -39,7 +43,15 @@ class HomePageState extends State<HomePage> {
     });
   }
 
+  _getToken() async{
+    token = await getTokenId();
+  }
 
+  @override
+  void initState() {
+    _getToken();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

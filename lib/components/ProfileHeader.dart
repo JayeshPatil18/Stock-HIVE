@@ -360,6 +360,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
   }
 
   Future<List<UserModel>> getProfileInfo(String username) async{
+    
     final url = Uri.parse('$globalApiUrl/users/info?username=${username}');
     final response = await http.get(url);
     final data = jsonDecode(response.body);

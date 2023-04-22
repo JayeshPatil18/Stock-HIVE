@@ -56,7 +56,7 @@ class SplashPage extends StatefulWidget {
 
 class SplashPageState extends State<SplashPage> {
   static const String KEY_LOGIN = "isLogin";
-  static const String KEY_LOGIN_DETAILS = "isLogin";
+  static const String KEY_LOGIN_DETAILS = "authToken";
 
   @override
   void initState() {
