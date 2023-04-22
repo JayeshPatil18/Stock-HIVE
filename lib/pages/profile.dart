@@ -1,7 +1,8 @@
 
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -94,7 +95,11 @@ class ProfilePageState extends State<ProfilePage> {
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13))),
-                      onPressed: () {},
+                      onPressed: () {
+                        final String url = 'https://www.free-css.com/assets/files/free-css-templates/preview/page274/sync/';
+
+                        Share.share('Check out our app at $url');
+                      },
                       child: Text(
                         'Invite',
                         style: TextStyle(
@@ -166,6 +171,17 @@ class ProfilePageState extends State<ProfilePage> {
   void navigateToEditPage(int index) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SettingPage(index)));
+  }
+
+  Future<void> _launchURL() async {
+    String url = "live-portfolio.netlify.app";
+    final Uri uri = Uri(scheme: "http", host: url);
+    if(!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Unable to show info.')));
+    }
   }
 
   @override
@@ -517,21 +533,26 @@ class ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.code,
-                          size: 20,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Text('Developer Info',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2!
-                                  .copyWith(fontSize: 16)),
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () {
+                        _launchURL();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.code,
+                            size: 20,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text('Developer Info',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(fontSize: 16)),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 )),

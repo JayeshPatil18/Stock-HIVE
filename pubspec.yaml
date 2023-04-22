@@ -51,6 +51,8 @@ dependencies:
   flutter_svg: ^0.22.0
   shared_preferences: ^2.1.0
   jwt_decoder: ^2.0.1
+  share_plus: ^6.3.2
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:

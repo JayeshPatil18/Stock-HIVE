@@ -12,20 +12,22 @@ import 'package:http/http.dart' as http;
 import '../main.dart';
 import '../utils/token_helper.dart';
 
-class ProfileHeader extends StatefulWidget{
+class ProfileHeader extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return ProfileHeaderState();
   }
 }
 
-class ProfileHeaderState extends State<ProfileHeader>{
+class ProfileHeaderState extends State<ProfileHeader> {
   List<UserModel> usersList = [];
   var elevationValue = 0.0;
 
-  String profileUrl = "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
+  String profileUrl =
+      "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
 
-  final Reference storageRef = FirebaseStorage.instance.ref().child('profile_imgs');
+  final Reference storageRef =
+      FirebaseStorage.instance.ref().child('profile_imgs');
 
   int maxStarCount = 5;
 
@@ -40,7 +42,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return Container(
-            color: Colors.white,
+              color: Colors.white,
               height: 223,
               child: const Center(child: CircularProgressIndicator()));
         } else {
@@ -63,23 +65,27 @@ class ProfileHeaderState extends State<ProfileHeader>{
                         child: Stack(children: [
                           user.uProfileurl.toString() != "img_url"
                               ? CircleAvatar(
-                            backgroundImage: NetworkImage(user.uProfileurl.toString()),
-                            radius: 50,
-                          )
+                                  backgroundImage:
+                                      NetworkImage(user.uProfileurl.toString()),
+                                  radius: 50,
+                                )
                               : const CircleAvatar(
-                            backgroundImage:
-                            AssetImage("assets/icons/default_avatar.jpg"),
-                            radius: 50,
-                          ),
+                                  backgroundImage: AssetImage(
+                                      "assets/icons/default_avatar.jpg"),
+                                  radius: 50,
+                                ),
                           Positioned(
                             bottom: 0,
                             right: 0,
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the icon
-                                  shape: BoxShape.circle, // Set the shape of the background to a circle
+                                  color: Colors
+                                      .white, // Set the background color of the icon
+                                  shape: BoxShape
+                                      .circle, // Set the shape of the background to a circle
                                 ),
-                                child: Icon(Icons.add_circle, color: Colors.black, size: 30)),
+                                child: Icon(Icons.add_circle,
+                                    color: Colors.black, size: 30)),
                           ),
                         ]),
                       ),
@@ -88,27 +94,27 @@ class ProfileHeaderState extends State<ProfileHeader>{
                             margin: EdgeInsets.only(left: 20),
                             child: Column(
                               children: [
-                              Container(
-                              height: 22,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: maxStarCount,
-                                itemBuilder: (context, index) {
-                                  if(index < starCount!){
-                                    return Icon(
-                                      Icons.star,
-                                      color: starColor(),
-                                    );
-                                  }else{
-                                    return Icon(
-                                      Icons.star,
-                                      color: defaultBgColor(),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                            Container(
+                                Container(
+                                  height: 22,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: maxStarCount,
+                                    itemBuilder: (context, index) {
+                                      if (index < starCount!) {
+                                        return Icon(
+                                          Icons.star,
+                                          color: starColor(),
+                                        );
+                                      } else {
+                                        return Icon(
+                                          Icons.star,
+                                          color: defaultBgColor(),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Container(
                                     margin: EdgeInsets.only(top: 6),
                                     alignment: Alignment.topLeft,
                                     child: Column(
@@ -158,7 +164,8 @@ class ProfileHeaderState extends State<ProfileHeader>{
                                 Container(
                                     margin: EdgeInsets.only(bottom: 4),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.account_balance_wallet_outlined,
@@ -194,100 +201,171 @@ class ProfileHeaderState extends State<ProfileHeader>{
                         ),
                       ),
                       Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          elevation: 4,
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          color: Colors.white,
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.only(bottom: 4),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.card_giftcard,
-                                          size: 16,
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 4),
-                                          child: Text(
-                                            'Points',
-                                            style: textStyleSubTitle(
-                                                textColor: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${user.uPoints}',
-                                      style: textStyleDefault(
-                                          textColor: Colors.black),
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Earn points by getting likes!'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          'Congratulations! You\'re well on your way to increasing your overall rank on our platform. For every 10 likes you receive on a tweet or comment, you\'ll earn 1 point.'),
+                                      SizedBox(height: 16),
+                                      Text('Here\'s how it works:', style: TextStyle(fontWeight: FontWeight.w600),),
+                                      SizedBox(height: 8),
+                                      Text(
+                                          '- Whenever someone likes your tweet or comment, our system keeps track of it.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                      Text(
+                                          '- Once you reach 10 likes, we\'ll automatically award you 1 point.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                      Text(
+                                          '- The more points you earn, the higher your overall rank will be on our platform.', style: TextStyle(fontWeight: FontWeight.w400),),
+                                      SizedBox(height: 16),
+                                      Text(
+                                          'So keep posting and engaging with other users to increase your chances of earning more points. Good luck!'),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Ok'),
                                     ),
                                   ],
-                                ),
-                              ],
+                                );
+                              },
+                            );
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 4,
+                            margin: EdgeInsets.only(left: 5, right: 5),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.card_giftcard,
+                                            size: 16,
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4),
+                                            child: Text(
+                                              'Points',
+                                              style: textStyleSubTitle(
+                                                  textColor: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '${user.uPoints}',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                       Expanded(
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          elevation: 4,
-                          margin: EdgeInsets.only(left: 5, right: 10),
-                          color: Colors.white,
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.only(bottom: 4),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.leaderboard_outlined,
-                                          size: 16,
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 4),
-                                          child: Text(
-                                            'Rank',
-                                            style: textStyleSubTitle(
-                                                textColor: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '#',
-                                      style: textStyleDefault(
-                                          textColor: Colors.black),
-                                    ),
-                                    Text(
-                                      '${user.uRank}',
-                                      style: textStyleDefault(
-                                          textColor: Colors.black),
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Rank on Our Platform'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Congratulations! You\'re doing great on our platform, but there\'s still room to grow. By earning points, you can increase your overall rank and stand out among other users. \n\nTo earn points, simply receive likes on your tweets or comments. For every 10 likes, you\'ll be awarded 1 point. We\'ll keep track of your likes and award points automatically once you reach the 10-like threshold.\n\nSo, keep engaging with other users and sharing great content to increase your chances of earning more points. Your higher rank will make you more visible and recognized on our platform. \n\nThank you for being a part of our community and good luck on your journey to a higher rank!'),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Ok'),
                                     ),
                                   ],
-                                ),
-                              ],
+                                );
+                              },
+                            );
+                          },
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            elevation: 4,
+                            margin: EdgeInsets.only(left: 5, right: 10),
+                            color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(bottom: 4),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.leaderboard_outlined,
+                                            size: 16,
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4),
+                                            child: Text(
+                                              'Rank',
+                                              style: textStyleSubTitle(
+                                                  textColor: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '#',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                      Text(
+                                        '${user.uRank}',
+                                        style: textStyleDefault(
+                                            textColor: Colors.black),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -303,17 +381,17 @@ class ProfileHeaderState extends State<ProfileHeader>{
     );
   }
 
-  Future _uploadFile(String path) async{
+  Future _uploadFile(String path) async {
     String username = await getTokenUsername();
-    try{
+    try {
       storageRef.child('${username}').putFile(_imageFile!);
     } catch (error) {
       debugPrint(error.toString());
     }
   }
 
-  pickImage(ImageSource source) async{
-    try{
+  pickImage(ImageSource source) async {
+    try {
       final pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null) {
         setState(() {
@@ -322,7 +400,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
         });
         await _uploadFile(_imageFile!.path);
       }
-    } catch (error){
+    } catch (error) {
       debugPrint(error.toString());
     }
   }
@@ -338,7 +416,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
               ListTile(
                 leading: Icon(Icons.photo),
                 title: Text('Gallary'),
-                onTap: (){
+                onTap: () {
                   pickImage(ImageSource.gallery);
                 },
               ),
@@ -350,7 +428,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
               ListTile(
                 leading: Icon(Icons.photo_camera),
                 title: Text('Camera'),
-                onTap: (){
+                onTap: () {
                   pickImage(ImageSource.camera);
                 },
               ),
@@ -361,7 +439,7 @@ class ProfileHeaderState extends State<ProfileHeader>{
     );
   }
 
-  Future<List<UserModel>> getProfileInfo() async{
+  Future<List<UserModel>> getProfileInfo() async {
     int userId = await getTokenId();
     final url = Uri.parse('$globalApiUrl/users/info?userId=${userId}');
     final response = await http.get(url);
