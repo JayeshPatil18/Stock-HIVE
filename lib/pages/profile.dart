@@ -562,65 +562,70 @@ class ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
         length: 3,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, _) {
-            return [
-              SliverList(
-                delegate: SliverChildListDelegate(
-                    [
-                      ProfileHeader(),
-                    ]
-                ),
-              )
-            ];
-          },
-          body: Container(
-            color: Colors.transparent,
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(width: 2,
-                                color: Colors.black),
-                            borderRadius: BorderRadius.circular(20)
+        child: RefreshIndicator(
+          onRefresh: () async{ 
+            _refresh();
+           },
+          child: NestedScrollView(
+            headerSliverBuilder: (context, _) {
+              return [
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                      [
+                        ProfileHeader(),
+                      ]
+                  ),
+                )
+              ];
+            },
+            body: Container(
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 2,
+                                  color: Colors.black),
+                              borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: TabBar(
+                              indicator: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              labelColor: Colors.white,
+                              unselectedLabelColor: Colors.black,
+                              tabs: [
+                                Tab(text: "Tweets",),
+                                Tab(text: "Replies",),
+                                Tab(text: "Likes",),
+                              ]),
                         ),
-                        child: TabBar(
-                            indicator: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            labelColor: Colors.white,
-                            unselectedLabelColor: Colors.black,
-                            tabs: [
-                              Tab(text: "Tweets",),
-                              Tab(text: "Replies",),
-                              Tab(text: "Likes",),
-                            ]),
-                      ),
-                      Container(
-                        color: Colors.grey,
-                        height: 0.3,
-                      )
-                    ],
+                        Container(
+                          color: Colors.grey,
+                          height: 0.3,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    children: [
-                      TweetsTab(),
-                      RepliesTab(),
-                      LikesTab()
-                    ],
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        TweetsTab(),
+                        RepliesTab(),
+                        LikesTab()
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

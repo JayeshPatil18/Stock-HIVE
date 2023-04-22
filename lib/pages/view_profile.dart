@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../color_helper/defaultColor.dart';
+import '../components/ProfileHeader.dart';
+import '../components/ProfileTabs.dart';
 import '../components/discussModel.dart';
 import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
@@ -26,304 +28,68 @@ class ViewProfile extends StatelessWidget{
         ),
       ),
       backgroundColor: Colors.transparent,
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.person,
-                            size: 80,
-                          )),
-                      backgroundColor: Colors.black12,
-                      radius: 50,
-                    ),
-                    Expanded(
-                      child: Container(
-                          margin: EdgeInsets.only(left: 20),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: starColor(),
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: starColor(),
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: starColor(),
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: defaultBgColor(),
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: defaultBgColor(),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                  margin: EdgeInsets.only(top: 6),
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Jayesh Patil',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline1!
-                                                  .copyWith(fontSize: 25))),
-                                      Container(
-                                          alignment: Alignment.topLeft,
-                                          margin: EdgeInsets.only(top: 6),
-                                          child: Text('@username',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(fontSize: 16)))
-                                    ],
-                                  )),
-                            ],
-                          )),
-                    )
-                  ],
+      body: DefaultTabController(
+        length: 3,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, _) {
+            return [
+              SliverList(
+                delegate: SliverChildListDelegate(
+                    [
+                      ProfileHeader(),
+                    ]
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 20),
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
+              )
+            ];
+          },
+          body: Container(
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(width: 2,
+                                color: Colors.black),
+                            borderRadius: BorderRadius.circular(20)
                         ),
-                        elevation: 4,
-                        margin: EdgeInsets.only(left: 10, right: 5),
-                        color: Colors.white,
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(bottom: 4),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.account_balance_wallet_outlined, size: 16,),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 4),
-                                        child: Text(
-                                          'Revenue',
-                                          style: textStyleSubTitle(
-                                              textColor: Colors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '1000',
-                                    style: textStyleDefault(
-                                        textColor: Colors.black),
-                                  ),
-                                  Icon(
-                                    Icons.currency_rupee,
-                                    color: Colors.black,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                        child: TabBar(
+                            indicator: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(20)
+                            ),
+                            labelColor: Colors.white,
+                            unselectedLabelColor: Colors.black,
+                            tabs: [
+                              Tab(text: "Tweets",),
+                              Tab(text: "Replies",),
+                              Tab(text: "Likes",),
+                            ]),
                       ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        elevation: 4,
-                        margin: EdgeInsets.only(left: 5, right: 5),
-                        color: Colors.white,
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(bottom: 4),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.card_giftcard, size: 16,),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 4),
-                                        child: Text(
-                                          'Points',
-                                          style: textStyleSubTitle(
-                                              textColor: Colors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '1000',
-                                    style: textStyleDefault(
-                                        textColor: Colors.black),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        elevation: 4,
-                        margin: EdgeInsets.only(left: 5, right: 10),
-                        color: Colors.white,
-                        child: Container(
-                          padding: EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(bottom: 4),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.leaderboard_outlined, size: 16,),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 4),
-                                        child: Text(
-                                          'Rank',
-                                          style: textStyleSubTitle(
-                                              textColor: Colors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '#',
-                                    style: textStyleDefault(
-                                        textColor: Colors.black),
-                                  ),
-                                  Text(
-                                    '1000',
-                                    style: textStyleDefault(
-                                        textColor: Colors.black),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Que & Ans', style: textStyleDefault()),
-                  ],
-                ),
-              ),
-              Container(
-                color: defaultBgColor(),
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-                    child: Column(
-                      children: [
-                        TabSection2(),
-                        InkWell(
-                          onTap: () {
-                            showDialogDiscuss(context);
-                          },
-                          child: Container(
-                              margin: EdgeInsets.only(top: 8),
-                              width: double.infinity,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                elevation: appBarElevation,
-                                child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
-                              )),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialogDiscuss(context);
-                          },
-                          child: Container(
-                              margin: EdgeInsets.only(top: 8),
-                              width: double.infinity,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                elevation: appBarElevation,
-                                child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",),
-                              )),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialogDiscuss(context);
-                          },
-                          child: Container(
-                              margin: EdgeInsets.only(top: 8),
-                              width: double.infinity,
-                              child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  elevation: appBarElevation,
-                                  child: DiscussModel(tId: "1", fullname: 'Rajesh Hatli', username: 'nahila', tTxt: 'What about adani', tDate: '2018-10-20T00:00:00.000Z', tLikes: "54", tComments: "45", tUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2P3SxrEq6z7iY6dXOD0K18RuW2kHwYHInoI2yANC2XQ&s', isLiked: "-1",)
-                              )),
-                        ),
-                      ],
-                    ),
+                      Container(
+                        color: Colors.grey,
+                        height: 0.3,
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      TweetsTab(),
+                      RepliesTab(),
+                      LikesTab()
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
