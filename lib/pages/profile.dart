@@ -201,6 +201,14 @@ class ProfilePageState extends State<ProfilePage> {
               children: [
                 IconButton(
                   icon: Icon(
+                    Icons.refresh,
+                  ),
+                  onPressed: () {
+                    _refresh();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(
                     Icons.add_comment_rounded,
                   ),
                   onPressed: () {

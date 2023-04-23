@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart%20';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_prediction/components/ProfileHeaderView.dart';
@@ -10,14 +11,13 @@ import '../components/tabSection.dart';
 import '../dialgo_boxs/discussionDialogBox.dart';
 import '../font_helper/default_fonts.dart';
 import '../main.dart';
+import '../utils/token_helper.dart';
 
-class ViewProfile extends StatelessWidget{
+class ViewProfile extends StatefulWidget{
 
-  final imageUrl;
   final userId;
 
   ViewProfile({
-    required this.imageUrl,
     required this.userId
   });
 
@@ -25,6 +25,23 @@ class ViewProfile extends StatelessWidget{
     DiscussDialogBox(),
     DiscussDialogBoxSecondary(),
   ];
+
+  @override
+  State<ViewProfile> createState() => _ViewProfileState(userId);
+}
+
+class _ViewProfileState extends State<ViewProfile> {
+  Future _refresh() async{
+    setState(() {
+
+    });
+  }
+
+  int? userId;
+
+  _ViewProfileState(int userId) {
+    this.userId = userId;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +53,18 @@ class ViewProfile extends StatelessWidget{
           'Profile',
           style: TextStyle(color: Colors.black),
         ),
+        actions: <Widget>[
+          Builder(builder: (context) {
+            return IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                _refresh();
+              },
+            );
+          })
+        ],
       ),
       backgroundColor: Colors.transparent,
       body: DefaultTabController(
@@ -46,14 +75,14 @@ class ViewProfile extends StatelessWidget{
               SliverList(
                 delegate: SliverChildListDelegate(
                     [
-                      ProfileHeaderView(imageUrl: imageUrl, userId: userId),
+                      ProfileHeaderView(userId: widget.userId),
                     ]
                 ),
               )
             ];
           },
           body: Container(
-            color: Colors.transparent,
+            color: defaultBgColor(),
             child: Column(
               children: [
                 Container(
@@ -92,9 +121,9 @@ class ViewProfile extends StatelessWidget{
                 Expanded(
                   child: TabBarView(
                     children: [
-                      TweetsTabView(userId: userId),
-                      RepliesTabView(userId: userId),
-                      LikesTabView(userId: userId)
+                      TweetsTabView(userId: widget.userId),
+                      RepliesTabView(userId: widget.userId),
+                      LikesTabView(userId: widget.userId)
                     ],
                   ),
                 ),
@@ -122,7 +151,7 @@ class ViewProfile extends StatelessWidget{
           minChildSize: 0.60,
           builder: (context, scrollContoller) => SingleChildScrollView(
             controller: scrollContoller,
-            child: sectionDialog[TabSection2State.currentIndex],
+            child: ViewProfile.sectionDialog[TabSection2State.currentIndex],
           ),
         ));
   }

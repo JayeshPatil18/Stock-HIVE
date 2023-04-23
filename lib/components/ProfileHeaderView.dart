@@ -14,17 +14,15 @@ import '../utils/token_helper.dart';
 
 class ProfileHeaderView extends StatefulWidget {
 
-  final imageUrl;
   final userId;
 
   ProfileHeaderView({
-    required this.imageUrl,
     required this.userId
   });
 
   @override
   State<StatefulWidget> createState() {
-    return ProfileHeaderViewState();
+    return ProfileHeaderViewState(userId);
   }
 }
 
@@ -33,11 +31,12 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
   var elevationValue = 0.0;
   int maxStarCount = 5;
 
-  String? imageUrl;
+  String profileUrl =
+      "https://cdn.stealthoptional.com/images/ncavvykf/stealth/f60441357c6c210401a1285553f0dcecc4c4489e-564x564.jpg?w=328&h=328&auto=format";
+
   int? userId;
 
-  QuestionModelState(String imageUrl, int userId) {
-    this.imageUrl = imageUrl;
+  ProfileHeaderViewState(int userId) {
     this.userId = userId;
   }
 
@@ -64,10 +63,13 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                                backgroundImage: NetworkImage(imageUrl!),
+                      user.uProfileurl.toString() == "img_url" ? CircleAvatar(
+                                backgroundImage: NetworkImage(profileUrl),
                                 radius: 50,
-                              ),
+                              ) : CircleAvatar(
+                        backgroundImage: NetworkImage(user.uProfileurl.toString()),
+                        radius: 50,
+                      ),
                       Expanded(
                         child: Container(
                             margin: EdgeInsets.only(left: 20),

@@ -90,7 +90,7 @@ class TweetPageState extends State<TweetPage> {
             FutureBuilder(
               future: getTweet(tId),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (!snapshot.hasData) {
+                if (tweetsList.isEmpty) {
                   return SizedBox(
                       height: 151,
                       child: const Center(child: CircularProgressIndicator()));

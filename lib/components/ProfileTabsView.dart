@@ -45,39 +45,44 @@ class TweetsTabViewState extends State<TweetsTabView>{
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getTweets(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
-              itemCount: tweetsList.length,
-              itemBuilder: (context, index) {
-                var tweet = tweetsList[index];
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
-                        .then((value) => setState(() {
-                      _refresh();
-                    }));
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(top: 8),
-                      width: double.infinity,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: elevationValue,
-                        child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
-                      )),
-                );
-              }
-          );
-        }
+    return RefreshIndicator(
+      onRefresh: () async{
+        _refresh();
       },
+      child: FutureBuilder(
+        future: getTweets(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
+                itemCount: tweetsList.length,
+                itemBuilder: (context, index) {
+                  var tweet = tweetsList[index];
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
+                          .then((value) => setState(() {
+                        _refresh();
+                      }));
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
+                        )),
+                  );
+                }
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -106,7 +111,7 @@ class RepliesTabView extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
-    return RepliesTabViewState();
+    return RepliesTabViewState(userId);
   }
 }
 
@@ -116,7 +121,7 @@ class RepliesTabViewState extends State<RepliesTabView>{
 
   int? userId;
 
-  TweetsTabViewState(int userId) {
+  RepliesTabViewState(int userId) {
     this.userId = userId;
   }
 
@@ -130,39 +135,44 @@ class RepliesTabViewState extends State<RepliesTabView>{
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getTweets(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
-              itemCount: tweetsList.length,
-              itemBuilder: (context, index) {
-                var tweet = tweetsList[index];
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tParent.toString())))
-                        .then((value) => setState(() {
-                      _refresh();
-                    }));
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(top: 8),
-                      width: double.infinity,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: elevationValue,
-                        child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
-                      )),
-                );
-              }
-          );
-        }
+    return RefreshIndicator(
+      onRefresh: () async{
+        _refresh();
       },
+      child: FutureBuilder(
+        future: getTweets(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
+                itemCount: tweetsList.length,
+                itemBuilder: (context, index) {
+                  var tweet = tweetsList[index];
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tParent.toString())))
+                          .then((value) => setState(() {
+                        _refresh();
+                      }));
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
+                        )),
+                  );
+                }
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -216,39 +226,44 @@ class LikesTabViewState extends State<LikesTabView>{
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getTweets(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
-              itemCount: tweetsList.length,
-              itemBuilder: (context, index) {
-                var tweet = tweetsList[index];
-                return GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
-                        .then((value) => setState(() {
-                      _refresh();
-                    }));
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(top: 8),
-                      width: double.infinity,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: elevationValue,
-                        child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
-                      )),
-                );
-              }
-          );
-        }
+    return RefreshIndicator(
+      onRefresh: () async{
+        _refresh();
       },
+      child: FutureBuilder(
+        future: getTweets(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80, left: 10, right: 10),
+                itemCount: tweetsList.length,
+                itemBuilder: (context, index) {
+                  var tweet = tweetsList[index];
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TweetPage(tId: tweet.tId.toString())))
+                          .then((value) => setState(() {
+                        _refresh();
+                      }));
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(top: 8),
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          elevation: elevationValue,
+                          child: DiscussModel(tId: tweet.tId.toString(), fullname: tweet.fullname.toString(), username: tweet.username.toString(), tTxt: tweet.tTxt.toString(), tDate: tweet.tDateTime.toString(), tLikes: tweet.tLikes.toString(), tComments: tweet.tComments.toString(), tUrl: tweet.tUrl.toString(), isLiked: tweet.isLiked.toString(),),
+                        )),
+                  );
+                }
+            );
+          }
+        },
+      ),
     );
   }
 
