@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:stock_prediction/auth_pages/signin.dart';
 import 'package:stock_prediction/auth_pages/verify.dart';
 import '../font_helper/default_fonts.dart';
+import 'package:http/http.dart' as http;
 import '../main.dart';
 
 class SignUp extends StatefulWidget{
@@ -32,6 +35,14 @@ class SignUpState extends State<SignUp>{
   String username = "";
   String phoneNo = "";
   String password = "";
+
+  String _signUpText = "Sign Up";
+  bool isClicked = false;
+  _setSignUpText(String btnText) {
+    setState(() {
+      _signUpText = btnText;
+    });
+  }
 
   @override
   void initState() {
@@ -173,39 +184,76 @@ class SignUpState extends State<SignUp>{
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13))),
-                          onPressed: () async{
+                          onPressed: () async {
+                            if (!isClicked) {
+                              isClicked = true;
 
-                            bool isValid = _myFormKey.currentState!.validate();
+                              bool isValid = _myFormKey.currentState!
+                                  .validate();
 
-                            if(isValid){
+                              if (isValid) {
+                                _setSignUpText("Loading...");
+                                name = nameController.text.trim();
+                                username = usernameController.text.trim();
+                                phoneNo = phoneNo.trim();
+                                password = passwordController.text;
 
-                            name = nameController.text.trim();
-                            username = usernameController.text.trim();
-                            phoneNo = phoneNo.trim();
-                            password = passwordController.text;
+                                int validCode = await validDataCheck(username, phoneNo);
 
-                              // Verification Code sending
-                              await FirebaseAuth.instance.verifyPhoneNumber(
-                                phoneNumber: phoneNo,
-                                verificationCompleted: (PhoneAuthCredential credential) {},
-                                verificationFailed: (FirebaseAuthException e) {},
-                                codeSent: (String verificationId, int? resendToken) {
-                                  SignUp.verify = verificationId;
-                                },
-                                codeAutoRetrievalTimeout: (String verificationId) {},
-                              );
+                                if (validCode == 200) {
+                                  // Verification Code sending
+                                  await FirebaseAuth.instance.verifyPhoneNumber(
+                                    phoneNumber: phoneNo,
+                                    verificationCompleted: (
+                                        PhoneAuthCredential credential) {},
+                                    verificationFailed: (
+                                        FirebaseAuthException e) {},
+                                    codeSent: (String verificationId,
+                                        int? resendToken) {
+                                      SignUp.verify = verificationId;
+                                    },
+                                    codeAutoRetrievalTimeout: (
+                                        String verificationId) {},
+                                  );
 
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Verification Code has been sent.')));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(
+                                          'Verification Code has been sent.')));
 
-                            Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          VerifyUser(name: name, username: username, phoneNo: phoneNo, password: password,)));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              VerifyUser(name: name,
+                                                username: username,
+                                                phoneNo: phoneNo,
+                                                password: password,)));
+                                } else if (validCode == 1) {
+                                  // invalid credential
+                                  _setSignUpText("Sign Up");
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("'$username' isn't available! Try another.")));
+                                } else if (validCode == 0) {
+                                  // user not exist
+                                  _setSignUpText("Sign Up");
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "'$phoneNo' is already in use! Try another.")));
+                                } else {
+                                  // error
+                                  _setSignUpText("Sign Up");
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Something went wrong! Try again.')));
+                                }
+                              }
+                              isClicked = false;
                             }
                           },
                           child: Text(
-                            'Sign Up',
+                            _signUpText,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -231,6 +279,35 @@ class SignUpState extends State<SignUp>{
           ),
         ),
     );
+  }
+
+  Future<int> validDataCheck(String username, String PhoneNo) async {
+    try {
+      final url = Uri.parse('$globalApiUrl/login/check');
+      final headers = {'Content-Type': 'application/json'};
+      final body = json.encode({
+        'username': username,
+        'phoneno': phoneNo,
+      });
+      final response = await http.post(url, headers: headers, body: body);
+
+
+      if (response.statusCode == 200) {
+        // valid data
+        return 200;
+      } else if (response.statusCode == 401) {
+        // invalid username
+        return 1;
+      } else if (response.statusCode == 404) {
+        // invalid phoneno
+        return 0;
+      } else {
+        // error
+        return -1;
+      }
+    } catch (e) {
+      return -1;
+    }
   }
 }
 
