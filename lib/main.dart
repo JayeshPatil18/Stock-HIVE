@@ -78,7 +78,7 @@ class SplashPageState extends State<SplashPage> {
           ),
           Center(
             child: Card(
-              elevation: 2.0,
+              elevation: 0.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100),
               ),
