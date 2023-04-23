@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock_prediction/pages/discussion.dart';
 import 'package:stock_prediction/pages/home.dart';
@@ -68,8 +69,45 @@ class SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Splash'),
+      body: Stack(
+        children: [
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: Lottie.asset('assets/anim/splash_bg.json', fit: BoxFit.cover, repeat: false),
+          ),
+          Center(
+            child: Card(
+              elevation: 2.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              color: Colors.white,
+              child: Container(
+                width: 180.0,
+                height: 180.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.grey,
+                      Colors.white,
+                    ],
+                  ),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    'assets/icons/logo.png',
+                    height: 220.0,
+                    width: 220.0,
+                  ),
+                ),
+              ),
+            )
+          ),
+        ],
       ),
     );
   }
@@ -78,7 +116,7 @@ class SplashPageState extends State<SplashPage> {
     var shardPref = await SharedPreferences.getInstance();
     var isLoggedIn = shardPref.getBool(KEY_LOGIN);
 
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(milliseconds: 2400), () {
       if (isLoggedIn != null) {
         if (isLoggedIn) {
           Navigator.pushReplacement(

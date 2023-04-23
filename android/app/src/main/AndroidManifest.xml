@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.stock_prediction">
    <application
-        android:label="stock_prediction"
+        android:label="Stock HIVE"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
