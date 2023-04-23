@@ -82,15 +82,24 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           pickSource();
                         },
                         child: Stack(children: [
-                          _imageFile != null
-                              ? CircleAvatar(
-                                  backgroundImage: FileImage(_imageFile!),
-                                  radius: 50,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: NetworkImage(profileUrl),
-                                  radius: 50,
+                          Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2.5,
                                 ),
+                              ),
+                              child: _imageFile != null
+                                  ? CircleAvatar(
+                                backgroundImage: FileImage(_imageFile!),
+                                radius: 50,
+                              )
+                                  : CircleAvatar(
+                                backgroundImage: NetworkImage(profileUrl),
+                                radius: 50,
+                              )
+                          ),
                           Positioned(
                             bottom: 0,
                             right: 0,

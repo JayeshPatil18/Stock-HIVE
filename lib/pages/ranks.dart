@@ -90,6 +90,13 @@ class RanksPageState extends State<RanksPage> {
                               margin: EdgeInsets.only(right: 10),
                               width: 80,
                               height: 80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 1.5,
+                                ),
+                              ),
                               child: user.uProfileurl.toString() != "img_url"
                                   ? CircleAvatar(
                                 backgroundImage: NetworkImage(user.uProfileurl.toString()),

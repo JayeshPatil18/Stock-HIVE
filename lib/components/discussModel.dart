@@ -82,16 +82,25 @@ class DiscussModelState extends State<DiscussModel> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    tUrl != "null"
-                        ? CircleAvatar(
-                            backgroundImage: NetworkImage(tUrl),
-                            radius: 22,
-                          )
-                        : const CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/icons/default_avatar.jpg"),
-                            radius: 22,
+                    Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.0,
                           ),
+                        ),
+                      child: tUrl != "null"
+                          ? CircleAvatar(
+                        backgroundImage: NetworkImage(tUrl),
+                        radius: 22,
+                      )
+                          : const CircleAvatar(
+                        backgroundImage:
+                        AssetImage("assets/icons/default_avatar.jpg"),
+                        radius: 22,
+                      ),
+                    ),
                     SizedBox(
                       width: 8,
                     ),

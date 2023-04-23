@@ -63,12 +63,21 @@ class ProfileHeaderViewState extends State<ProfileHeaderView> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      user.uProfileurl.toString() == "img_url" ? CircleAvatar(
-                                backgroundImage: NetworkImage(profileUrl),
-                                radius: 50,
-                              ) : CircleAvatar(
-                        backgroundImage: NetworkImage(user.uProfileurl.toString()),
-                        radius: 50,
+                      Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2.5,
+                            ),
+                          ),
+                          child: user.uProfileurl.toString() == "img_url" ? CircleAvatar(
+                            backgroundImage: NetworkImage(profileUrl),
+                            radius: 50,
+                          ) : CircleAvatar(
+                            backgroundImage: NetworkImage(user.uProfileurl.toString()),
+                            radius: 50,
+                          )
                       ),
                       Expanded(
                         child: Container(
