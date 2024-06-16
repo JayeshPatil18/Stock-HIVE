@@ -25,7 +25,7 @@ Welcome to **Stock HIVE**, a platform for sharing thoughts and ideas. Users can 
 
 ## Description
 
-**Stock HIVE** facilitates open communication where users can share their thoughts and receive feedback anonymously. This platform emphasizes interaction and engagement, allowing users to contribute and earn points for sharing valuable insights.
+**Stock HIVE** facilitates open communication where users can share their thoughts and receive feedback. This platform emphasizes interaction and engagement, allowing users to contribute and earn points for sharing valuable insights.
 
 ## Features
 
