@@ -14,9 +14,6 @@
 </div>
 </br>
 
-Welcome to **GHR Incog**, the ultimate platform for fearless college conversations. Unlock the power of anonymous expression with GHR Incog! Tailored for G. H. Raisoni College of Engineering and Management, Pune, this mobile application redefines how college students communicate.
-
-</br>
 
 Welcome to **Stock HIVE**, a platform for sharing thoughts and ideas. Users can post messages and receive advice and opinions from others. Earn points for sharing helpful information. User-friendly and easy to participate and engage with others.
 
